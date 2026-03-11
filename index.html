@@ -9,15 +9,32 @@
 </head>
 
 <body>
-    <!-- This is a comment-->
-    <div>
-        <h1>My heading 34</h1>
+    <div id="my-map" class="map-container">
+        <!-- Navigation bar -->
+        <div class='map-search-container'>
+            <button type="button" class="btn btn-success btn-lg rounded-pill shadow-sm" id="returnbutton">Original View</button>
+        </div>
+
+        <!-- Filter features -->
+        <div class='map-data-container'>
+            <label class="option-label" for="layercheck">Filter map view</label>
+            <!-- Dropdown for selecting a neighbourhood near UofT -->
+                <form>
+                    <fieldset id="boundaryfieldset">
+                        <label class="option-label">Select region</label>
+                        <select id="boundary" name="boundary">
+                            <option value="" disabled selected>Select...</option>
+                            <option value="All">Show all regions</option>
+                            <option value="North">North</option>
+                            <option value="South">South</option>
+                            <option value="West">West</option>
+                            <option value="East">East</option>
+                        </select>
+                    </fieldset>
+                </form>
+        </div>
+
     </div>
-    <br>
-    <div>
-        <p><a href="https://www.utoronto.ca/">Click here</a></p>
-    </div>
-    <div><button id ="my-button">Click me!</button></div>
     <script src="script.js"></script>
 </body>
 

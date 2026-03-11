@@ -1,8 +1,49 @@
-body {
-    background-color: blueviolet;
+/* Formatting the return to original view button */
+.map-search-container {
+    position: relative;
+    background: rgba(255, 255, 255, 0.8);
+    top: 0;
+    left: 0;
+    width: 260px;
+    margin: 10px 0 0 10px;
+    padding: 10px;
+    border-radius: 8px;
+    overflow: visible;
 }
 
-img {
-    width: 300;
-    height: 300;
+#returnbutton {
+    position: relative;
+    margin: 10px 0 10px;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Formatting geocoder */
+.geocoder {
+    position: relative;
+    margin: 10px 0;
+}
+
+/* Format dropdown option label*/
+.option-label {
+    font: 20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    width: 95%;
+    padding-bottom: 5px;
+    position: relative;
+    z-index: 1000;
+}
+
+/* Format smaller text */
+.form-check-label {
+    font: 15px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    position: relative;
+    z-index: 1000;
+}
+
+/* Format dropdown option in the map data container */
+.form {
+    padding-bottom: 20px;
+    position: relative;
+    z-index: 1000;
 }
