@@ -1,4 +1,23 @@
 /*--------------------------------------------------------------------
+Initially loading map in
+--------------------------------------------------------------------*/
+const map = new mapboxgl.Map({
+	container: 'my-map', // Map container ID
+	style: 'mapbox://styles/nadineconsunji/cmmbdfg9r007x01ryckrx8rx8', // Mapbox style URL
+	center: [-79.37, 43.7], // CHANGE
+	zoom: 10.5, // CHANGE
+});
+
+/*--------------------------------------------------------------------
+Adding data to the map 
+--------------------------------------------------------------------*/
+// Once map finishes loading, trigger the following functions 
+map.on('load', () => {
+    // Resize map accordingly if browser size is changed/minimised 
+    map.resize();
+});
+
+/*--------------------------------------------------------------------
 Adding map controls 
 --------------------------------------------------------------------*/
 // Search control 
