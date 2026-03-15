@@ -3,16 +3,33 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- Make layout responsive on other/mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- Website title displayed in browser tab -->
+    <title>CATF GGR472</title> 
+    <!-- Mapbox GL JS library (JavaScript loaded in for interactive maps) -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.18.1/mapbox-gl.js'></script>
+    <!-- Mapbox GL CSS (CSS loaded in for styling) -->
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.18.1/mapbox-gl.css' rel='stylesheet' /> 
+    <!-- Mapbox geocoder plugin -->
+    <script
+        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.1.0/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.1.0/mapbox-gl-geocoder.css"
+        type="text/css">
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap CSS (for responsive layout/grids) -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> <!--linking to bootstrap -->
+    <!-- Turf.js -->
+    <script src='https://unpkg.com/@turf/turf@7.2.0/turf.min.js'></script>
 </head>
 
 <body>
     <div id="my-map" class="map-container">
         <!-- Navigation bar -->
         <div class='map-search-container'>
-            <button type="button" class="btn btn-success btn-lg rounded-pill shadow-sm" id="returnbutton">Original View</button>
+            <button type="button" class="btn btn-success btn-lg rounded-pill shadow-sm" id="returnbutton">Return to original view</button>
         </div>
 
         <!-- Filter features -->

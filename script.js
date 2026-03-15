@@ -1,4 +1,26 @@
 /*--------------------------------------------------------------------
+Initializing map
+--------------------------------------------------------------------*/
+// Define access token
+mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6NTNkb29meTJzMW81dSJ9.t6RLssyQkfZODRIMy_ToNQ'; 
+
+// Initialize map and edit to your preference
+const map = new mapboxgl.Map({
+    container: 'my-map', // container id in HTML
+    style: 'mapbox://styles/nadineconsunji/cmmbdfg9r007x01ryckrx8rx8', 
+    center: [-79.37, 43.715],  // starting point, longitude/latitude
+    zoom: 10.3 // starting zoom level
+});
+
+/*--------------------------------------------------------------------
+Adding sources and layers
+--------------------------------------------------------------------*/
+map.on('load', () => {
+    // Resize map accordingly if browser size is changed/minimised 
+    map.resize();
+});
+
+/*--------------------------------------------------------------------
 Adding map controls 
 --------------------------------------------------------------------*/
 // Search control 
