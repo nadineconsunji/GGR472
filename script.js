@@ -1,7 +1,7 @@
 /*--------------------------------------------------------------------
 Initializing map
 --------------------------------------------------------------------*/
-// Define access token
+// Mapbox Token (default public)
 mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6NTNkb29meTJzMW81dSJ9.t6RLssyQkfZODRIMy_ToNQ'; 
 
 // Initialize map and edit to your preference
