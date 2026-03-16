@@ -86,7 +86,6 @@ map.on('load', () => {
     });
 
     map.on('click', 'testpoint', (e) => {
-        // map.flyTo({center: [0, 0], zoom: 9});
         map.flyTo({
             center: e.features[0].geometry.coordinates, zoom: 15
         });
