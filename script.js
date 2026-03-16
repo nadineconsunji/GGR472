@@ -7,15 +7,16 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6N
 // Mapbox Token (default public) - added by Daniel
 // mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuaWVsODEwMTciLCJhIjoiY21rZWI2eGg4MDU5NjNscHdxbjhkMTNmciJ9.jdsMukp7zHz3llySNBJs0A';
 
-// Center coordinates for map on load (to change, refer to https://labs.mapbox.com/location-helper)
-const center = [22.13452, 7.67653]; // SET TO AFRICA
+// Center coordinates for map on load and zoom change(to change, refer to https://labs.mapbox.com/location-helper)
+const center = [22.34868, -0.31974];
+const zoom = 2.6;
 
 // Initialize map and edit to your preference
 const map = new mapboxgl.Map({
     container: 'my-map', // container id in HTML
     style: 'mapbox://styles/nadineconsunji/cmmbdfg9r007x01ryckrx8rx8',
-    center: center,  // starting point, longitude/latitude - SEE LINE 10-11
-    zoom: 1.75 // starting zoom level
+    center: center,  // starting point, longitude/latitude - SEE LINES 10-11
+    zoom: zoom // starting zoom level - SEE LINE 10, 12
     // pitch: '', [CAN USE FOR 3D MAP VISUALIZATION] 
 });
 
@@ -101,8 +102,8 @@ Adding interactivity
 // 1) Add event listener which returns map view to original view on button click using flyTo method
 document.getElementById('returnbutton').addEventListener('click', () => {
     map.flyTo({
-        center: [-79.37, 43.7], // CHANGE COORDINATES HERE - "centre"
-        zoom: 10.5, // CHANGE ZOOM LEVEL HERE - already corrected see lines 10-11
+        center: center, // LINES 10-11
+        zoom: zoom, // LINE 10, 12
         essential: true
     });
 });

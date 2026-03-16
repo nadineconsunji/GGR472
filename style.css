@@ -1,4 +1,5 @@
 body {
+    height: 100%;
     margin: 0;
     padding: 0;
 }
@@ -82,17 +83,12 @@ body {
     transform: translateX(295px);
 }
 
-
-
-
-
-
-
-html, body {
+/* Marking for removal - there is already a body at top */
+/* html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-}
+} */
 
 .map-container {
     position: absolute;
@@ -110,6 +106,7 @@ html, body {
     background:(rgba(0,0,0,0));
     top: 0;
     left: 0;
+    right: 0;
     width: 260px;
     margin: 10px 0 0 10px;
     padding: 10px;
@@ -127,11 +124,11 @@ html, body {
 /* Format map data container */
 .map-data-container {
     position: absolute;   
-    top: 90px;           
-    left: 20px;          
+    top: 10px;           
+    left: 15px;     
     background: rgba(255, 255, 255, 0.9);
     width: 260px;
-    padding: 10px;
+    padding: 0px;
     border-radius: 8px;
     overflow: visible;
     z-index: 1000;
@@ -142,7 +139,7 @@ html, body {
     font: 20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     font-weight: bold;
     width: 95%;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     position: relative;
     z-index: 1000;
 }
