@@ -33,29 +33,31 @@
         <div id="left" class="sidebar flex-center left collapsed">
 
             <div class="sidebar-content rounded-rect flex-center">
-                <!-- Original View Button -->
-                <div class='map-search-container'>
-                    <button type="button" class="btn btn-success btn-lg rounded-pill shadow-sm" id="returnbutton">Return
-                        to original view (click neon point on map to test!!!)</button>
-                </div>
-
-                <!-- Filter features -->
-                <div class='map-data-container'>
-                    <label class="option-label" for="layercheck">Filter map view</label>
-                    <!-- Dropdown for selecting a neighbourhood near UofT -->
-                    <form>
-                        <fieldset id="boundaryfieldset">
-                            <label class="option-label">Select region</label>
-                            <select id="boundary" name="boundary">
-                                <option value="" disabled selected>Select...</option>
-                                <option value="All">Show all regions</option>
-                                <option value="North">North</option>
-                                <option value="South">South</option>
-                                <option value="West">West</option>
-                                <option value="East">East</option>
-                            </select>
-                        </fieldset>
-                    </form>
+                <div>
+                    <!-- Filter features -->
+                    <div class='map-data-container'>
+                        <label class="option-label" for="layercheck">Filter map view</label>
+                        <!-- Dropdown for selecting a neighbourhood near UofT -->
+                        <form>
+                            <fieldset id="boundaryfieldset">
+                                <label class="option-label">Select region</label>
+                                <select id="boundary" name="boundary">
+                                    <option value="" disabled selected>Select...</option>
+                                    <option value="All">Show all regions</option>
+                                    <option value="North">North</option>
+                                    <option value="South">South</option>
+                                    <option value="West">West</option>
+                                    <option value="East">East</option>
+                                </select>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <!-- Original View Button - BOOTSTRAP NEEDS FIX -->
+                    <div class='map-search-container'>
+                        <button type="button" class="btn btn-success btn-lg rounded-pill shadow-sm"
+                            id="returnbutton">Return
+                            to original view (click neon point on map to test!!!)</button>
+                    </div>
                 </div>
                 <div class="sidebar-toggle rounded-rect left" onclick="toggleSidebar('left')">
                     &rarr;
