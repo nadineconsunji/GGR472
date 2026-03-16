@@ -67,6 +67,39 @@ map.on('load', function () {
     toggleSidebar('left');
 });
 
+// THIS IS A TEST (DELETE LATER)
+map.on('load', () => {
+    map.addSource('TESTdata', {
+        type: 'geojson',
+        data: 'https://raw.githubusercontent.com/daniel81017/Lab2/refs/heads/main/TEST(DELETELATER).geojson',
+    });
+
+    map.addLayer({
+        'id': 'testpoint',
+        'type': 'circle',
+        'source': 'TESTdata',
+        'paint': {
+            'circle-width': 100,
+            'circle-color': '#22f513'
+        },
+        'filter': ['==', ['geometry-type'], 'Point'],
+    });
+
+    map.on('click', 'testpoint', (e) => {
+        // map.flyTo({center: [0, 0], zoom: 9});
+        map.flyTo({
+            center: e.features[0].geometry.coordinates, zoom: 15
+        });
+    });
+
+    map.on('mouseenter', 'testpoint', () => {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', 'testpoint', () => {
+        map.getCanvas().style.cursor = '';
+    });
+});
 
 /*--------------------------------------------------------------------
 Adding sources and layers
