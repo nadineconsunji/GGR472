@@ -1,8 +1,89 @@
-html, body {
+body {
     height: 100%;
     margin: 0;
     padding: 0;
 }
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.rounded-rect {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 50px -25px black;
+}
+
+.flex-center {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-center.left {
+    left: 0px;
+}
+
+.flex-center.right {
+    right: 0px;
+}
+
+.sidebar-content {
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 32px;
+    color: gray;
+}
+
+.sidebar-toggle {
+    position: absolute;
+    width: 1.3em;
+    height: 1.3em;
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-toggle.left {
+    right: -1.5em;
+}
+
+.sidebar-toggle:hover {
+    color: #000000;
+    cursor: pointer;
+}
+
+.sidebar {
+    transition: transform 2s;
+    z-index: 1;
+    width: 300px;
+    height: 98%;
+}
+
+/* Developer comments: The sidebar styling has them "expanded" by default, we use CSS transforms to push them offscreen
+    The toggleSidebar() function removes this class from the element in order to expand it.
+    */
+.left.collapsed {
+    transform: translateX(-295px);
+}
+
+.right.collapsed {
+    transform: translateX(295px);
+}
+
+/* Marking for removal - there is already a body at top */
+/* html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+} */
 
 .map-container {
     position: absolute;
@@ -20,6 +101,7 @@ html, body {
     background:(rgba(0,0,0,0));
     top: 0;
     left: 0;
+    right: 0;
     width: 260px;
     margin: 10px 0 0 10px;
     padding: 10px;
@@ -37,11 +119,11 @@ html, body {
 /* Format map data container */
 .map-data-container {
     position: absolute;   
-    top: 90px;           
-    left: 20px;          
+    top: 10px;           
+    left: 15px;     
     background: rgba(255, 255, 255, 0.9);
     width: 260px;
-    padding: 10px;
+    padding: 0px;
     border-radius: 8px;
     overflow: visible;
     z-index: 1000;
@@ -52,7 +134,7 @@ html, body {
     font: 20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     font-weight: bold;
     width: 95%;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     position: relative;
     z-index: 1000;
 }
