@@ -117,7 +117,6 @@ map.addControl(
     new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
-        countries: "ca" // CHANGE
     })
 );
 
@@ -141,21 +140,43 @@ document.getElementById('returnbutton').addEventListener('click', () => {
 });
 
 // 2) Filter data layer to show selected region of Africa 
-let boundaryvalue;
+let regionvalue;
 
 document.getElementById("boundaryfieldset").addEventListener('change',(e) => {   
     boundaryvalue = document.getElementById('boundary').value;
 
-    if (boundaryvalue == 'All') {
+    if (regionvalue == 'All') {
         map.setFilter(
             'bikeshare-fill', // CHANGE
-            ['has', 'AREA_NAME'] // CHANGE AREA_NAME TO RELEVANT FIELD 
+            ['has', 'region'] // CHANGE AREA_NAME TO RELEVANT FIELD 
         );
     } else {
         map.setFilter(
             'bikeshare-fill', // CHANGE
-            ['==', ['get', 'AREA_NAME'], boundaryvalue] // CHANGE AREA_NAME AND boundaryvalue
+            ['==', ['get', 'region'], regionvalue] // CHANGE AREA_NAME AND boundaryvalue
         );
     }
 
+});
+
+// 3) Information button 
+const infopopup = document.getElementById("popup");
+const infobutton = document.getElementById("infobutton");
+const closeBtn = document.getElementById("closeBtn");
+
+// Open popup
+infobutton.addEventListener("click", () => {
+    popup.style.display = "block";
+});
+
+// Close popup
+closeBtn.addEventListener("click", () => {
+    popup.style.display = "none";
+});
+
+// Close if clicking outside the box
+window.addEventListener("click", (e) => {
+    if (e.target === popup) {
+        popup.style.display = "none";
+    }
 });

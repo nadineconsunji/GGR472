@@ -35,38 +35,52 @@
             <div class="sidebar-content rounded-rect flex-center">
                 <div>
                     <!-- Filter features -->
-                    <div class='map-data-container'>
-                        <label class="option-label" for="layercheck">Filter map view</label>
-                        <!-- Dropdown for selecting a neighbourhood near UofT -->
-                        <form>
-                            <fieldset id="boundaryfieldset">
-                                <label class="option-label">Select region</label>
-                                <select id="boundary" name="boundary">
-                                    <option value="" disabled selected>Select...</option>
-                                    <option value="All">Show all regions</option>
-                                    <option value="North">North</option>
-                                    <option value="South">South</option>
-                                    <option value="West">West</option>
-                                    <option value="East">East</option>
-                                    <option value="Central">Central</option>
-                                </select>
-                                <br>
-                                <br>
-                                <!-- Heading for data selection -->
-                                <label class="option-label">Select data</label>
-                            </fieldset>
-                        </form>
-                        <br>
-                        <!-- Original View Button -->
-                        <div class='map-search-container'>
-                            <button type="button" class="default-style" id="returnbutton">Return</button>
-                        </div>
+                    <label class="option-label" for="layercheck">Filter map view</label>
+                    <!-- Heading for data selection -->
+                    <div class="data-select">
+                        <input type="radio" id="composite" checked name="selection" value="composite" >
+                        <label for="composite">Composite Index</label><br>
+                        <input type="radio" id="readiness" name="selection" value="readiness">
+                        <label for="readiness">Transition Readiness</label><br>
+                        <input type="radio" id="performance" name="selection" value="performance">
+                        <label for="performance">System Performance</label>
+                    </div>
+                    <!-- Dropdown for selecting a neighbourhood near UofT -->
+                    <form>
+                        <fieldset id="boundaryfieldset">
+                            <label class="option-label2">Select region</label>
+                            <select class="option-label3" id="boundary" name="boundary">
+                                <option value="" disabled selected>Select...</option>
+                                <option value="All">Show all regions</option>
+                                <option value="North">North</option>
+                                <option value="South">South</option>
+                                <option value="West">West</option>
+                                <option value="East">East</option>
+                                <option value="Central">Central</option>
+                            </select>
+                            <br>
+                        </fieldset>
+                    </form>
+                    <br>
+                    <!-- Original View Button -->
+                    <div>
+                        <button class = "returnbutton" type="button" id="returnbutton">Return to view</button>
                     </div>
                 </div>
-                
                 <div class="sidebar-toggle rounded-rect left" onclick="toggleSidebar('left')">
                     &rarr;
                 </div>
+            </div>
+        </div>
+
+        <div>
+            <button class = "infobutton" type="button" id="infobutton">i</button>
+            <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" id="closeBtn">&times;</span>
+                <h2 class ="mapinfo-label"> Map Information</h2>
+                <p class ="mapinfo-label2">This map displays information about countries in Africa's energy transition.</p>
+            </div>
             </div>
         </div>
     </div>
