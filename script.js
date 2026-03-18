@@ -17,7 +17,7 @@ const map = new mapboxgl.Map({
     style: 'mapbox://styles/nadineconsunji/cmmbdfg9r007x01ryckrx8rx8',
     center: center,  // starting point, longitude/latitude - SEE LINES 10-11
     zoom: zoom, // starting zoom level - SEE LINE 10, 12
-    minZoom: 1.6,
+    maxZoom: 1.6,
     // pitch: '', [CAN USE FOR 3D MAP VISUALIZATION] 
 });
 
