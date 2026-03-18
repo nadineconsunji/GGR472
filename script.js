@@ -16,7 +16,8 @@ const map = new mapboxgl.Map({
     container: 'my-map', // container id in HTML
     style: 'mapbox://styles/nadineconsunji/cmmbdfg9r007x01ryckrx8rx8',
     center: center,  // starting point, longitude/latitude - SEE LINES 10-11
-    zoom: zoom // starting zoom level - SEE LINE 10, 12
+    zoom: zoom, // starting zoom level - SEE LINE 10, 12
+    minZoom: 1.6,
     // pitch: '', [CAN USE FOR 3D MAP VISUALIZATION] 
 });
 
@@ -103,6 +104,140 @@ map.on('load', () => {
 /*--------------------------------------------------------------------
 Adding sources and layers
 --------------------------------------------------------------------*/
+
+// Add and visualize data layers
+
+    // Composite index layer
+    
+    map.addSource('comp_index', {
+        type: 'geojson',
+        data: 'data/energy_index.geojson'
+    });
+
+    map.addLayer({
+        id: 'comp_index_layer',
+        type: 'fill',
+        source: 'comp_index',
+        visibility: 'visible',
+        paint: {
+            'fill-color': [
+                'interpolate',
+                ['linear'], ['get', 'composite_index'],
+                21, '#c2e699',
+                33, '#78c679',
+                45, '#31a354',
+                57, '#006837',
+                69, '#004529'
+            ],
+            'fill-opacity': 0.75
+        }
+    });
+
+    document.getElementById('composite')
+        .addEventListener('change', function (e) {
+
+            if (e.target.checked) {
+                map.setLayoutProperty(
+                    'comp_index_layer',
+                    'visibility',
+                    'visible'
+                );
+            } else {
+                map.setLayoutProperty(
+                    'comp_index_layer',
+                    'visibility',
+                    'none'
+                );
+            }
+        });
+
+    // Transition readiness layer
+
+    map.addSource('trans_readiness', {
+        type: 'geojson',
+        data: 'data/energy_index.geojson'
+    });
+
+    map.addLayer({
+        id: 'trans_readiness_layer',
+        type: 'fill',
+        source: 'trans_readiness',
+        visibility: 'none',
+        paint: {
+            'fill-color': [
+                'interpolate',
+                ['linear'], ['get', 'transition_readiness'],
+                5, '#c2e699',
+                13.5, '#78c679',
+                22, '#31a354',
+                30.5, '#006837',
+                39, '#004529'
+            ],
+            'fill-opacity': 0.75
+        }
+    });
+
+    document.getElementById('readiness')
+        .addEventListener('change', function (e) {
+
+            if (e.target.checked) {
+                map.setLayoutProperty(
+                    'trans_readiness_layer',
+                    'visibility',
+                    'visible'
+                );
+            } else {
+                map.setLayoutProperty(
+                    'trans_readiness_layer',
+                    'visibility',
+                    'none'
+                );
+            }
+        });
+
+    // System performance layer
+
+    map.addSource('sys_performance', {
+        type: 'geojson',
+        data: 'data/energy_index.geojson'
+    });
+
+    map.addLayer({
+        id: 'sys_performance_layer',
+        type: 'fill',
+        source: 'sys_performance',
+        visibility: 'none',
+        paint: {
+            'fill-color': [
+                'interpolate',
+                ['linear'], ['get', 'system_performance'],
+                21, '#c2e699',
+                26.5, '#78c679',
+                32, '#31a354',
+                37.5, '#006837',
+                43, '#004529'
+            ],
+            'fill-opacity': 0.75
+        }
+    });
+
+    document.getElementById('performance')
+        .addEventListener('change', function (e) {
+
+            if (e.target.checked) {
+                map.setLayoutProperty(
+                    'sys_performance_layer',
+                    'visibility',
+                    'visible'
+                );
+            } else {
+                map.setLayoutProperty(
+                    'sys_performance_layer',
+                    'visibility',
+                    'none'
+                );
+            }
+        });
 
 map.on('load', () => {
     // Resize map accordingly if browser size is changed/minimised 
