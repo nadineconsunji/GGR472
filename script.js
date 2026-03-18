@@ -106,6 +106,7 @@ Adding sources and layers
 --------------------------------------------------------------------*/
 
 // Add and visualize data layers
+map.on('load', () => {
 
     // Composite index layer
     
@@ -238,6 +239,7 @@ Adding sources and layers
                 );
             }
         });
+});
 
 map.on('load', () => {
     // Resize map accordingly if browser size is changed/minimised 
