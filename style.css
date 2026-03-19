@@ -1,10 +1,10 @@
-body {
+.body {
     height: 100%;
     margin: 0;
     padding: 0;
 }
 
-#map {
+.map {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -95,58 +95,127 @@ body {
     height: 100%;
 }
 
-/* Formatting the return to original view button */
-.map-search-container {
-    position: relative;
-    background:(rgba(0,0,0,0));
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 260px;
-    margin: 10px 0 0 10px;
-    padding: 10px;
-    border-radius: 8px;
-    overflow: visible;
+.returnbutton { 
+    position: absolute;
+    font: 15px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    bottom: 5px;
+    left: 5px;
+    right: 1000px;
+    width: 90%;
+    z-index: 1000;
 }
 
-#returnbutton {
-    position: relative;
-    top: 0;
+/*  -------------------------- INFO BUTTON --------------------------- */
+.infobutton { 
+    background-color: white; 
+    border: none;
+    border-radius: 50%;
+    position: absolute;
+    font-family: "Hoefler Text", serif;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    font-style: italic;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+    bottom: 25px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    z-index: 1000;
+}
+
+.infobutton:hover {
+  background-color: #0b7dda; /* Darker blue on hover */
+}
+
+.popup {
+    display: none; /* hidden by default */
+    position: fixed;
+    z-index: 2000;
     left: 0;
-    right: 0;
+    top: 0;
     width: 100%;
-    z-index: 1000;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
 }
 
-/* Format map data container */
-.map-data-container {
-    position: absolute;   
-    top: 10px;           
-    left: 15px;     
-    background: rgba(255, 255, 255, 0.9);
-    width: 260px;
-    padding: 0px;
-    border-radius: 8px;
-    overflow: visible;
-    z-index: 1000;
+.popup-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    width: 300px;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
 }
 
-/* Format dropdown option label and filter map view label*/
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.mapinfo-label{
+    font: 20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.mapinfo-label2{
+    font: 15px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+/* Format select data label*/
 .option-label {
     font: 20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     font-weight: bold;
+    top: 10px;           
+    left: 15px;
     width: 95%;
     padding-bottom: 10px;
-    position: relative;
+    position: absolute;
     z-index: 1000;
 }
 
-/* Format smaller text */
-.form-check-label {
-    font: 15px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    position: relative;
-    z-index: 1000;
+/* Format data select*/
+.data-select {
+    font: 16px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    top: 40px;          
+    left: 15px;
+    width: 90%;
     padding-bottom: 10px;
+    position: absolute;
+    z-index: 1000;
+}
+
+/* Format dropdown option label*/
+.option-label2 {
+    font: 20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    top: 110px;          
+    left: 15px;
+    width: 95%;
+    padding-bottom: 10px;
+    position: absolute;
+    z-index: 1000;
+}
+
+/* Format dropdown options*/
+.option-label3 {
+    font: 16px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    top: 135px;          
+    left: 15px;
+    width: 90%;
+    padding-bottom: 10px;
+    position: absolute;
+    z-index: 1000;
 }
 
 /* Format dropdown option in the map data container */
@@ -155,3 +224,5 @@ body {
     position: relative;
     z-index: 1000;
 }
+
+
