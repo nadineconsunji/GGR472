@@ -204,15 +204,19 @@ map.on('load', () => {
 
     function handleData() {
 
-        var selection = document.getElementById('selections').value;
-        layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
-        if (selection == 'composite') {
+        var selectedData = document.getElementById("selections").value;
+        if (selectedData == 'composite') {
+            layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
             updateLegend(composite_stops);
             map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
-        } else if (selection == 'readiness') {
+        } else {
+            layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
+        }
+        if (selectedData == 'readiness') {
             updateLegend(readiness_stops);
             map.setLayoutProperty('transition_readiness_layer', 'visibility', 'visible');
-        } else if (selection == 'performance') {
+        }
+        if (selectedData == 'performance') {
             updateLegend(performance_stops);
             map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
         }

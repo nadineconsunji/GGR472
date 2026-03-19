@@ -37,14 +37,13 @@
                     <!-- Filter features -->
                     <label class="option-label" for="layercheck">Filter map view</label>
                     <!-- Heading for data selection -->
-                    <div class="data-select" id="selections">
-                        <input type="radio" checked name="selection" value="composite">
-                        <label for="composite">Composite Index</label><br>
-                        <input type="radio" name="selection" value="readiness">
-                        <label for="readiness">Transition Readiness</label><br>
-                        <input type="radio" name="selection" value="performance">
-                        <label for="performance">System Performance</label>
-                    </div>
+                    
+                    <select name="select_data" id="selections" class="data-select">
+                        <option value="composite">Composite Index</option>
+                        <option value="readiness">Transition Readiness</option>
+                        <option value="performance">System Performance</option>
+                    </select>
+
                     <!-- Dropdown for selecting a region -->
                     <form>
                         <fieldset id="boundaryfieldset">
@@ -64,10 +63,10 @@
                     <br>
                     <!-- Original View Button -->
                     <div>
-                        <button class = "returnbutton" type="button" id="returnbutton">Return to view</button>
+                        <button class="returnbutton" type="button" id="returnbutton">Return to view</button>
                     </div>
                 </div>
-                
+
                 <div class="sidebar-toggle rounded-rect left" onclick="toggleSidebar('left')">
                     &rarr;
                 </div>
