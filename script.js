@@ -2,7 +2,7 @@
 Initializing map
 --------------------------------------------------------------------*/
 // Mapbox Token
-mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6NTNkb29meTJzMW81dSJ9.t6RLssyQkfZODRIMy_ToNQ'; 
+mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6NTNkb29meTJzMW81dSJ9.t6RLssyQkfZODRIMy_ToNQ';
 
 // Mapbox Token (default public) - added by Daniel
 // mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuaWVsODEwMTciLCJhIjoiY21rZWI2eGg4MDU5NjNscHdxbjhkMTNmciJ9.jdsMukp7zHz3llySNBJs0A';
@@ -17,7 +17,8 @@ const map = new mapboxgl.Map({
     style: 'mapbox://styles/nadineconsunji/cmmbdfg9r007x01ryckrx8rx8',
     center: center,  // starting point, longitude/latitude - SEE LINES 10-11
     zoom: zoom, // starting zoom level - SEE LINE 10, 12
-    maxZoom: 1.6,
+    minZoom: 2.3,
+    maxZoom: 3.0
     // pitch: '', [CAN USE FOR 3D MAP VISUALIZATION] 
 });
 
@@ -64,11 +65,13 @@ function toggleSidebar(leftsidebar) {
 }
 
 // Expands sidebar on map load (remove to keep closed on default load, change nested code to remove the "sliding" appearance)
+
 map.on('load', function () {
     toggleSidebar('left');
 });
 
 // THIS IS A TEST (DELETE LATER)
+
 map.on('load', () => {
     map.addSource('TESTdata', {
         type: 'geojson',
@@ -105,140 +108,119 @@ map.on('load', () => {
 Adding sources and layers
 --------------------------------------------------------------------*/
 
+const theme_colours = ['#c2e699', '#78c679', '#31a354', '#006837', '#004529'];
+
 // Add and visualize data layers
+
 map.on('load', () => {
 
     // Composite index layer
-    
-    map.addSource('comp_index', {
+
+    map.addSource('composite_index', {
         type: 'geojson',
         data: 'data/energy_index.geojson'
     });
 
+    const composite_stops = [21, 33, 45, 57, 69];
+
     map.addLayer({
-        id: 'comp_index_layer',
+        id: 'composite_index_layer',
         type: 'fill',
-        source: 'comp_index',
+        source: 'composite_index',
         visibility: 'visible',
         paint: {
             'fill-color': [
                 'interpolate',
                 ['linear'], ['get', 'composite_index'],
-                21, '#c2e699',
-                33, '#78c679',
-                45, '#31a354',
-                57, '#006837',
-                69, '#004529'
+                composite_stops[0], theme_colours[0],
+                composite_stops[1], theme_colours[1],
+                composite_stops[2], theme_colours[2],
+                composite_stops[3], theme_colours[3],
+                composite_stops[4], theme_colours[4]
             ],
             'fill-opacity': 0.75
         }
     });
 
-    document.getElementById('composite')
-        .addEventListener('change', function (e) {
-
-            if (e.target.checked) {
-                map.setLayoutProperty(
-                    'comp_index_layer',
-                    'visibility',
-                    'visible'
-                );
-            } else {
-                map.setLayoutProperty(
-                    'comp_index_layer',
-                    'visibility',
-                    'none'
-                );
-            }
-        });
-
     // Transition readiness layer
 
-    map.addSource('trans_readiness', {
+    map.addSource('transition_readiness', {
         type: 'geojson',
         data: 'data/energy_index.geojson'
     });
 
+    const readiness_stops = [5, 13.5, 22, 30.5, 39];
+
     map.addLayer({
-        id: 'trans_readiness_layer',
+        id: 'transition_readiness_layer',
         type: 'fill',
-        source: 'trans_readiness',
+        source: 'transition_readiness',
         visibility: 'none',
         paint: {
             'fill-color': [
                 'interpolate',
                 ['linear'], ['get', 'transition_readiness'],
-                5, '#c2e699',
-                13.5, '#78c679',
-                22, '#31a354',
-                30.5, '#006837',
-                39, '#004529'
+                readiness_stops[0], theme_colours[0],
+                readiness_stops[1], theme_colours[1],
+                readiness_stops[2], theme_colours[2],
+                readiness_stops[3], theme_colours[3],
+                readiness_stops[4], theme_colours[4]
             ],
             'fill-opacity': 0.75
         }
     });
 
-    document.getElementById('readiness')
-        .addEventListener('change', function (e) {
-
-            if (e.target.checked) {
-                map.setLayoutProperty(
-                    'trans_readiness_layer',
-                    'visibility',
-                    'visible'
-                );
-            } else {
-                map.setLayoutProperty(
-                    'trans_readiness_layer',
-                    'visibility',
-                    'none'
-                );
-            }
-        });
-
     // System performance layer
 
-    map.addSource('sys_performance', {
+    map.addSource('system_performance', {
         type: 'geojson',
         data: 'data/energy_index.geojson'
     });
 
+    const performance_stops = [21, 26.5, 32, 37.5, 43];
+
     map.addLayer({
-        id: 'sys_performance_layer',
+        id: 'system_performance_layer',
         type: 'fill',
-        source: 'sys_performance',
+        source: 'system_performance',
         visibility: 'none',
         paint: {
             'fill-color': [
                 'interpolate',
                 ['linear'], ['get', 'system_performance'],
-                21, '#c2e699',
-                26.5, '#78c679',
-                32, '#31a354',
-                37.5, '#006837',
-                43, '#004529'
+                performance_stops[0], theme_colours[0],
+                performance_stops[1], theme_colours[1],
+                performance_stops[2], theme_colours[2],
+                performance_stops[3], theme_colours[3],
+                performance_stops[4], theme_colours[4]
             ],
             'fill-opacity': 0.75
         }
     });
 
-    document.getElementById('performance')
-        .addEventListener('change', function (e) {
+    // Toggle layers off and on
 
-            if (e.target.checked) {
-                map.setLayoutProperty(
-                    'sys_performance_layer',
-                    'visibility',
-                    'visible'
-                );
-            } else {
-                map.setLayoutProperty(
-                    'sys_performance_layer',
-                    'visibility',
-                    'none'
-                );
-            }
-        });
+    const layers = ['composite_index_layer', 'transition_readiness_layer', 'system_performance_layer']
+
+    function handleData() {
+
+        var selectedData = document.getElementById("selections").value;
+        layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
+
+        if (selectedData == 'composite') {
+            // updateLegend(composite_stops);
+            map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
+        } else if (selectedData == 'readiness') {
+            // updateLegend(readiness_stops);
+            map.setLayoutProperty('transition_readiness_layer', 'visibility', 'visible');
+        } else if (selectedData == 'performance') {
+            // updateLegend(performance_stops);
+            map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
+        }
+    };
+
+    document.getElementById("selections").addEventListener("change", handleData);
+
 });
 
 map.on('load', () => {
@@ -254,6 +236,7 @@ map.addControl(
     new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
+        countries: "ca" // CHANGE
     })
 );
 
@@ -277,43 +260,21 @@ document.getElementById('returnbutton').addEventListener('click', () => {
 });
 
 // 2) Filter data layer to show selected region of Africa 
-let regionvalue;
+let boundaryvalue;
 
-document.getElementById("boundaryfieldset").addEventListener('change',(e) => {   
+document.getElementById("boundaryfieldset").addEventListener('change', (e) => {
     boundaryvalue = document.getElementById('boundary').value;
 
-    if (regionvalue == 'All') {
+    if (boundaryvalue == 'All') {
         map.setFilter(
             'bikeshare-fill', // CHANGE
-            ['has', 'region'] // CHANGE AREA_NAME TO RELEVANT FIELD 
+            ['has', 'AREA_NAME'] // CHANGE AREA_NAME TO RELEVANT FIELD 
         );
     } else {
         map.setFilter(
             'bikeshare-fill', // CHANGE
-            ['==', ['get', 'region'], regionvalue] // CHANGE AREA_NAME AND boundaryvalue
+            ['==', ['get', 'AREA_NAME'], boundaryvalue] // CHANGE AREA_NAME AND boundaryvalue
         );
     }
 
-});
-
-// 3) Information button 
-const infopopup = document.getElementById("popup");
-const infobutton = document.getElementById("infobutton");
-const closeBtn = document.getElementById("closeBtn");
-
-// Open popup
-infobutton.addEventListener("click", () => {
-    popup.style.display = "block";
-});
-
-// Close popup
-closeBtn.addEventListener("click", () => {
-    popup.style.display = "none";
-});
-
-// Close if clicking outside the box
-window.addEventListener("click", (e) => {
-    if (e.target === popup) {
-        popup.style.display = "none";
-    }
 });
