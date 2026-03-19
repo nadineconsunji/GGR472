@@ -214,6 +214,9 @@ map.on('load', () => {
 
     // Toggle layers off and on
 
+    const composite_layer = ['composite_index_layer']
+    const readiness_layer = ['transition_readiness_layer']
+    const performance_layer = ['system_performance_layer']
     const layers = ['composite_index_layer', 'transition_readiness_layer', 'system_performance_layer']
 
     function handleData() {
@@ -223,17 +226,52 @@ map.on('load', () => {
 
         if (selectedData == 'composite') {
             updateLegend(composite_stops);
+            var currentData = composite_layer;
             map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
         } else if (selectedData == 'readiness') {
             updateLegend(readiness_stops);
+            var currentData = readiness_layer;
             map.setLayoutProperty('transition_readiness_layer', 'visibility', 'visible');
         } else if (selectedData == 'performance') {
             updateLegend(performance_stops);
+            var currentData = performance_layer;
             map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
         }
     };
 
     document.getElementById("selections").addEventListener("change", handleData);
+
+    // Filter by region
+
+    function handleRegions () {
+        var selectedRegion = document.getElementById("regions").value;
+
+        if (selectedRegion == 'all') {
+
+        } else if (selectedRegion == 'east') {
+            map.setFilter(currentData,
+                ['==', ['get', 'region'], 'east']
+            );
+        } else if (selectedRegion == 'west') {
+            map.setFilter(currentData,
+                ['==', ['get', 'region'], 'west']
+            );
+        } else if (selectedRegion == 'north') {
+            map.setFilter(currentData,
+                ['==', ['get', 'region'], 'north']
+            );
+        } else if (selectedRegion == 'south') {
+            map.setFilter(currentData,
+                ['==', ['get', 'region'], 'south']
+            );
+        } else if (selectedRegion == 'central') {
+            map.setFilter(currentData,
+                ['==', ['get', 'region'], 'central']
+            );
+        }
+    }
+
+    document.getElementById("regions").addEventListener("change", handleRegions);
 
 });
 
