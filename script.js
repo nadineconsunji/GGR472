@@ -201,12 +201,12 @@ map.on('load', () => {
     // Toggle layers off and on
 
     const layers = ['composite_index_layer', 'transition_readiness_layer', 'system_performance_layer']
-    const selection = document.getElementById('selections');
 
-    selection.addEventListener('change', (event) => {
-        const selectedValue = event.target.value;
+    function handleData() {
+
+        var selection = document.getElementById('selections').value;
+        layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
         if (selectedValue == 'composite') {
-            layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
             updateLegend(composite_stops);
             map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
         } else if (selectedValue == 'readiness') {
@@ -216,7 +216,9 @@ map.on('load', () => {
             updateLegend(performance_stops);
             map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
         }
-    });
+    };
+
+    document.getElementById("selections").addEventListener("change", handleData);
 
 });
 
