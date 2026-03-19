@@ -210,11 +210,9 @@ map.on('load', () => {
             updateLegend(composite_stops);
             map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
         } else if (selectedValue == 'readiness') {
-            layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
             updateLegend(readiness_stops);
             map.setLayoutProperty('transition_readiness_layer', 'visibility', 'visible');
         } else if (selectedValue == 'performance') {
-            layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
             updateLegend(performance_stops);
             map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
         }
