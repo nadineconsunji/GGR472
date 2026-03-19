@@ -297,6 +297,65 @@ map.on('load', () => {
 
     document.getElementById("regions").addEventListener("change", handleRegions);
 
+    // Popups
+
+    const energy_popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    layers.forEach(layer => {
+        map.on('mouseenter', layer, function (e) {
+
+            map.getCanvas().style.cursor = 'pointer';
+
+            const coordinates = e.lngLat;
+            const ind = e.features[0].properties.composite_index;
+            const read = e.features[0].properties.transition_readiness;
+            const perf = e.features[0].properties.system_performance;
+
+            energy_popup
+                .setLngLat(coordinates)
+                .setHTML(`
+                <strong>Composite Index: ${ind}</strong><br>
+                <strong>Transition Readiness: ${read}</strong><br>
+                <strong>System Performance: ${perf}</strong><br>
+                <strong>Click to zoom in</strong>
+                `)
+                .addTo(map);
+        });
+
+        map.on('mouseleave', layer, function () {
+
+            map.getCanvas().style.cursor = '';
+            energy_popup.remove();
+
+        });
+    });
+
+    // Zoom to country - commenting out because it doesn't work yet
+
+    /* layers.forEach(layer => {
+        map.on('click', layer, (e) => {
+            const feature = e.features[0];
+ 
+            const bounds = new mapboxgl.LngLatBounds();
+ 
+            const coords = normalizeCoords(feature.geometry);
+ 
+            coords.forEach(polygon => {
+                polygon.forEach(ring => {
+                    ring.forEach(coord => bounds.extend(coord));
+                });
+            });
+ 
+            map.fitBounds(bounds, {
+                padding: 40,
+                duration: 1000
+            });
+        });
+    }); */
+
 });
 
 map.on('load', () => {
@@ -333,24 +392,4 @@ document.getElementById('returnbutton').addEventListener('click', () => {
         zoom: zoom, // LINE 10, 12
         essential: true
     });
-});
-
-// 2) Filter data layer to show selected region of Africa 
-let boundaryvalue;
-
-document.getElementById("boundaryfieldset").addEventListener('change', (e) => {
-    boundaryvalue = document.getElementById('boundary').value;
-
-    if (boundaryvalue == 'All') {
-        map.setFilter(
-            'bikeshare-fill', // CHANGE
-            ['has', 'AREA_NAME'] // CHANGE AREA_NAME TO RELEVANT FIELD 
-        );
-    } else {
-        map.setFilter(
-            'bikeshare-fill', // CHANGE
-            ['==', ['get', 'AREA_NAME'], boundaryvalue] // CHANGE AREA_NAME AND boundaryvalue
-        );
-    }
-
 });
