@@ -39,7 +39,7 @@
                     <!-- Data Select -->
                     <p class="option-label" for="layercheck">Filter map view</p>
 
-                    <select name="select_data" id="selections" class="data-select">
+                    <select name="select_data" id="selections" class="data-select" onchange="handleData()">
                         <option value="composite">Composite Index</option>
                         <option value="readiness">Transition Readiness</option>
                         <option value="performance">System Performance</option>
@@ -50,7 +50,7 @@
                     <!-- Region Select -->
                     <p class="option-label" for="layercheck">Select Region</p>
 
-                    <select name="select_region" id="regions" class="data-select">
+                    <select name="select_region" id="regions" class="data-select" onchange="handleRegions()">
                         <option value="all">Show all regions</option>
                         <option value="east">East</option>
                         <option value="west">West</option>

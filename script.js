@@ -8,8 +8,15 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6N
 // mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuaWVsODEwMTciLCJhIjoiY21rZWI2eGg4MDU5NjNscHdxbjhkMTNmciJ9.jdsMukp7zHz3llySNBJs0A';
 
 // Center coordinates for map on load and zoom change(to change, refer to https://labs.mapbox.com/location-helper)
+// FIX COORDINATES FOR EAST, WEST, AND SOUTH
 const center = [22.34868, -0.31974];
+const centerEast = [-2.6, 40.3];
+const centerWest = [12.9, -1.7];
+const centerNorth = [17.5, 19.5];
+const centerSouth = [-17.9, 24.9];
 const zoom = 2.6;
+const minZoom = 2.3;
+const maxZoom = 3.0;
 
 // Initialize map and edit to your preference
 const map = new mapboxgl.Map({
@@ -17,8 +24,8 @@ const map = new mapboxgl.Map({
     style: 'mapbox://styles/nadineconsunji/cmmbdfg9r007x01ryckrx8rx8',
     center: center,  // starting point, longitude/latitude - SEE LINES 10-11
     zoom: zoom, // starting zoom level - SEE LINE 10, 12
-    minZoom: 2.3,
-    maxZoom: 3.0
+    minZoom: minZoom,
+    maxZoom: maxZoom
     // pitch: '', [CAN USE FOR 3D MAP VISUALIZATION] 
 });
 
@@ -91,7 +98,8 @@ map.on('load', () => {
 
     map.on('click', 'testpoint', (e) => {
         map.flyTo({
-            center: e.features[0].geometry.coordinates, zoom: 15
+            center: e.features[0].geometry.coordinates,
+            zoom: 15
         });
     });
 
@@ -214,9 +222,6 @@ map.on('load', () => {
 
     // Toggle layers off and on
 
-    const composite_layer = ['composite_index_layer']
-    const readiness_layer = ['transition_readiness_layer']
-    const performance_layer = ['system_performance_layer']
     const layers = ['composite_index_layer', 'transition_readiness_layer', 'system_performance_layer']
 
     function handleData() {
@@ -226,50 +231,69 @@ map.on('load', () => {
 
         if (selectedData == 'composite') {
             updateLegend(composite_stops);
-            var currentData = composite_layer;
             map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
         } else if (selectedData == 'readiness') {
             updateLegend(readiness_stops);
-            var currentData = readiness_layer;
             map.setLayoutProperty('transition_readiness_layer', 'visibility', 'visible');
         } else if (selectedData == 'performance') {
             updateLegend(performance_stops);
-            var currentData = performance_layer;
             map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
         }
     };
+
+    // Event listener to trigger change
 
     document.getElementById("selections").addEventListener("change", handleData);
 
     // Filter by region
 
-    function handleRegions () {
+    function handleRegions() {
         var selectedRegion = document.getElementById("regions").value;
 
-        if (selectedRegion == 'all') {
+        layers.forEach(layer => {
+            if (selectedRegion == 'all') {
+                map.setFilter(layer, null);
+            } else {
+                map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
+            }
+        });
 
+        // Fly to selected region
+
+        if (selectedRegion == 'all') {
+            map.flyTo({
+                center: center,
+                zoom: minZoom
+            });
         } else if (selectedRegion == 'east') {
-            map.setFilter(currentData,
-                ['==', ['get', 'region'], 'east']
-            );
+            map.flyTo({
+                center: centerEast,
+                zoom: maxZoom
+            });
         } else if (selectedRegion == 'west') {
-            map.setFilter(currentData,
-                ['==', ['get', 'region'], 'west']
-            );
+            map.flyTo({
+                center: centerWest,
+                zoom: maxZoom
+            });
         } else if (selectedRegion == 'north') {
-            map.setFilter(currentData,
-                ['==', ['get', 'region'], 'north']
-            );
+            map.flyTo({
+                center: centerNorth,
+                zoom: maxZoom
+            });
         } else if (selectedRegion == 'south') {
-            map.setFilter(currentData,
-                ['==', ['get', 'region'], 'south']
-            );
+            map.flyTo({
+                center: centerSouth,
+                zoom: maxZoom
+            });
         } else if (selectedRegion == 'central') {
-            map.setFilter(currentData,
-                ['==', ['get', 'region'], 'central']
-            );
-        }
-    }
+            map.flyTo({
+                center: center,
+                zoom: maxZoom
+            });
+        };
+    };
+
+    // Event listener to trigger change
 
     document.getElementById("regions").addEventListener("change", handleRegions);
 
