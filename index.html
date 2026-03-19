@@ -32,20 +32,54 @@
         <!-- Navigation Bar -->
         <div id="left" class="sidebar flex-center left collapsed">
 
-            <div class="sidebar-content rounded-rect flex-center">
+            <div class="sidebar-content rounded-rect">
                 <div>
-                    <!-- Filter features -->
-                    <label class="option-label" for="layercheck">Filter map view</label>
-                    <!-- Heading for data selection -->
+                    <br>
                     
+                    <!-- Data Select -->
+                    <p class="option-label" for="layercheck">Filter map view</p>
+
                     <select name="select_data" id="selections" class="data-select">
                         <option value="composite">Composite Index</option>
                         <option value="readiness">Transition Readiness</option>
                         <option value="performance">System Performance</option>
                     </select>
 
+                    <br><br>
+
+                    <!-- Region Select -->
+                    <p class="option-label" for="layercheck">Select Region</p>
+
+                    <select name="select_data" id="selections" class="data-select">
+                        <option value="all">Show all regions</option>
+                        <option value="east">East</option>
+                        <option value="west">West</option>
+                        <option value="north">North</option>
+                        <option value="south">South</option>
+                        <option value="central">Central</option>
+                    </select>
+
+                    <br><br>
+
+                    <!-- Legend -->
+                    <p class="option-label" for="layercheck">Legend</p>
+                    <p class="option-label" for="layercheck">Weighted index (%)</p>
+                    <div class="option-label">
+                        <span class="legend-symbol" style="background-color:#c2e699;"></span>
+                        <span class="legend-symbol" style="background-color:#78c679;"></span>
+                        <span class="legend-symbol" style="background-color:#31a354;"></span>
+                        <span class="legend-symbol" style="background-color:#006837;"></span>
+                        <span class="legend-symbol" style="background-color:#004529;"></span>
+                        <br>
+                        <span id="stop_0"></span>
+                        <span id="stop_1"></span>
+                        <span id="stop_2"></span>
+                        <span id="stop_3"></span>
+                        <span id="stop_4"></span>
+                    </div>
+
                     <!-- Dropdown for selecting a region -->
-                    <form>
+                    <!-- <form>
                         <fieldset id="boundaryfieldset">
                             <label class="option-label2">Select region</label>
                             <select class="option-label3" id="boundary" name="boundary">
@@ -59,8 +93,9 @@
                             </select>
                             <br>
                         </fieldset>
-                    </form>
+                    </form> -->
                     <br>
+
                     <!-- Original View Button -->
                     <div>
                         <button class="returnbutton" type="button" id="returnbutton">Return to view</button>

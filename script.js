@@ -142,6 +142,10 @@ map.on('load', () => {
         }
     });
 
+    composite_stops.forEach((stop, i) => {
+        document.getElementById(`stop_${i}`).textContent = stop;
+    });
+
     // Transition readiness layer
 
     map.addSource('transition_readiness', {
@@ -198,6 +202,16 @@ map.on('load', () => {
         }
     });
 
+    // Legend
+
+    function updateLegend(stops_variable) {
+        document.getElementById('stop_0').textContent = stops_variable[0];
+        document.getElementById('stop_1').textContent = stops_variable[1];
+        document.getElementById('stop_2').textContent = stops_variable[2];
+        document.getElementById('stop_3').textContent = stops_variable[3];
+        document.getElementById('stop_4').textContent = stops_variable[4];
+    }
+
     // Toggle layers off and on
 
     const layers = ['composite_index_layer', 'transition_readiness_layer', 'system_performance_layer']
@@ -208,13 +222,13 @@ map.on('load', () => {
         layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
 
         if (selectedData == 'composite') {
-            // updateLegend(composite_stops);
+            updateLegend(composite_stops);
             map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
         } else if (selectedData == 'readiness') {
-            // updateLegend(readiness_stops);
+            updateLegend(readiness_stops);
             map.setLayoutProperty('transition_readiness_layer', 'visibility', 'visible');
         } else if (selectedData == 'performance') {
-            // updateLegend(performance_stops);
+            updateLegend(performance_stops);
             map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
         }
     };
