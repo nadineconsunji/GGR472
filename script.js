@@ -309,10 +309,18 @@ map.on('load', () => {
 
             map.getCanvas().style.cursor = 'pointer';
 
+            const feature = e.features[0];
+            const featureId = feature.properties.id;
             const coordinates = e.lngLat;
-            const ind = e.features[0].properties.composite_index;
-            const read = e.features[0].properties.transition_readiness;
-            const perf = e.features[0].properties.system_performance;
+
+            const ind = feature.properties.composite_index;
+            const read = feature.properties.transition_readiness;
+            const perf = feature.properties.system_performance;
+
+            map.setPaintProperty(layer, 'fill-opacity', [ // This doesn't work yet
+                'case',
+                ['==', ['id'], featureId], 1
+            ]);
 
             energy_popup
                 .setLngLat(coordinates)
@@ -320,16 +328,15 @@ map.on('load', () => {
                 <strong>Composite Index: ${ind}</strong><br>
                 <strong>Transition Readiness: ${read}</strong><br>
                 <strong>System Performance: ${perf}</strong><br>
-                <strong>Click to zoom in</strong>
+                <strong>+ Click to zoom in</strong>
                 `)
                 .addTo(map);
         });
 
         map.on('mouseleave', layer, function () {
-
             map.getCanvas().style.cursor = '';
             energy_popup.remove();
-
+            map.setPaintProperty(layer, 'fill-opacity', 0.75)
         });
     });
 
