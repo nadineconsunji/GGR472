@@ -331,3 +331,11 @@
     font: 16px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     font-weight: bold;
 }
+
+/* Style side popups */
+.no-arrow-popup {
+    font-size: medium;
+}
+.no-arrow-popup .mapboxgl-popup-tip {
+    display: none;
+}

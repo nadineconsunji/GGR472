@@ -368,13 +368,15 @@ map.on('load', () => {
             const ind = feature.properties.composite_index;
             const read = feature.properties.transition_readiness;
             const perf = feature.properties.system_performance;
+            const name = feature.properties.country;
 
             energy_popup
                 .setLngLat(coordinates)
                 .setHTML(`
-                <strong>Composite Index: ${ind}</strong><br>
-                <strong>Transition Readiness: ${read}</strong><br>
-                <strong>System Performance: ${perf}</strong><br>
+                <strong>${name || 'Country'}</strong><br>
+                Composite Index: ${ind}<br>
+                Transition Readiness: ${read}<br>
+                System Performance: ${perf}<br>
                 `)
                 .addTo(map);
         });
@@ -388,32 +390,37 @@ map.on('load', () => {
     // Zoom to country - commenting out because it doesn't work yet
 
     map.doubleClickZoom.disable();
-    map.on('dblclick', 'composite_index_layer', (e) => {
-        const feature = e.features[0];
+    layers.forEach(layer => {
+        map.on('dblclick', layer, (e) => {
+            const feature = e.features[0];
 
-        // Compute the centroid of the country polygon
-        const centroid = turf.centroid(feature);
-        const centerCoordinates = centroid.geometry.coordinates;
+            // Compute the centroid of the polygon
+            const centroid = turf.centroid(feature);
+            const centerCoordinates = centroid.geometry.coordinates;
 
-        // Fly to the centroid
-        map.flyTo({
-            center: centerCoordinates,
-            zoom: 4,        // adjust zoom level as needed
-            essential: true // ensures smooth animation
-        });
+            // Fly to the centroid
+            map.flyTo({
+                center: centerCoordinates,
+                zoom: 4,        // adjust zoom as needed
+                essential: true
+            });
 
-        const name = feature.properties.country;
-        const text = feature.properties.text;
+            const name = feature.properties.country;
+            const text = feature.properties.text;
 
-        // Create the popup
-        new mapboxgl.Popup({ offset: [350, 350] })
-            .setLngLat(centerCoordinates)
-            .setHTML(`
-            <strong>${name || 'Country'}</strong><br>
-            <strong>${text || 'Text'}</strong><br>
+            // Create the popup
+            new mapboxgl.Popup({
+                offset: [400, 350],
+                className: 'no-arrow-popup'
+            })
+                .setLngLat(centerCoordinates)
+                .setHTML(`
+            <strong>${name || 'Country'}</strong><br><br>
+            ${text || 'Text'}<br><br>
             Source: Wikipedia
         `)
-            .addTo(map);
+                .addTo(map);
+        });
     });
 
 });
