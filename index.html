@@ -91,26 +91,61 @@
                     <br><br>
 
                     <!-- Legend -->
-                    <p class="option-label" for="layercheck">Legend</p>
-                    <p class="option-label" for="layercheck">Weighted index (%)</p>
-                    <div class="option-label">
-                        <span class="legend-symbol" style="background: linear-gradient(to right, lightgreen, darkblue);"></span>
-                        <br>
-                        <span id="stop_0">21</span>
-                        <span id="stop_1" style="position: absolute; right: 15px;">69</span>
+                    <div class="legend">
+                        <p class="legendtitle" for="layercheck">Index Values (%)</p>
+                        <div><span class="colour-ramp"></span>
+                            <br><br>
+                        </div>
+                            <div class="legendtext">
+                                <span id="stop_0"></span>
+                                <span id="stop_1"></span>
+                                <span id="stop_2"></span>
+                                <span id="stop_3"></span>
+                                <span id="stop_4"></span>
+                            </div>
+                        <!-- </div> -->
                     </div>
 
-                    <br>
-
                     <!-- Combine button -->
-                    <button class ="combinebutton" id="combinebutton">Combine Selected</button>
+                    <button class="combinebutton" id="combinebutton">Average selected countries</button>
 
                     <!-- Original View Button -->
                     <div>
                         <button class="returnbutton" type="button" id="returnbutton">Return to view</button>
                     </div>
+
+                    <!-- Dropdown for selecting a region -->
+                    <!-- <form>
+                        <fieldset id="boundaryfieldset">
+                            <label class="option-label2">Select region</label>
+                            <select class="option-label3" id="boundary" name="boundary">
+                                <option value="" disabled selected>Select...</option>
+                                <option value="All">Show all regions</option>
+                                <option value="North">North</option>
+                                <option value="South">South</option>
+                                <option value="West">West</option>
+                                <option value="East">East</option>
+                                <option value="Central">Central</option>
+                            </select>
+                            <br>
+                        </fieldset>
+                    </form> -->
+                    <!-- <br> -->
+
+                    <!-- CATF logo RELATIVE PATH COPIED, MAY REQ. CHANGE LATER -->
+                    <div>
+                        <div class="bottomtextcredits">
+                            Site made in partnership with the University of Toronto's Faculty of Arts and Science
+                            Sandbox program.
+                            <br>Course: GGR472H1S Developing Web Maps.
+                        </div>
+                        <div>
+                            <img class="logoUofT" src="data\UofTArtSciwordmark.png">
+                        </div>
+                    </div>
                 </div>
 
+                <!-- Sidebar toggle (left) -->
                 <div class="sidebar-toggle rounded-rect left" onclick="toggleSidebar('left')">
                     &rarr;
                 </div>
