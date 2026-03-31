@@ -78,46 +78,11 @@ map.on('load', function () {
     toggleSidebar('left');
 });
 
-// THIS IS A TEST (DELETE LATER)
-
-map.on('load', () => {
-    map.addSource('TESTdata', {
-        type: 'geojson',
-        data: 'https://raw.githubusercontent.com/daniel81017/Lab2/refs/heads/main/TEST(DELETELATER).geojson',
-    });
-
-    map.addLayer({
-        'id': 'testpoint',
-        'type': 'circle',
-        'source': 'TESTdata',
-        'paint': {
-            'circle-width': 100,
-            'circle-color': '#22f513'
-        },
-        'filter': ['==', ['geometry-type'], 'Point'],
-    });
-
-    map.on('click', 'testpoint', (e) => {
-        map.flyTo({
-            center: e.features[0].geometry.coordinates,
-            zoom: 15
-        });
-    });
-
-    map.on('mouseenter', 'testpoint', () => {
-        map.getCanvas().style.cursor = 'pointer';
-    });
-
-    map.on('mouseleave', 'testpoint', () => {
-        map.getCanvas().style.cursor = '';
-    });
-});
-
 /*--------------------------------------------------------------------
 Adding sources and layers
 --------------------------------------------------------------------*/
 
-const theme_colours = ['#c2e699', '#78c679', '#31a354', '#006837', '#004529'];
+const theme_colours = ['#90ee90', '#71bb8f', '#46738e', '#27408d', '#01018b'];
 
 // Add and visualize data layers
 
@@ -154,13 +119,9 @@ map.on('load', () => {
                 'case',
                 ['boolean', ['feature-state', 'hover'], false],
                 1,      // hovered country (fully visible)
-                0.5     // all other countries (dimmed)
+                0.70     // all other countries (dimmed)
             ]
         }
-    });
-
-    composite_stops.forEach((stop, i) => {
-        document.getElementById(`stop_${i}`).textContent = stop;
     });
 
     // Transition readiness layer
@@ -188,7 +149,7 @@ map.on('load', () => {
                 'case',
                 ['boolean', ['feature-state', 'hover'], false],
                 1,      // hovered country (fully visible)
-                0.5     // all other countries (dimmed)
+                0.70     // all other countries (dimmed)
             ]
         }
     });
@@ -217,7 +178,7 @@ map.on('load', () => {
                 'case',
                 ['boolean', ['feature-state', 'hover'], false],
                 1,      // hovered country (fully visible)
-                0.5     // all other countries (dimmed)
+                0.70     // all other countries (dimmed)
             ]
         }
     });
@@ -226,10 +187,7 @@ map.on('load', () => {
 
     function updateLegend(stops_variable) {
         document.getElementById('stop_0').textContent = stops_variable[0];
-        document.getElementById('stop_1').textContent = stops_variable[1];
-        document.getElementById('stop_2').textContent = stops_variable[2];
-        document.getElementById('stop_3').textContent = stops_variable[3];
-        document.getElementById('stop_4').textContent = stops_variable[4];
+        document.getElementById('stop_1').textContent = stops_variable[4];
     }
 
     // Toggle layers off and on
