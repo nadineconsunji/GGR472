@@ -15,8 +15,8 @@ const centerWest = [-2, 15];
 const centerNorth = [15.5, 19.5];
 const centerSouth = [25, -20];
 const centerCentral = [22.3, 3];
-const zoom = 2.6;
-const minZoom = 2.3;
+const zoom = 2.5;
+const minZoom = zoom;
 const maxZoom = 7.0;
 
 // Initialize map and edit to your preference
