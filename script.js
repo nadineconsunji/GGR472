@@ -10,12 +10,13 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6N
 // Center coordinates for map on load and zoom change(to change, refer to https://labs.mapbox.com/location-helper)
 // FIX COORDINATES FOR EAST, WEST, AND SOUTH
 const center = [22.34868, -0.31974];
-const centerEast = [-2.6, 40.3];
-const centerWest = [12.9, -1.7];
-const centerNorth = [17.5, 19.5];
-const centerSouth = [-17.9, 24.9];
-const zoom = 2.6;
-const minZoom = 2.3;
+const centerEast = [35, -5];
+const centerWest = [-2, 15];
+const centerNorth = [15.5, 19.5];
+const centerSouth = [25, -20];
+const centerCentral = [22.3, 3];
+const zoom = 2.5;
+const minZoom = zoom;
 const maxZoom = 7.0;
 
 // Initialize map and edit to your preference
@@ -77,44 +78,310 @@ map.on('load', function () {
     toggleSidebar('left');
 });
 
-// THIS IS A TEST (DELETE LATER)
-
-map.on('load', () => {
-    map.addSource('TESTdata', {
-        type: 'geojson',
-        data: 'https://raw.githubusercontent.com/daniel81017/Lab2/refs/heads/main/TEST(DELETELATER).geojson',
-    });
-
-    map.addLayer({
-        'id': 'testpoint',
-        'type': 'circle',
-        'source': 'TESTdata',
-        'paint': {
-            'circle-width': 100,
-            'circle-color': '#22f513'
-        },
-        'filter': ['==', ['geometry-type'], 'Point'],
-    });
-
-    map.on('click', 'testpoint', (e) => {
-        map.flyTo({
-            center: e.features[0].geometry.coordinates,
-            zoom: 15
-        });
-    });
-
-    map.on('mouseenter', 'testpoint', () => {
-        map.getCanvas().style.cursor = 'pointer';
-    });
-
-    map.on('mouseleave', 'testpoint', () => {
-        map.getCanvas().style.cursor = '';
-    });
-});
-
 /*--------------------------------------------------------------------
 Adding sources and layers
 --------------------------------------------------------------------*/
+
+const theme_colours = ['#90ee90', '#71bb8f', '#46738e', '#27408d', '#01018b'];
+
+// Add and visualize data layers
+
+map.on('load', () => {
+
+    // Composite index layer
+
+    map.addSource('energy', {
+        type: 'geojson',
+        data: 'https://raw.githubusercontent.com/nadineconsunji/GGR472/main/data/energy_index.geojson',
+        promoteId: 'OBJECTID'
+    });
+
+    const composite_stops = [21, 33, 45, 57, 69];
+
+    map.addLayer({
+        id: 'composite_index_layer',
+        type: 'fill',
+        source: 'energy',
+        layout: {
+            visibility: 'visible'
+        },
+        paint: {
+            'fill-color': [
+                'interpolate',
+                ['linear'], ['get', 'composite_index'],
+                composite_stops[0], theme_colours[0],
+                composite_stops[1], theme_colours[1],
+                composite_stops[2], theme_colours[2],
+                composite_stops[3], theme_colours[3],
+                composite_stops[4], theme_colours[4]
+            ],
+            'fill-opacity': [
+                'case',
+                ['boolean', ['feature-state', 'hover'], false],
+                1,      // hovered country (fully visible)
+                0.70     // all other countries (dimmed)
+            ]
+        }
+    });
+
+    // Transition readiness layer
+
+    const readiness_stops = [5, 13.5, 22, 30.5, 39];
+
+    map.addLayer({
+        id: 'transition_readiness_layer',
+        type: 'fill',
+        source: 'energy',
+        layout: {
+            visibility: 'none'
+        },
+        paint: {
+            'fill-color': [
+                'interpolate',
+                ['linear'], ['get', 'transition_readiness'],
+                readiness_stops[0], theme_colours[0],
+                readiness_stops[1], theme_colours[1],
+                readiness_stops[2], theme_colours[2],
+                readiness_stops[3], theme_colours[3],
+                readiness_stops[4], theme_colours[4]
+            ],
+            'fill-opacity': [
+                'case',
+                ['boolean', ['feature-state', 'hover'], false],
+                1,      // hovered country (fully visible)
+                0.70     // all other countries (dimmed)
+            ]
+        }
+    });
+
+    // System performance layer
+    const performance_stops = [21, 26.5, 32, 37.5, 43];
+
+    map.addLayer({
+        id: 'system_performance_layer',
+        type: 'fill',
+        source: 'energy',
+        layout: {
+            visibility: 'none'
+        },
+        paint: {
+            'fill-color': [
+                'interpolate',
+                ['linear'], ['get', 'system_performance'],
+                performance_stops[0], theme_colours[0],
+                performance_stops[1], theme_colours[1],
+                performance_stops[2], theme_colours[2],
+                performance_stops[3], theme_colours[3],
+                performance_stops[4], theme_colours[4]
+            ],
+            'fill-opacity': [
+                'case',
+                ['boolean', ['feature-state', 'hover'], false],
+                1,      // hovered country (fully visible)
+                0.70     // all other countries (dimmed)
+            ]
+        }
+    });
+
+    // Legend
+
+    function updateLegend(stops_variable) {
+        document.getElementById('stop_0').textContent = stops_variable[0];
+        document.getElementById('stop_1').textContent = stops_variable[4];
+    }
+
+    // Toggle layers off and on
+
+    const layers = ['composite_index_layer', 'transition_readiness_layer', 'system_performance_layer']
+
+    function handleData() {
+
+        var selectedData = document.getElementById("selections").value;
+        layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
+
+        // Show the selected layer and set activeLayer accordingly
+        if (selectedData == 'composite') {
+            updateLegend(composite_stops);
+            map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
+            activeLayer = 'composite_index_layer';
+        } else if (selectedData == 'readiness') {
+            updateLegend(readiness_stops);
+            map.setLayoutProperty('transition_readiness_layer', 'visibility', 'visible');
+            activeLayer = 'transition_readiness_layer';
+        } else if (selectedData == 'performance') {
+            updateLegend(performance_stops);
+            map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
+            activeLayer = 'system_performance_layer';
+        }
+    };
+
+    // Event listener to trigger change
+
+    document.getElementById("selections").addEventListener("change", handleData);
+
+    // Filter by region
+
+    function handleRegions() {
+        var selectedRegion = document.getElementById("regions").value;
+
+        layers.forEach(layer => {
+            if (selectedRegion == 'all') {
+                map.setFilter(layer, null);
+            } else {
+                map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
+            }
+        });
+
+        // Fly to selected region
+
+        if (selectedRegion == 'all') {
+            map.flyTo({
+                center: center,
+                zoom: minZoom
+            });
+        } else if (selectedRegion == 'east') {
+            map.flyTo({
+                center: centerEast,
+                zoom: 3.3
+            });
+        } else if (selectedRegion == 'west') {
+            map.flyTo({
+                center: centerWest,
+                zoom: 4
+            });
+        } else if (selectedRegion == 'north') {
+            map.flyTo({
+                center: centerNorth,
+                zoom: 3.5
+            });
+        } else if (selectedRegion == 'south') {
+            map.flyTo({
+                center: centerSouth,
+                zoom: 3.5
+            });
+        } else if (selectedRegion == 'central') {
+            map.flyTo({
+                center: centerCentral,
+                zoom: 3.5
+            });
+        };
+    };
+
+    // Event listener to trigger change
+
+    document.getElementById("regions").addEventListener("change", handleRegions);
+
+    // Hover
+    let hoveredId = null;
+
+    layers.forEach(layer => {
+        map.on('mousemove', layer, (e) => {
+            if (e.features.length > 0) {
+
+                // Remove hover from previous feature
+                if (hoveredId !== null) {
+                    map.setFeatureState(
+                        { source: map.getLayer(layer).source, id: hoveredId },
+                        { hover: false }
+                    );
+                }
+
+                // Set new hovered feature
+                hoveredId = e.features[0].id;
+
+                map.setFeatureState(
+                    { source: map.getLayer(layer).source, id: hoveredId },
+                    { hover: true }
+                );
+            }
+        });
+
+        map.on('mouseleave', layer, () => {
+            if (hoveredId !== null) {
+                map.setFeatureState(
+                    { source: map.getLayer(layer).source, id: hoveredId },
+                    { hover: false }
+                );
+            }
+            hoveredId = null;
+        });
+    });
+
+    // Popups
+
+    const energy_popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    layers.forEach(layer => {
+        map.on('mousemove', layer, function (e) {
+
+            map.getCanvas().style.cursor = 'pointer';
+
+            const feature = e.features[0];
+            const featureId = feature.properties.id;
+            const coordinates = e.lngLat;
+
+            const ind = feature.properties.composite_index;
+            const read = feature.properties.transition_readiness;
+            const perf = feature.properties.system_performance;
+            const name = feature.properties.country;
+
+            energy_popup
+                .setLngLat(coordinates)
+                .setHTML(`
+                <strong>${name || 'Country'}</strong><br>
+                Composite Index: ${ind}<br>
+                Transition Readiness: ${read}<br>
+                System Performance: ${perf}<br>
+                `)
+                .addTo(map);
+        });
+
+        map.on('mouseleave', layer, function () {
+            map.getCanvas().style.cursor = '';
+            energy_popup.remove();
+        });
+    });
+
+    // Zoom to country - commenting out because it doesn't work yet
+
+    map.doubleClickZoom.disable();
+    layers.forEach(layer => {
+        map.on('dblclick', layer, (e) => {
+            const feature = e.features[0];
+
+            // Compute the centroid of the polygon
+            const centroid = turf.centroid(feature);
+            const centerCoordinates = centroid.geometry.coordinates;
+
+            // Fly to the centroid
+            map.flyTo({
+                center: centerCoordinates,
+                zoom: 4,        // adjust zoom as needed
+                essential: true
+            });
+
+            const name = feature.properties.country;
+            const text = feature.properties.text;
+
+            // Create the popup
+            new mapboxgl.Popup({
+                offset: [400, 350],
+                className: 'no-arrow-popup'
+            })
+                .setLngLat(centerCoordinates)
+                .setHTML(`
+            <strong>${name || 'Country'}</strong><br><br>
+            ${text || 'Text'}<br><br>
+            Source: Wikipedia
+        `)
+                .addTo(map);
+        });
+    });
+
+});
 
 const theme_colours = ['#25d0ff', '#00a6d4', '#026bc2', '#00457d', '#01145e'];
 

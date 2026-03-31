@@ -134,6 +134,26 @@
     /* Darker blue on hover */
 }
 
+.returnbutton:hover {
+  background-color: #364856; /* Darker blue on hover */
+}
+
+/*  -------------------------- COMBINE BUTTON --------------------------- */
+.combinebutton { 
+    position: absolute;
+    font: 15px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    bottom:35px;
+    left: 5px;
+    right: 1000px;
+    width: 90%;
+    z-index: 1000;
+}
+
+.combinebutton:hover {
+  background-color: #364856; /* Darker blue on hover */
+}
+
 /*  -------------------------- INFO BUTTON --------------------------- */
 .infobutton {
     background-color: white;
