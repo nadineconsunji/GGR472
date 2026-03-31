@@ -116,7 +116,7 @@ map.on('load', () => {
 Adding sources and layers
 --------------------------------------------------------------------*/
 
-const theme_colours = ['#c2e699', '#78c679', '#31a354', '#006837', '#004529'];
+const theme_colours = ['#25d0ff', '#00a6d4', '#026bc2', '#00457d', '#01145e'];
 
 // Add and visualize data layers
 
