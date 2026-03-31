@@ -101,10 +101,11 @@
     font-weight: bold;
     top: -20px;
     left: 15px;
-    width: 85%;
+    width: 75%;
     z-index: 1000;
     padding-top: 5px;
     padding-bottom: 5px;
+    border-radius: 10px;
 }
 
 .returnbutton:hover {
@@ -120,10 +121,11 @@
     font-weight: bold;
     top: -30px;
     left: 15px;
-    width: 85%;
+    width: 75%;
     z-index: 1000;
     padding-top: 5px;
     padding-bottom: 5px;
+    border-radius: 10px;
 }
 
 .combinebutton:hover {
@@ -334,12 +336,13 @@
     /* font-weight: bold; */
     top: -50px;
     left: 15px;
-    width: 85%;
+    width: 75%;
     padding-top: 5px;
     padding-bottom: 5px;
     position: relative;
     margin-bottom: -100px;
     z-index: 1000;
+    border-radius: 10px;
 
 }
 
@@ -402,22 +405,23 @@
 
 /* NEW */
 .legend {
-    position: absolute;
+    position: relative;
     display: block;
     background: rgba(255, 255, 255, 0.7);
     z-index: 1000;
-    bottom: 0;
-    right: 0;
-    margin: 0px 10 30 0px;
+    top: -40px;
+    left: 15px;
+    width: 90%;
     padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    max-width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
 }
 
 .colour-ramp {
-    height: 20px;
+    height: 60%;
     width: 200px;
+    left: 15px;
     background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
     border: 0.1px, solid, #000000;
 }
