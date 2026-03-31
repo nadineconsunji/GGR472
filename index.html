@@ -31,43 +31,53 @@
     <div id="my-map" class="map-container">
         <!-- Navigation Bar -->
         <div id="left" class="sidebar flex-center left collapsed">
-
             <div class="sidebar-content rounded-rect">
                 <div>
-                    <!-- Map title and brief description -->
-                    <h2 class ="maptitle">Energy Transition Readiness Across Africa</h2>
-                    <p class ="description">
-                        This map showcases the composite index, transition readiness and system performance across countries in Africa. 
-                    </p>
-
+                    <!-- CATF logo RELATIVE PATH COPIED, MAY REQ. CHANGE LATER -->
                     <div>
-                        <!-- Filter map view info button -->
-                        <button id="infobutton2" class="infobutton2">i</button>
-                        <div id="popup2" class="popup2">
-                        <div class="popup-content2">
-                            <span class="close-btn2" id="closeBtn2">&times;</span>
-                            <h3 class ="mapinfo-label">Composite Index</h3>
-                            <p class ="mapinfo-label2">COMPOSITE INDEX INFO</p>
-                            <h3 class ="mapinfo-label">Transition Readiness</h3>
-                            <p class ="mapinfo-label2">TRANSITION READINESS INFO</p>
-                            <h3 class ="mapinfo-label">System Performance</h3>
-                            <p class ="mapinfo-label2">SYSTEM PERFORMANCE INFO</p>
-                        </div>
+                        <img class="logoCATF" src="data\CATFlogo.png"> <br>
+                    </div>
+                    <!-- Map title and brief description -->
+                    <div>
+                        <h2 class="maptitle">Energy Transition Readiness in Africa</h2>
+                        <p class="description">
+                            This map showcases Africa's transition potential to environmentally sustainable technologies
+                            by
+                            country and region.
+                            <br>Readiness is quantified through composite index, transition readiness and system
+                            performance
+                            scores.
+                        </p>
+                    </div>
+                    <!-- Horizontal line -->
+                    <hr class="horizontalline">
+                    <!-- Filter map view -->
+                    <p class="option-label" for="layercheck">Filter map view</p>
+                    <div>
+                        <select name="select_data" id="selections" class="data-select" onchange="handleData()">
+                            <option value="composite">Composite Index</option>
+                            <option value="readiness">Transition Readiness</option>
+                            <option value="performance">System Performance</option>
+                        </select>
+                        <!-- Transition scores info button and related pop-up -->
+                        <div>
+                            <button id="infobutton2" class="infobutton2">i</button>
+                            <div id="popup2" class="popup2">
+                                <div class="popup-content2">
+                                    <span class="close-btn2" id="closeBtn2">&times;</span>
+                                    <h3 class="mapinfo-label">Composite Index</h3>
+                                    <p class="mapinfo-label2">[COMPOSITE INDEX INFO]</p>
+                                    <h3 class="mapinfo-label">Transition Readiness</h3>
+                                    <p class="mapinfo-label2">[TRANSITION READINESS INFO]</p>
+                                    <h3 class="mapinfo-label">System Performance</h3>
+                                    <p class="mapinfo-label2">[SYSTEM PERFORMANCE INFO]</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
-                    <!-- Data Select -->
-                    <p class="option-label" for="layercheck">Filter map view</p>
-                    <select name="select_data" id="selections" class="data-select" onchange="handleData()">
-                        <option value="composite">Composite Index</option>
-                        <option value="readiness">Transition Readiness</option>
-                        <option value="performance">System Performance</option>
-                    </select>
-
-                    <br><br>
 
                     <!-- Region Select -->
-                    <p class="option-label" for="layercheck">Select Region</p>
+                    <p class="option-label" for="layercheck">Region</p>
 
                     <select name="select_region" id="regions" class="data-select" onchange="handleRegions()">
                         <option value="all">Show all regions</option>
@@ -81,20 +91,27 @@
                     <br><br>
 
                     <!-- Legend -->
-                    <p class="option-label" for="layercheck">Legend</p>
-                    <p class="option-label" for="layercheck">Weighted index (%)</p>
-                    <div class="option-label">
-                        <span class="legend-symbol" style="background-color:#c2e699;"></span>
-                        <span class="legend-symbol" style="background-color:#78c679;"></span>
-                        <span class="legend-symbol" style="background-color:#31a354;"></span>
-                        <span class="legend-symbol" style="background-color:#006837;"></span>
-                        <span class="legend-symbol" style="background-color:#004529;"></span>
-                        <br>
-                        <span id="stop_0"></span>
-                        <span id="stop_1"></span>
-                        <span id="stop_2"></span>
-                        <span id="stop_3"></span>
-                        <span id="stop_4"></span>
+                    <div class="legend">
+                        <p class="legendtitle" for="layercheck">Index Values (%)</p>
+                        <div><span class="colour-ramp"></span>
+                            <br><br>
+                        </div>
+                            <div class="legendtext">
+                                <span id="stop_0"></span>
+                                <span id="stop_1"></span>
+                                <span id="stop_2"></span>
+                                <span id="stop_3"></span>
+                                <span id="stop_4"></span>
+                            </div>
+                        <!-- </div> -->
+                    </div>
+
+                    <!-- Combine button -->
+                    <button class="combinebutton" id="combinebutton">Average selected countries</button>
+
+                    <!-- Original View Button -->
+                    <div>
+                        <button class="returnbutton" type="button" id="returnbutton">Return to view</button>
                     </div>
 
                     <!-- Dropdown for selecting a region -->
@@ -113,30 +130,36 @@
                             <br>
                         </fieldset>
                     </form> -->
-                    <br>
+                    <!-- <br> -->
 
-                    <!-- Combine button -->
-                    <button class ="combinebutton" id="combinebutton">Combine Selected</button>
-
-                    <!-- Original View Button -->
+                    <!-- CATF logo RELATIVE PATH COPIED, MAY REQ. CHANGE LATER -->
                     <div>
-                        <button class="returnbutton" type="button" id="returnbutton">Return to view</button>
+                        <div class="bottomtextcredits">
+                            Site made in partnership with the University of Toronto's Faculty of Arts and Science
+                            Sandbox program.
+                            <br>Course: GGR472H1S Developing Web Maps.
+                        </div>
+                        <div>
+                            <img class="logoUofT" src="data\UofTArtSciwordmark.png">
+                        </div>
                     </div>
                 </div>
 
+                <!-- Sidebar toggle (left) -->
                 <div class="sidebar-toggle rounded-rect left" onclick="toggleSidebar('left')">
                     &rarr;
                 </div>
             </div>
         </div>
         <div>
-            <button class = "infobutton" type="button" id="infobutton">i</button>
+            <button class="infobutton" type="button" id="infobutton">i</button>
             <div id="popup" class="popup">
-            <div class="popup-content">
-                <span class="close-btn" id="closeBtn">&times;</span>
-                <h2 class ="mapinfo-label"> Map Information</h2>
-                <p class ="mapinfo-label2">This map displays information about countries in Africa's energy transition.</p>
-            </div>
+                <div class="popup-content">
+                    <span class="close-btn" id="closeBtn">&times;</span>
+                    <h2 class="mapinfo-label"> Map Information</h2>
+                    <p class="mapinfo-label2">This map displays information about countries in Africa's energy
+                        transition.</p>
+                </div>
             </div>
         </div>
     </div>
