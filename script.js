@@ -40,10 +40,14 @@ function toggleSidebar(leftsidebar) {
     let elem = document.getElementById(leftsidebar);
     let classes = elem.className.split(' ');
     let collapsed = classes.indexOf('collapsed') !== -1;
+    let button = document.getElementById("left-toggle").innerHTML= "&larr;";
+    
+    // elem.classList.toggle("collapsed");
+    // let isCollapsed = elem.classList.contains("collapsed");
 
     let padding = {};
 
-    if (collapsed) {
+    if (collapsed) { //PREVIOUSLY if(isCollapsed)
 
         // Developer comment: Remove the 'collapsed' class from the class list of the element, this sets it back to the expanded state.
         classes.splice(classes.indexOf('collapsed'), 1);
@@ -53,6 +57,8 @@ function toggleSidebar(leftsidebar) {
             padding: padding,
             duration: 1000 // Developer comment: In ms, CSS transition duration property for the sidebar matches this value
         });
+
+        button.innerHTML = "&larr;";
 
     }
 
@@ -66,6 +72,8 @@ function toggleSidebar(leftsidebar) {
             padding: padding,
             duration: 1000
         });
+
+        button.innerHTML = "&rarr;";
 
     }
 
@@ -412,6 +420,7 @@ map.addControl(
     new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
+        countries: "td" // CHANGE
     })
 );
 
