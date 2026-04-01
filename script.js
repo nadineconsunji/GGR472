@@ -578,11 +578,11 @@ function onCountryClick(e) {
             // Add line layer for boundaries
             map.addLayer({
                 id: 'selected_boundaries',
-                type: 'fill',
+                type: 'line',
                 source: 'selected_countries',
                 paint: {
-                    'fill-color': theme_colours[4],
-                    'fill-opacity': 0.75
+                    'line-color': theme_colours[4],
+                    'line-width': 1
                 }
             });
         }
