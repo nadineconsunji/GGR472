@@ -19,6 +19,8 @@ const zoom = 2.5;
 const minZoom = zoom;
 const maxZoom = 7.0;
 
+let layers = ['composite_index_layer', 'system_performance_layer', 'transition_readiness_layer'];
+
 // Initialize map and edit to your preference
 const map = new mapboxgl.Map({
     container: 'my-map', // container id in HTML
@@ -477,74 +479,143 @@ window.addEventListener("click", (e) => {
     }
 });
 
-// 4) Combine button ---------------------------------------------------------------------------------------------
+// 4) Combine countries ---------------------------------------------------------------------------------------------
 
 // Store selected countries
-let selectedFeatures = [];
-let combinedActive = false; // Tracks if combined layer is currently active
-
-// Active layer variable (updateS based on toggle logic)
-let activeLayer = 'composite_index_layer'; // Example default
-
-// Click event to collect countries
-map.on('click', activeLayer, (e) => {
+function onCountryClick(e) {
     const feature = e.features[0];
 
     // Avoid duplicates
     if (!selectedFeatures.some(f => f.id === feature.id)) {
         selectedFeatures.push(feature);
+
+        const selectedGeoJSON = {
+            type: 'FeatureCollection',
+            features: selectedFeatures
+        };
+
+        // If source already exists, update it
+        if (map.getSource('selected_countries')) {
+            map.getSource('selected_countries').setData(selectedGeoJSON);
+        } else {
+            // If not, add source
+            map.addSource('selected_countries', {
+                type: 'geojson',
+                data: selectedGeoJSON
+            });
+
+            // Add line layer for boundaries
+            map.addLayer({
+                id: 'selected_boundaries',
+                type: 'fill',
+                source: 'selected_countries',
+                paint: {
+                    'fill-color': '#00092d',
+                    'fill-opacity': 1
+                }
+            });
+        }
     }
 
     console.log("Selected features count:", selectedFeatures.length);
+};
+
+// Select countries only when checkbox is checked
+function handleCountrySelection(isChecked) {
+
+    // Define list
+    selectedFeatures = [];
+
+    layers.forEach(layer => {
+        if (isChecked) {
+            map.on('click', layer, onCountryClick);
+        } else {
+            map.off('click', layer, onCountryClick);
+        }
+    });
+};
+
+// Checkbox event listener
+document.getElementById('select').addEventListener('change', function () {
+
+    // Remove old selection
+    if (activePopup) {
+        activePopup.remove();
+        activePopup = null;
+    }
+    if (map.getLayer('selected_boundaries')) {
+        map.removeLayer('selected_boundaries');
+    }
+    if (map.getSource('selected_countries')) {
+        map.removeSource('selected_countries');
+    }
+    handleCountrySelection(this.checked);
 });
 
-// Combine button with toggle
+let activePopup;
+
+// Display average for selected countries
 document.getElementById('combinebutton').addEventListener('click', () => {
-    if (!combinedActive) {
-        // --- COMBINE & HIGHLIGHT ---
-        if (selectedFeatures.length === 0) {
-            alert("No countries selected!");
-            return;
-        }
 
-        const combinedGeoJSON = turf.combine(turf.featureCollection(selectedFeatures));
-
-        // Add or update Mapbox source
-        if (map.getSource('selection')) {
-            map.getSource('selection').setData(combinedGeoJSON);
-        } else {
-            map.addSource('selection', { type: 'geojson', data: combinedGeoJSON });
-            map.addLayer({
-                id: 'selection_layer',
-                type: 'fill',
-                source: 'selection',
-                paint: { 'fill-color': '#f39c12', 'fill-opacity': 0.5 }
-            });
-        }
-
-        // Compute average
-        const activeProperty = activeLayer === 'composite_index_layer' ? 'composite_index' :
-            activeLayer === 'transition_readiness_layer' ? 'transition_readiness' :
-                'system_performance';
-
-        const values = selectedFeatures.map(f => f.properties[activeProperty]);
-        const average = values.reduce((sum, v) => sum + v, 0) / values.length;
-
-        console.log(`Average ${activeProperty}:`, average);
-        alert(`Average ${activeProperty}: ${average.toFixed(2)}`);
-
-        combinedActive = true; // Mark as active
-    } else {
-        // --- REMOVE HIGHLIGHT ---
-        if (map.getLayer('selection_layer')) {
-            map.removeLayer('selection_layer');
-        }
-        if (map.getSource('selection')) {
-            map.removeSource('selection');
-        }
-
-        combinedActive = false; // Reset
-        selectedFeatures = []; // Optional: clear selected features
-        console.log("Combined highlight cleared");
+    // Return error for no selection
+    if (selectedFeatures.length === 0) {
+        alert("No countries selected!");
+        return;
     }
-});     
+
+    // Combine selected
+    const combinedGeoJSON = turf.combine(turf.featureCollection(selectedFeatures));
+
+    // Compute averages
+    const indValues = selectedFeatures.map(f => f.properties['composite_index']);
+    const perfValues = selectedFeatures.map(f => f.properties['system_performance']);
+    const readValues = selectedFeatures.map(f => f.properties['transition_readiness']);
+
+    const indAverage = indValues.reduce((sum, v) => sum + v, 0) / indValues.length;
+    const perfAverage = perfValues.reduce((sum, v) => sum + v, 0) / perfValues.length;
+    const readAverage = readValues.reduce((sum, v) => sum + v, 0) / readValues.length;
+
+    // Configure popups by selected layer
+    var activeProperty = document.getElementById("selections").value;
+    const selectCentroid = turf.centroid(combinedGeoJSON);
+
+    const config = {
+        composite: {
+            label: 'composite index',
+            value: indAverage
+        },
+        readiness: {
+            label: 'transition readiness',
+            value: readAverage
+        },
+        performance: {
+            label: 'system performance',
+            value: perfAverage
+        }
+    };
+
+    const current = config[activeProperty];
+
+    // Display popup
+    if (current) {
+        activePopup = new mapboxgl.Popup({ className: 'no-arrow-popup' })
+            .setLngLat(selectCentroid.geometry.coordinates)
+            .setHTML(`
+                <strong>Average ${current.label}:<br>
+                ${current.value.toFixed(2)}</strong><br><br>
+                You have calculated the average ${current.label} for ${selectedFeatures.length} selected countries.
+            `)
+            .addTo(map);
+    }
+
+    // Turn select off
+    layers.forEach(layer => {
+        map.off('click', layer, onCountryClick);
+    });
+
+    // Uncheck select checkbox
+    document.getElementById('select').checked = false;
+
+    // Empty list of selected countries
+    selectedFeatures = [];
+});
