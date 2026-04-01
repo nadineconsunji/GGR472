@@ -412,7 +412,7 @@ map.addControl(
     new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
-        countries: "ca" // CHANGE
+        countries: // CHANGE
     })
 );
 
