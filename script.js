@@ -149,7 +149,7 @@ map.on('load', () => {
                 'case',
                 ['boolean', ['feature-state', 'hover'], false],
                 1,      // hovered country (fully visible)
-                0.7     // all other countries (dimmed)
+                0.9     // all other countries (dimmed)
             ]
         }
     });
