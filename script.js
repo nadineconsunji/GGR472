@@ -40,8 +40,8 @@ function toggleSidebar(leftsidebar) {
     let elem = document.getElementById(leftsidebar);
     let classes = elem.className.split(' ');
     let collapsed = classes.indexOf('collapsed') !== -1;
-    let button = document.getElementById("left-toggle").innerHTML = "&larr;";
-
+    let button = document.getElementById("left-toggle").innerHTML= "&larr;";
+    
     // elem.classList.toggle("collapsed");
     // let isCollapsed = elem.classList.contains("collapsed");
 
