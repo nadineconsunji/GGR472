@@ -4,9 +4,6 @@
     padding: 0;
 }
 
-
-
-
 .map {
     position: absolute;
     top: 0;
@@ -38,10 +35,9 @@
 .sidebar-content {
     position: absolute;
     width: 95%;
-    height: 95%;
+    height: 95.5%;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 32px;
-    /* color: gray; */
     background: #ffffff;
     /* overflow-y: scroll; */
 }
@@ -93,39 +89,31 @@
     height: 100%;
 }
 
-/*  -------------------------- RETURN BUTTON --------------------------- */
-
-.returnbutton {
-    position: relative;
-    font: 15px 'Arial', Helvetica, Verdana, sans-serif;
-    font-weight: bold;
-    top: 20px;
-    left: 15px;
-    width: 75%;
-    z-index: 1000;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-radius: 10px;
-}
-
-.returnbutton:hover {
-    color: #ffffff;
-    background-color: #364856;
-    /* Darker blue on hover */
-}
-
-/* --------------------------- CHECKBOXES --------------------------------*/
+/* --------------------------- CHECKBOXES -------------------------------- */
 
 input[type="checkbox"] {
     margin-left: 15px;
-    accent-color: #25d0ff;
+    margin-bottom: 10px;
+    accent-color: #0084ff;
+    width: 20px;
+    height: 20px;
 }
 
-/*  -------------------------- COMBINE BUTTON --------------------------- */
-.combinebutton {
+/* Checkbox label */
+
+.label {
+    font: 15px 'Arial', Helvetica, Verdana, sans-serif;
+    color: #000000;
+    width: 100%;
+    position: relative;
+    top: -4px;
+    z-index: 1000;
+}
+
+/*  -------------------------- BUTTONS --------------------------- */
+.button {
     position: relative;
     font: 15px 'Arial', Helvetica, Verdana, sans-serif;
-    top: 15px;
     left: 15px;
     width: 75%;
     z-index: 1000;
@@ -134,9 +122,10 @@ input[type="checkbox"] {
     border-radius: 10px;
     border-width: 1px;
     background-color: #ffffff;
+    text-align: left;
 }
 
-.combinebutton:hover {
+.button:hover {
     background-color: #c2f2ff;
     /* Darker blue on hover */
 }
@@ -274,8 +263,6 @@ input[type="checkbox"] {
 /*  -------------------------- LOGOS --------------------------- */
 .logoCATF {
     position: relative;
-    top: 10px;
-    /* left: 15px; */
     margin: 5% 0 0 5%;
     width: 90%;
 }
@@ -288,16 +275,15 @@ input[type="checkbox"] {
     /*FOR TESTS ON WHITE SURFACES background-color: #000000; */
 }
 
-/* Format map title and description */
+/* --------------- Format map title and description ------------  */
 
 .maptitle {
     position: relative;
     font: 25px 'Arial', Helvetica, Verdana, sans-serif;
     font-weight: bold;
-    top: 20px;
     left: 15px;
     width: 90%;
-    padding-bottom: 10px;
+    padding-top: 10px;
     z-index: 1;
     color: #003adb;
 }
@@ -324,9 +310,9 @@ input[type="checkbox"] {
     z-index: 1000;
 }
 
-/* Format select data label*/
-.option-label {
-    font: 20px 'Arial', Helvetica, Verdana, sans-serif;
+/* Format section headings */
+.heading {
+    font: 18px 'Arial', Helvetica, Verdana, sans-serif;
     font-weight: bold;
     color: #000000;
     top: -10px;
@@ -348,31 +334,6 @@ input[type="checkbox"] {
     border-radius: 10px;
 }
 
-/* REMOVE IF NOT NEEDED, HTML is commented out for option-label2 and option-label3 */
-/* Format dropdown option label*/
-.option-label2 {
-    font: 20px 'Arial', Helvetica, Verdana, sans-serif;
-    font-weight: bold;
-    top: 110px;
-    left: 15px;
-    width: 95%;
-    padding-bottom: 10px;
-    position: absolute;
-    z-index: 1000;
-}
-
-/* Format dropdown options*/
-.option-label3 {
-    font: 16px 'Arial', Helvetica, Verdana, sans-serif;
-    font-weight: bold;
-    top: 135px;
-    left: 15px;
-    width: 90%;
-    padding-bottom: 10px;
-    position: absolute;
-    z-index: 1000;
-}
-
 /* Format dropdown option in the map data container */
 .form {
     padding-bottom: 20px;
@@ -391,20 +352,21 @@ input[type="checkbox"] {
     z-index: 1000;
 }
 
-/* FOR LEGEND */
+/* ------------------------ LEGEND ---------------------------- */
 
 .legend {
     position: relative;
     display: block;
     background: rgba(255, 255, 255, 0.7);
     z-index: 1000;
-    top: 0px;
+    top: -10px;
     left: 15px;
     width: 90%;
-    height: 175px;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    border-width: 1px;
+    border-color: rgb(0, 0, 0);
+    border-style: solid;
     max-width: 500px;
 }
 
@@ -423,7 +385,7 @@ input[type="checkbox"] {
     font: 15px 'Arial', Helvetica, Verdana, sans-serif;
     color: #000000;
     width: 100%;
-    padding-top: 10px;
+    padding-top: 5px;
     position: relative;
     z-index: 1000;
 }
@@ -431,7 +393,8 @@ input[type="checkbox"] {
 .colour-ramp {
     display: inline-block;
     height: 30px;
-    width: 100%; /* Relative to the .legend box */
+    width: 100%;
+    /* Relative to the .legend box */
     left: 15px;
     background: linear-gradient(0.25turn,
             #25d0ff 21%,
@@ -442,13 +405,14 @@ input[type="checkbox"] {
     /* SEPARATE "BACKGROUNDS" REQ'D FOR EACH MAP VIEW? BECAUSE DIFFERING PERCENTAGE THRESHOLDS FOR EACH COLOUR */
 }
 
-/* SIDE POPUPS */
+/* ------------------------------------- SIDE POPUPS ------------------------------------------ */
 
 /* Style side popups */
 .no-arrow-popup {
     font-size: small;
     position: fixed;
 }
+
 .no-arrow-popup .mapboxgl-popup-tip {
     display: none;
 }

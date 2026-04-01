@@ -479,80 +479,9 @@ window.addEventListener("click", (e) => {
     }
 });
 
-/*
-// 4) Combine button ---------------------------------------------------------------------------------------------
+// 4) Combine countries ---------------------------------------------------------------------------------------------
 
 // Store selected countries
-let selectedFeatures = [];
-let combinedActive = false; // Tracks if combined layer is currently active
-
-// Active layer variable (updateS based on toggle logic)
-let activeLayer = 'composite_index_layer'; // Example default
-
-// Click event to collect countries
-map.on('click', activeLayer, (e) => {
-    const feature = e.features[0];
-
-    // Avoid duplicates
-    if (!selectedFeatures.some(f => f.id === feature.id)) {
-        selectedFeatures.push(feature);
-    }
-
-    console.log("Selected features count:", selectedFeatures.length);
-});
-
-// Combine button with toggle
-document.getElementById('combinebutton').addEventListener('click', () => {
-    if (!combinedActive) {
-        // --- COMBINE & HIGHLIGHT ---
-        if (selectedFeatures.length === 0) {
-            alert("No countries selected!");
-            return;
-        }
-
-        const combinedGeoJSON = turf.combine(turf.featureCollection(selectedFeatures));
-
-        // Add or update Mapbox source
-        if (map.getSource('selection')) {
-            map.getSource('selection').setData(combinedGeoJSON);
-        } else {
-            map.addSource('selection', { type: 'geojson', data: combinedGeoJSON });
-            map.addLayer({
-                id: 'selection_layer',
-                type: 'fill',
-                source: 'selection',
-                paint: { 'fill-color': '#f39c12', 'fill-opacity': 0.5 }
-            });
-        }
-
-        // Compute average
-        const activeProperty = activeLayer === 'composite_index_layer' ? 'composite_index' :
-            activeLayer === 'transition_readiness_layer' ? 'transition_readiness' :
-                'system_performance';
-
-        const values = selectedFeatures.map(f => f.properties[activeProperty]);
-        const average = values.reduce((sum, v) => sum + v, 0) / values.length;
-
-        console.log(`Average ${activeProperty}:`, average);
-        alert(`Average ${activeProperty}: ${average.toFixed(2)}`);
-
-        combinedActive = true; // Mark as active
-    } else {
-        // --- REMOVE HIGHLIGHT ---
-        if (map.getLayer('selection_layer')) {
-            map.removeLayer('selection_layer');
-        }
-        if (map.getSource('selection')) {
-            map.removeSource('selection');
-        }
-
-        combinedActive = false; // Reset
-        selectedFeatures = []; // Optional: clear selected features
-        console.log("Combined highlight cleared");
-    }
-});
-*/
-
 function onCountryClick(e) {
     const feature = e.features[0];
 
@@ -569,7 +498,7 @@ function onCountryClick(e) {
         if (map.getSource('selected_countries')) {
             map.getSource('selected_countries').setData(selectedGeoJSON);
         } else {
-            // Add source
+            // If not, add source
             map.addSource('selected_countries', {
                 type: 'geojson',
                 data: selectedGeoJSON
@@ -578,11 +507,11 @@ function onCountryClick(e) {
             // Add line layer for boundaries
             map.addLayer({
                 id: 'selected_boundaries',
-                type: 'line',
+                type: 'fill',
                 source: 'selected_countries',
                 paint: {
-                    'line-color': theme_colours[4],
-                    'line-width': 1
+                    'fill-color': '#00092d',
+                    'fill-opacity': 1
                 }
             });
         }
@@ -591,6 +520,7 @@ function onCountryClick(e) {
     console.log("Selected features count:", selectedFeatures.length);
 };
 
+// Select countries only when checkbox is checked
 function handleCountrySelection(isChecked) {
 
     // Define list
@@ -624,18 +554,19 @@ document.getElementById('select').addEventListener('change', function () {
 
 let activePopup;
 
+// Display average for selected countries
 document.getElementById('combinebutton').addEventListener('click', () => {
 
-    // --- COMBINE & HIGHLIGHT ---
+    // Return error for no selection
     if (selectedFeatures.length === 0) {
         alert("No countries selected!");
         return;
     }
 
+    // Combine selected
     const combinedGeoJSON = turf.combine(turf.featureCollection(selectedFeatures));
 
     // Compute averages
-
     const indValues = selectedFeatures.map(f => f.properties['composite_index']);
     const perfValues = selectedFeatures.map(f => f.properties['system_performance']);
     const readValues = selectedFeatures.map(f => f.properties['transition_readiness']);
@@ -645,7 +576,6 @@ document.getElementById('combinebutton').addEventListener('click', () => {
     const readAverage = readValues.reduce((sum, v) => sum + v, 0) / readValues.length;
 
     // Configure popups by selected layer
-
     var activeProperty = document.getElementById("selections").value;
     const selectCentroid = turf.centroid(combinedGeoJSON);
 
@@ -667,7 +597,6 @@ document.getElementById('combinebutton').addEventListener('click', () => {
     const current = config[activeProperty];
 
     // Display popup
-
     if (current) {
         activePopup = new mapboxgl.Popup({ className: 'no-arrow-popup' })
             .setLngLat(selectCentroid.geometry.coordinates)

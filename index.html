@@ -40,7 +40,6 @@
                     <!-- Map title and brief description -->
                     <div>
                         <h2 class="maptitle">Energy Transition Readiness in Africa</h2>
-                        <br>
                         <p class="description">
                             This map showcases Africa's transition potential to environmentally sustainable technologies
                             by
@@ -50,10 +49,12 @@
                             scores.
                         </p>
                     </div>
+
                     <!-- Horizontal line -->
                     <hr class="horizontalline">
+
                     <!-- Filter map view -->
-                    <p class="option-label" for="layercheck">Filter map view</p>
+                    <p class="heading" for="layercheck">Filter map view</p>
                     <div>
                         <select name="select_data" id="selections" class="data-select" onchange="handleData()">
                             <option value="composite">Composite Index</option>
@@ -78,7 +79,7 @@
                     </div>
 
                     <!-- Region Select -->
-                    <p class="option-label" for="layercheck">Region</p>
+                    <p class="heading" for="layercheck">Region</p>
 
                     <select name="select_region" id="regions" class="data-select" onchange="handleRegions()">
                         <option value="all">Show all regions</option>
@@ -89,35 +90,35 @@
                         <option value="central">Central</option>
                     </select>
                     <br>
-                    <input type="checkbox" id="select" class="checkbox" value="new_selection">
-                    <span class="legendpara">New selection</span>
-                    <br>
-                    <button class="combinebutton" id="combinebutton">Average selected countries</button> <!-- FORMAT -->
-
+                    <button class="button" type="button" id="returnbutton">Return to original view</button>
                     <br><br>
+                    <input type="checkbox" id="select" class="checkbox" value="new_selection">
+                    <span class="label"><strong>New selection</strong></span>
+                    <br>
+                    <button class="button" id="combinebutton">Calculate average</button> <!-- FORMAT -->
+
+                    <br>
 
                     <!-- Legend -->
+
+                    <!-- Horizontal line -->
+                    <hr class="horizontalline">
+                    <p class="heading" for="layercheck">Legend</p>
+
                     <div class="legend">
-                        <p class="legendtitle" for="layercheck">Legend</p>
                         <p class="legendpara">Index Values (%)</p>
                         <div><span class="colour-ramp"></span>
                             <br>
                         </div>
-                            <div class="legendpara">
-                                <span id="stop_0">21</span>
-                                <span id="stop_1" style="position: absolute; right: 0px;">69</span>
-                            </div>
-                        <!-- </div> -->
+                        <div class="legendpara">
+                            <span id="stop_0">21</span>
+                            <span id="stop_1" style="position: absolute; right: 0px;">69</span>
+                        </div>
                     </div>
-                    <br><br>                 
+                </div>
 
-                    <!-- Original View Button -->
-                    <div>
-                        <button class="returnbutton" type="button" id="returnbutton">Return to view</button>
-                    </div>
-
-                    <!-- CATF logo RELATIVE PATH COPIED, MAY REQ. CHANGE LATER -->
-                    <!--
+                <!-- CATF logo RELATIVE PATH COPIED, MAY REQ. CHANGE LATER -->
+                <!--
                     <div>
                         <div class="bottomtextcredits">
                             Site made in partnership with the University of Toronto's Faculty of Arts and Science
@@ -129,25 +130,25 @@
                         </div>
                     </div>
                     -->
-                </div>
+            </div>
 
-                <!-- Sidebar toggle (left) -->
-                <div class="sidebar-toggle rounded-rect left" onclick="toggleSidebar('left')">
-                    &rarr;
-                </div>
+            <!-- Sidebar toggle (left) -->
+            <div class="sidebar-toggle rounded-rect left" onclick="toggleSidebar('left')">
+                &rarr;
             </div>
         </div>
-        <div>
-            <button class="infobutton" type="button" id="infobutton">i</button>
-            <div id="popup" class="popup">
-                <div class="popup-content">
-                    <span class="close-btn" id="closeBtn">&times;</span>
-                    <h2 class="mapinfo-label">Map Information</h2>
-                    <p class="mapinfo-label2">This map displays information about countries in Africa's energy
-                        transition.</p>
-                </div>
+    </div>
+    <div>
+        <button class="infobutton" type="button" id="infobutton">i</button>
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" id="closeBtn">&times;</span>
+                <h2 class="mapinfo-label">Map Information</h2>
+                <p class="mapinfo-label2">This map displays information about countries in Africa's energy
+                    transition.</p>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Bootstrap and JS Script Links -->
