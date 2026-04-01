@@ -149,7 +149,7 @@ map.on('load', () => {
                 'case',
                 ['boolean', ['feature-state', 'hover'], false],
                 1,      // hovered country (fully visible)
-                0.9     // all other countries (dimmed)
+                0.7     // all other countries (dimmed)
             ]
         }
     });
@@ -180,6 +180,21 @@ map.on('load', () => {
                 1,      // hovered country (fully visible)
                 0.7     // all other countries (dimmed)
             ]
+        }
+    });
+
+    // Boundaries
+
+    map.addLayer({
+        id: 'boundaries',
+        type: 'line',
+        source: 'energy',
+        layout: {
+            visibility: 'visible'
+        },
+        paint: {
+            'line-color': theme_colours[3],
+            'line-width': 0.1
         }
     });
 
@@ -509,8 +524,8 @@ document.getElementById('combinebutton').addEventListener('click', () => {
 
         // Compute average
         const activeProperty = activeLayer === 'composite_index_layer' ? 'composite_index' :
-                               activeLayer === 'transition_readiness_layer' ? 'transition_readiness' :
-                               'system_performance';
+            activeLayer === 'transition_readiness_layer' ? 'transition_readiness' :
+                'system_performance';
 
         const values = selectedFeatures.map(f => f.properties[activeProperty]);
         const average = values.reduce((sum, v) => sum + v, 0) / values.length;
