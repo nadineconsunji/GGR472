@@ -10,12 +10,13 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6N
 // Center coordinates for map on load and zoom change(to change, refer to https://labs.mapbox.com/location-helper)
 // FIX COORDINATES FOR EAST, WEST, AND SOUTH
 const center = [22.34868, -0.31974];
-const centerEast = [-2.6, 40.3];
-const centerWest = [12.9, -1.7];
-const centerNorth = [17.5, 19.5];
-const centerSouth = [-17.9, 24.9];
-const zoom = 2.6;
-const minZoom = 2.3;
+const centerEast = [35, -5];
+const centerWest = [-2, 15];
+const centerNorth = [15.5, 19.5];
+const centerSouth = [25, -20];
+const centerCentral = [22.3, 3];
+const zoom = 2.5;
+const minZoom = zoom;
 const maxZoom = 7.0;
 
 // Initialize map and edit to your preference
@@ -77,41 +78,6 @@ map.on('load', function () {
     toggleSidebar('left');
 });
 
-// THIS IS A TEST (DELETE LATER)
-
-map.on('load', () => {
-    map.addSource('TESTdata', {
-        type: 'geojson',
-        data: 'https://raw.githubusercontent.com/daniel81017/Lab2/refs/heads/main/TEST(DELETELATER).geojson',
-    });
-
-    map.addLayer({
-        'id': 'testpoint',
-        'type': 'circle',
-        'source': 'TESTdata',
-        'paint': {
-            'circle-width': 100,
-            'circle-color': '#22f513'
-        },
-        'filter': ['==', ['geometry-type'], 'Point'],
-    });
-
-    map.on('click', 'testpoint', (e) => {
-        map.flyTo({
-            center: e.features[0].geometry.coordinates,
-            zoom: 15
-        });
-    });
-
-    map.on('mouseenter', 'testpoint', () => {
-        map.getCanvas().style.cursor = 'pointer';
-    });
-
-    map.on('mouseleave', 'testpoint', () => {
-        map.getCanvas().style.cursor = '';
-    });
-});
-
 /*--------------------------------------------------------------------
 Adding sources and layers
 --------------------------------------------------------------------*/
@@ -153,13 +119,9 @@ map.on('load', () => {
                 'case',
                 ['boolean', ['feature-state', 'hover'], false],
                 1,      // hovered country (fully visible)
-                0.5     // all other countries (dimmed)
+                0.7     // all other countries (dimmed)
             ]
         }
-    });
-
-    composite_stops.forEach((stop, i) => {
-        document.getElementById(`stop_${i}`).textContent = stop;
     });
 
     // Transition readiness layer
@@ -187,7 +149,7 @@ map.on('load', () => {
                 'case',
                 ['boolean', ['feature-state', 'hover'], false],
                 1,      // hovered country (fully visible)
-                0.5     // all other countries (dimmed)
+                0.7     // all other countries (dimmed)
             ]
         }
     });
@@ -216,7 +178,7 @@ map.on('load', () => {
                 'case',
                 ['boolean', ['feature-state', 'hover'], false],
                 1,      // hovered country (fully visible)
-                0.5     // all other countries (dimmed)
+                0.7     // all other countries (dimmed)
             ]
         }
     });
@@ -225,10 +187,7 @@ map.on('load', () => {
 
     function updateLegend(stops_variable) {
         document.getElementById('stop_0').textContent = stops_variable[0];
-        document.getElementById('stop_1').textContent = stops_variable[1];
-        document.getElementById('stop_2').textContent = stops_variable[2];
-        document.getElementById('stop_3').textContent = stops_variable[3];
-        document.getElementById('stop_4').textContent = stops_variable[4];
+        document.getElementById('stop_1').textContent = stops_variable[4];
     }
 
     // Toggle layers off and on
@@ -283,27 +242,27 @@ map.on('load', () => {
         } else if (selectedRegion == 'east') {
             map.flyTo({
                 center: centerEast,
-                zoom: maxZoom
+                zoom: 3.3
             });
         } else if (selectedRegion == 'west') {
             map.flyTo({
                 center: centerWest,
-                zoom: maxZoom
+                zoom: 4
             });
         } else if (selectedRegion == 'north') {
             map.flyTo({
                 center: centerNorth,
-                zoom: maxZoom
+                zoom: 3.5
             });
         } else if (selectedRegion == 'south') {
             map.flyTo({
                 center: centerSouth,
-                zoom: maxZoom
+                zoom: 3.5
             });
         } else if (selectedRegion == 'central') {
             map.flyTo({
-                center: center,
-                zoom: maxZoom
+                center: centerCentral,
+                zoom: 3.5
             });
         };
     };
@@ -367,13 +326,15 @@ map.on('load', () => {
             const ind = feature.properties.composite_index;
             const read = feature.properties.transition_readiness;
             const perf = feature.properties.system_performance;
+            const name = feature.properties.country;
 
             energy_popup
                 .setLngLat(coordinates)
                 .setHTML(`
-                <strong>Composite Index: ${ind}</strong><br>
-                <strong>Transition Readiness: ${read}</strong><br>
-                <strong>System Performance: ${perf}</strong><br>
+                <strong>${name || 'Country'}</strong><br>
+                Composite Index: ${ind}<br>
+                Transition Readiness: ${read}<br>
+                System Performance: ${perf}<br>
                 `)
                 .addTo(map);
         });
@@ -384,29 +345,41 @@ map.on('load', () => {
         });
     });
 
-    // Zoom to country - commenting out because it doesn't work yet
+    // Zoom to country
 
-    /* layers.forEach(layer => {
-        map.on('click', layer, (e) => {
+    map.doubleClickZoom.disable();
+    layers.forEach(layer => {
+        map.on('dblclick', layer, (e) => {
             const feature = e.features[0];
- 
-            const bounds = new mapboxgl.LngLatBounds();
- 
-            const coords = normalizeCoords(feature.geometry);
- 
-            coords.forEach(polygon => {
-                polygon.forEach(ring => {
-                    ring.forEach(coord => bounds.extend(coord));
-                });
+
+            // Compute the centroid of the polygon
+            const centroid = turf.centroid(feature);
+            const centerCoordinates = centroid.geometry.coordinates;
+
+            // Fly to the centroid
+            map.flyTo({
+                center: centerCoordinates,
+                zoom: 4,        // adjust zoom as needed
+                essential: true
             });
- 
-            map.fitBounds(bounds, {
-                padding: 40,
-                duration: 1000
-            });
+
+            const name = feature.properties.country;
+            const text = feature.properties.text;
+
+            // Create the popup
+            new mapboxgl.Popup({
+                offset: [400, 350],
+                className: 'no-arrow-popup'
+            })
+                .setLngLat(centerCoordinates)
+                .setHTML(`
+            <strong>${name || 'Country'}</strong><br><br>
+            ${text || 'Text'}<br><br>
+            Source: Wikipedia
+        `)
+                .addTo(map);
         });
-    }); */
-    handleData();
+    });
 });
 
 map.on('load', () => {
