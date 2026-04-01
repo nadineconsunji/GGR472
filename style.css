@@ -458,7 +458,7 @@
 
 /* Style side popups */
 .no-arrow-popup {
-    font-size: medium;
+    font-size: small;
     position: fixed;
 }
 .no-arrow-popup .mapboxgl-popup-tip {
