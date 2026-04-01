@@ -477,6 +477,7 @@ window.addEventListener("click", (e) => {
     }
 });
 
+/*
 // 4) Combine button ---------------------------------------------------------------------------------------------
 
 // Store selected countries
@@ -547,4 +548,122 @@ document.getElementById('combinebutton').addEventListener('click', () => {
         selectedFeatures = []; // Optional: clear selected features
         console.log("Combined highlight cleared");
     }
-});     
+});
+*/
+
+function onCountryClick(e) {
+    const feature = e.features[0];
+
+    // Avoid duplicates
+    if (!selectedFeatures.some(f => f.id === feature.id)) {
+        selectedFeatures.push(feature);
+    }
+
+    console.log("Selected features count:", selectedFeatures.length);
+};
+
+function handleCountrySelection(isChecked) {
+    // Define list
+    selectedFeatures = [];
+
+    if (isChecked) {
+        map.on('click', 'composite_index_layer', onCountryClick);
+        //map.on('click', 'transition_readiness_layer', onCountryClick);
+    } else {
+        map.off('click', 'composite_index_layer', onCountryClick);
+        //map.off('click', 'transition_readiness_layer', onCountryClick);
+    };
+};
+
+// Checkbox event listener
+document.getElementById('select').addEventListener('change', function () {
+    handleCountrySelection(this.checked);
+});
+
+let combinedActive = false; // Tracks if combined layer is currently active
+
+document.getElementById('combinebutton').addEventListener('click', () => {
+    // --- COMBINE & HIGHLIGHT ---
+    if (selectedFeatures.length === 0) {
+        alert("No countries selected!");
+        return;
+    }
+
+    const combinedGeoJSON = turf.combine(turf.featureCollection(selectedFeatures));
+
+    // Add or update Mapbox source
+    if (map.getSource('selection')) {
+        map.getSource('selection').setData(combinedGeoJSON);
+    } else {
+        map.addSource('selection', { type: 'geojson', data: combinedGeoJSON });
+        map.addLayer({
+            id: 'selection_layer',
+            type: 'fill',
+            source: 'selection',
+            paint: { 'fill-color': '#f39c12', 'fill-opacity': 0.5 }
+        });
+    }
+
+    // Compute average
+
+    const indValues = selectedFeatures.map(f => f.properties['composite_index']);
+    const perfValues = selectedFeatures.map(f => f.properties['system_performance']);
+    const readValues = selectedFeatures.map(f => f.properties['transition_readiness']);
+
+    const indAverage = indValues.reduce((sum, v) => sum + v, 0) / indValues.length;
+    const perfAverage = perfValues.reduce((sum, v) => sum + v, 0) / perfValues.length;
+    const readAverage = readValues.reduce((sum, v) => sum + v, 0) / readValues.length;
+
+    console.log('Composite Index:', indAverage);
+    console.log('System Performance:', perfAverage);
+    console.log('Transition Readiness:', readAverage);
+
+    var activeProperty = document.getElementById("selections").value;
+    const selectCentroid = turf.centroid(combinedGeoJSON);
+
+    if (activeProperty == 'composite') {
+        new mapboxgl.Popup({ className: 'no-arrow-popup' })
+            .setLngLat(selectCentroid.geometry.coordinates)
+            .setHTML(`
+                <strong>Average Composite Index: ${indAverage.toFixed(2)}</strong><br>
+                You have calculated the average composite index for ${selectedFeatures.length} selected countries.
+            `)
+            .addTo(map);
+    } else if (activeProperty == 'readiness') {
+        new mapboxgl.Popup({ className: 'no-arrow-popup' })
+            .setLngLat(selectCentroid.geometry.coordinates)
+            .setHTML(`
+                <strong>Average transition readiness: ${readAverage.toFixed(2)}</strong><br>
+                You have calculated the average transition readiness for ${selectedFeatures.length} selected countries.
+            `)
+            .addTo(map);
+    } else if (activeProperty == 'performance') {
+        new mapboxgl.Popup({ className: 'no-arrow-popup' })
+            .setLngLat(selectCentroid.geometry.coordinates)
+            .setHTML(`
+                <strong>Average system performance: ${perfAverage.toFixed(2)}</strong><br>
+                You have calculated the average system performance for ${selectedFeatures.length} selected countries.
+            `)
+            .addTo(map);
+    }
+
+    document.getElementById('select').checked = false;
+    selectedFeatures = [];
+
+    // Compute average
+    /*
+    const activeProperty = activeLayer === 'composite_index_layer' ? 'composite_index' :
+        activeLayer === 'transition_readiness_layer' ? 'transition_readiness' :
+            'system_performance';
+
+    const values = selectedFeatures.map(f => f.properties[activeProperty]);
+    const average = values.reduce((sum, v) => sum + v, 0) / values.length;
+
+    console.log(`Average ${activeProperty}:`, average);
+    alert(`Average ${activeProperty}: ${average.toFixed(2)}`);
+
+    combinedActive = true; // Mark as active */
+
+    //selectedFeatures = []; // Optional: clear selected features
+    //console.log("Combined highlight cleared");
+});
