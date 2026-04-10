@@ -40,15 +40,11 @@ function toggleSidebar(leftsidebar) {
     let elem = document.getElementById(leftsidebar);
     let classes = elem.className.split(' ');
     let collapsed = classes.indexOf('collapsed') !== -1;
-    let button = document.getElementById("left-toggle").innerHTML = "&larr;";
-
-    // elem.classList.toggle("collapsed");
-    // let isCollapsed = elem.classList.contains("collapsed");
+    let button = document.getElementById("left-toggle");
 
     let padding = {};
 
-    if (collapsed) { //PREVIOUSLY if(isCollapsed)
-
+    if (collapsed) {
         // Developer comment: Remove the 'collapsed' class from the class list of the element, this sets it back to the expanded state.
         classes.splice(classes.indexOf('collapsed'), 1);
 
@@ -58,8 +54,7 @@ function toggleSidebar(leftsidebar) {
             duration: 1000 // Developer comment: In ms, CSS transition duration property for the sidebar matches this value
         });
 
-        button.innerHTML = "&larr;";
-
+        button.innerText = "⇦";
     }
 
     else {
@@ -73,13 +68,11 @@ function toggleSidebar(leftsidebar) {
             duration: 1000
         });
 
-        button.innerHTML = "&rarr;";
-
+        button.innerText = "⇨";
     }
 
     // Developer comment: Update the class list on the element
     elem.className = classes.join(' ');
-
 }
 
 // Expands sidebar on map load (remove to keep closed on default load, change nested code to remove the "sliding" appearance)
