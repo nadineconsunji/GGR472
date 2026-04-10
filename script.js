@@ -437,6 +437,8 @@ Switch between individual technology layers (JUMP2)
 --------------------------------------------------------------------*/
 
 // Change layer property depending on technology selected
+
+/*
 function handleTech(selectedTech) {
 
     // Update selected technology variable - this works
@@ -474,6 +476,7 @@ document.getElementById("tech_select").addEventListener("change", (e) => {
 // FIGURE OUT HOW TO RUN THE ABOVE FUNCTION AND LISTENER WITHIN THE MAP LOAD
 
 // END JUMP
+*/
 
 /*--------------------------------------------------------------------
 Resize map
