@@ -465,13 +465,13 @@ function handleTech(selectedTech) {
     console.log("layer updated");
 }
 
-// FIGURE OUT HOW TO RUN THE ABOVE FUNCTION ON MAP LOAD
-
 // Event listener to trigger change - this works
 document.getElementById("tech_select").addEventListener("change", (e) => {
     var selectedTech = e.target.value;
     handleTech(selectedTech);
 });
+
+// FIGURE OUT HOW TO RUN THE ABOVE FUNCTION AND LISTENER WITHIN THE MAP LOAD
 
 // END JUMP
 
