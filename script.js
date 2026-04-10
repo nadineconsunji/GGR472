@@ -19,7 +19,7 @@ const zoom = 2.5;
 const minZoom = zoom;
 const maxZoom = 7.0;
 
-let layers = ['composite_index_layer', 'system_performance_layer', 'transition_readiness_layer'];
+let layers = ['composite_index_layer', 'system_performance_layer', 'transition_readiness_layer', 'technology_layer'];
 
 // Initialize map and edit to your preference
 const map = new mapboxgl.Map({
@@ -40,8 +40,8 @@ function toggleSidebar(leftsidebar) {
     let elem = document.getElementById(leftsidebar);
     let classes = elem.className.split(' ');
     let collapsed = classes.indexOf('collapsed') !== -1;
-    let button = document.getElementById("left-toggle").innerHTML= "&larr;";
-    
+    let button = document.getElementById("left-toggle").innerHTML = "&larr;";
+
     // elem.classList.toggle("collapsed");
     // let isCollapsed = elem.classList.contains("collapsed");
 
@@ -94,6 +94,13 @@ Adding sources and layers
 
 const theme_colours = ['#25d0ff', '#00a6d4', '#026bc2', '#00457d', '#01145e'];
 
+const fillOpacity = [
+    'case',
+    ['boolean', ['feature-state', 'hover'], false],
+    1,      // hovered country (fully visible)
+    0.7     // all other countries (dimmed)
+];
+
 // Add and visualize data layers
 
 map.on('load', () => {
@@ -113,7 +120,7 @@ map.on('load', () => {
         type: 'fill',
         source: 'energy',
         layout: {
-            visibility: 'visible'
+            visibility: 'none'
         },
         paint: {
             'fill-color': [
@@ -125,12 +132,7 @@ map.on('load', () => {
                 composite_stops[3], theme_colours[3],
                 composite_stops[4], theme_colours[4]
             ],
-            'fill-opacity': [
-                'case',
-                ['boolean', ['feature-state', 'hover'], false],
-                1,      // hovered country (fully visible)
-                0.7     // all other countries (dimmed)
-            ]
+            'fill-opacity': fillOpacity
         }
     });
 
@@ -155,12 +157,7 @@ map.on('load', () => {
                 readiness_stops[3], theme_colours[3],
                 readiness_stops[4], theme_colours[4]
             ],
-            'fill-opacity': [
-                'case',
-                ['boolean', ['feature-state', 'hover'], false],
-                1,      // hovered country (fully visible)
-                0.7     // all other countries (dimmed)
-            ]
+            'fill-opacity': fillOpacity
         }
     });
 
@@ -184,14 +181,26 @@ map.on('load', () => {
                 performance_stops[3], theme_colours[3],
                 performance_stops[4], theme_colours[4]
             ],
-            'fill-opacity': [
-                'case',
-                ['boolean', ['feature-state', 'hover'], false],
-                1,      // hovered country (fully visible)
-                0.7     // all other countries (dimmed)
-            ]
+            'fill-opacity': fillOpacity
         }
     });
+
+    // Dynamic layer for technology (JUMP1)
+
+    map.addLayer({
+        id: 'technology_layer',
+        type: 'fill',
+        source: 'energy', // CHANGE SOURCE ONCE DUMMY DATA IS CREATED
+        layout: {
+            visibility: 'visible'
+        },
+        paint: {
+            'fill-color': '#0099ff', // INTERPOLATE ONCE DUMMY DATA IS CREATED
+            'fill-opacity': fillOpacity // THE HOVER DOES NOT WORK
+        }
+    });
+
+    // DELETE JUMP
 
     // Boundaries
 
@@ -217,7 +226,7 @@ map.on('load', () => {
 
     // Toggle layers off and on
 
-    const layers = ['composite_index_layer', 'transition_readiness_layer', 'system_performance_layer']
+    const layers = ['composite_index_layer', 'transition_readiness_layer', 'system_performance_layer', 'technology_layer']
 
     function handleData() {
 
@@ -242,6 +251,7 @@ map.on('load', () => {
 
     // Event listener to trigger change
 
+    handleData();
     document.getElementById("selections").addEventListener("change", handleData);
 
     // Filter by region
@@ -370,9 +380,14 @@ map.on('load', () => {
         });
     });
 
-    // Zoom to country
+    /*--------------------------------------------------------------------
+    Zoom to country
+    --------------------------------------------------------------------*/
 
     map.doubleClickZoom.disable();
+
+    let country_popup = null;
+
     layers.forEach(layer => {
         map.on('dblclick', layer, (e) => {
             const feature = e.features[0];
@@ -392,20 +407,77 @@ map.on('load', () => {
             const text = feature.properties.text;
 
             // Create the popup
-            new mapboxgl.Popup({
+            country_popup = new mapboxgl.Popup({
                 offset: [400, 350],
                 className: 'no-arrow-popup'
             })
                 .setLngLat(centerCoordinates)
                 .setHTML(`
-            <strong>${name || 'Country'}</strong><br><br>
-            ${text || 'Text'}<br><br>
-            Source: Wikipedia
-        `)
+                <strong>${name || 'Country'}</strong><br><br>
+                ${text || 'Text'}<br><br>
+                Source: Wikipedia
+            `)
                 .addTo(map);
         });
     });
+
+    function closeCountryPopup() {
+        if (country_popup) {
+            country_popup.remove();
+        }
+    }
+
+    map.on("dragstart", closeCountryPopup);
+    map.on("zoomstart", closeCountryPopup);
+
 });
+
+/*--------------------------------------------------------------------
+Switch between individual technology layers (JUMP2)
+--------------------------------------------------------------------*/
+
+// Change layer property depending on technology selected
+function handleTech(selectedTech) {
+
+    // Update selected technology variable - this works
+    var selectedTech = document.getElementById("tech_select").value;
+    console.log(selectedTech);
+
+    // Compute min and max - this works
+    const values = map.querySourceFeatures('energy') // CHANGE SOURCE
+        .map(f => f.properties.system_performance) // CHANGE PROPERTY TO selectedTech
+        .filter(v => v != null);
+
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+
+    // Update layer property - this works
+
+    map.setPaintProperty('technology_layer', 'fill-color', [
+        'interpolate',
+        ['linear'],
+        ['get', 'system_performance'], // CHANGE TO selectedTech ONCE DUMMY DATA CREATED
+        min, theme_colours[0],
+        max, theme_colours[4]
+    ]);
+
+    // Confirm update
+    console.log("layer updated");
+}
+
+// Event listener to trigger change - this works
+document.getElementById("tech_select").addEventListener("change", (e) => {
+    var selectedTech = e.target.value;
+    handleTech(selectedTech);
+});
+
+// FIGURE OUT HOW TO RUN THE ABOVE FUNCTION AND LISTENER WITHIN THE MAP LOAD
+
+// END JUMP
+
+/*--------------------------------------------------------------------
+Resize map
+--------------------------------------------------------------------*/
 
 map.on('load', () => {
     // Resize map accordingly if browser size is changed/minimised 

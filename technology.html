@@ -31,12 +31,12 @@
 
     <div id="navbar" class="navbar">
         <span class="navbar-title">Energy Transition Readiness in Africa</span>
-        
+
         <!-- Vertical line -->
         <span class="vertical-line"></span>
 
-        <a class="navbar-tab" href="#" style="font-weight: bold;">Overall Indices</a>
-        <a class="navbar-tab" href="technology.html">Technology-Specific Preparedness</a>
+        <a class="navbar-tab" href="index.html">Overall Indices</a>
+        <a class="navbar-tab" href="#" style="font-weight: bold;">Technology-Specific Preparedness</a>
 
         <!-- Vertical line -->
         <span class="vertical-line"></span>
@@ -55,23 +55,19 @@
 
                     <!-- CATF logo RELATIVE PATH COPIED, MAY REQ. CHANGE LATER -->
                     <div>
-                        <a href="https://www.catf.us/africa/"><img class="logoCATF" src="data\CATFlogo.png"></a>
-                        <br>
+                        <img class="logoCATF" src="data\CATFlogo.png"> <br>
                     </div>
 
                     <!-- Horizontal line -->
                     <hr class="horizontalline">
-                    <p class="maptitle">Overall Indices</p>
+                    <p class="maptitle" for="layercheck">Technology-Specific Readiness</p>
 
                     <!-- Map title and brief description -->
                     <div>
                         <p class="description">
-                            This map showcases Africa's transition potential to environmentally sustainable technologies
-                            by
-                            country and region.
-                            <br>Readiness is quantified through composite index, transition readiness and system
-                            performance
-                            scores.
+                            This map shows transition readiness across Africa by type of renewable energy technology.
+                            These are scores of how well a country is
+                            prepared to shift to clean energy across each of these technologies.
                         </p>
                     </div>
 
@@ -79,36 +75,20 @@
                     <hr class="horizontalline">
 
                     <!-- Filter map view -->
-                    <p class="heading" for="layercheck">Select variable</p>
+                    <p class="heading" for="layercheck">Select technology</p>
                     <div>
-                        <select name="select_data" id="selections" class="data-select" onchange="handleData()">
-                            <option value="composite">Composite Index</option>
-                            <option value="readiness">Transition Readiness</option>
-                            <option value="performance">System Performance</option>
+                        <select id="tech_select" class="data-select">
+                            <option value="solar">Solar Energy</option>
+                            <option value="wind">Wind Energy</option>
+                            <option value="hydro">Hydropower</option>
                         </select>
-                        <!-- Transition scores info button and related pop-up -->
-                        <div>
-                            <button id="infobutton2" class="infobutton2">i</button>
-                            <div id="popup2" class="popup2">
-                                <div class="popup-content2">
-                                    <span class="close-btn2" id="closeBtn2">&times;</span>
-                                    <h3 class="mapinfo-label">Composite Index</h3>
-                                    <p class="mapinfo-label2">Single, overall score of a country’s current energy
-                                        technology</p>
-                                    <h3 class="mapinfo-label">Transition Readiness</h3>
-                                    <p class="mapinfo-label2">Measures how prepared a country is to successfully shift
-                                        to a clean energy system </p>
-                                    <h3 class="mapinfo-label">System Performance</h3>
-                                    <p class="mapinfo-label2">How well is a country’s current system functioning today
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
-                    <!-- Region Select -->
+                    <!-- Horizontal line -->
+                    <hr class="horizontalline">
                     <p class="heading" for="layercheck">Region</p>
 
+                    <!-- Region Select -->
                     <select name="select_region" id="regions" class="data-select" onchange="handleRegions()">
                         <option value="all">Show all regions</option>
                         <option value="east">East</option>
@@ -119,39 +99,20 @@
                     </select>
                     <br>
                     <button class="button" type="button" id="returnbutton">Return to original view</button>
-                    <br>
-                    <br>
-                    <p class="heading" for="layercheck">Calculate Region Average</p>
-                     <div>
-                        <!-- Select regional average button and pop up -->
-                        <div>
-                            <button id="infobutton3" class="infobutton2">i</button>
-                            <div id="popup3" class="popup2">
-                                <div class="popup-content2">
-                                    <span class="close-btn2" id="closeBtn3">&times;</span>
-                                    <h3 class="mapinfo-label">Calculate Regional Average</h3>
-                                    <p class="mapinfo-label2">To calculate the average of composite index, transition readiness or system performance for a region of your choosing, <b>tick</b> the 'new selection' box and <b>click on countries</b> of interest, then <b>press the 'calculate average' button.</b></p>
-                            </div>
-                        </div>
-                        <input type="checkbox" id="select" class="checkbox" value="new_selection">
-                        <span class="label"><strong>New selection</strong></span>
-                        <br>
-                        <button class="button" id="combinebutton">Calculate average</button>
-                    </div>
+
                     <!-- Horizontal line -->
-                    <br>
                     <hr class="horizontalline">
                     <p class="heading" for="layercheck">Legend</p>
 
                     <!-- Legend -->
                     <div class="legend">
-                        <p class="legendpara">Index Values (%)</p>
+                        <p class="legendpara">Weighted Scores</p>
                         <div><span class="colour-ramp"></span>
                             <br>
                         </div>
                         <div class="legendpara">
-                            <span id="stop_0">21</span>
-                            <span id="stop_1" style="position: absolute; right: 0px;">69</span>
+                            <span id="stop_0">0</span>
+                            <span id="stop_1" style="position: absolute; right: 0px;">100</span>
                         </div>
                     </div>
                 </div>
