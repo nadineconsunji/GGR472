@@ -54,7 +54,7 @@ function toggleSidebar(leftsidebar) {
             duration: 1000 // Developer comment: In ms, CSS transition duration property for the sidebar matches this value
         });
 
-        button.innerText = "←";
+        button.innerText = "⇦";
     }
 
     else {
@@ -68,7 +68,7 @@ function toggleSidebar(leftsidebar) {
             duration: 1000
         });
 
-        button.innerText = "→";
+        button.innerText = "⇨";
     }
 
     // Developer comment: Update the class list on the element
