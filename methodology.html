@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Make layout responsive on other/mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Website title displayed in browser tab -->
+    <title>CATF GGR472</title>
+    <!-- Mapbox GL JS library (JavaScript loaded in for interactive maps) -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.18.1/mapbox-gl.js'></script>
+    <!-- Mapbox GL CSS (CSS loaded in for styling) -->
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.18.1/mapbox-gl.css' rel='stylesheet' />
+    <!-- Mapbox geocoder plugin -->
+    <script
+        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.1.0/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.1.0/mapbox-gl-geocoder.css"
+        type="text/css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap CSS (for responsive layout/grids) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!--linking to bootstrap SEE BELOW -->
+    <!-- Turf.js -->
+    <script src='https://unpkg.com/@turf/turf@7.2.0/turf.min.js'></script>
+</head>
+
+<body>
+
+    <div id="navbar" class="navbar">
+        <span class="navbar-title">Energy Transition Readiness in Africa</span>
+
+        <!-- Vertical line -->
+        <span class="vertical-line"></span>
+
+        <a class="navbar-tab" href="index.html">Overall Indices</a>
+        <a class="navbar-tab" href="technology.html">Technology-Specific Preparedness</a>
+
+        <!-- Vertical line -->
+        <span class="vertical-line"></span>
+
+        <a class="navbar-tab" href="#" style="font-weight: bold;">Methodology</a>
+        <a class="navbar-tab" href="https://github.com/nadineconsunji/GGR472">Data</a>
+
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-content">
+
+            <!-- CATF logo -->
+            <div>
+                <a href="https://www.catf.us/africa/"><img class="logoCATF" src="data\CATFlogo.png"></a>
+                <br>
+            </div>
+
+            <!-- Horizontal line -->
+            <hr class="horizontalline">
+            <p class="maptitle">Methodology</p>
+
+            <!-- Map title and brief description -->
+            <div>
+                <p class="description">
+                    This map showcases Africa's transition potential to environmentally sustainable technologies
+                    by
+                    country and region.
+                    <br>Readiness is quantified through composite index, transition readiness and system
+                    performance
+                    scores.
+                </p>
+            </div>
+
+            <!-- Horizontal line -->
+            <hr class="horizontalline">
+
+            <!-- Heading -->
+            <p class="heading" for="layercheck">Heading</p>
+
+            <!-- Region Select -->
+            <p class="heading" for="layercheck">Another heading</p>
+
+            <button class="button" type="button" id="randombutton">Random button</button>
+
+        </div>
+    </div>
+
+
+    <!-- Bootstrap and JS Script Links -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
+
+<!-- Sidebar HTML, style, and script attribution: by GitHub user antelove19, on Sandbox (codesandbox.io) https://bjiow.csb.app/, https://codesandbox.io/p/sandbox/javascript-api-mapbox-map-sidebar-bjiow?file=%2Findex.html%3A113%2C21-113%2C30 -->
