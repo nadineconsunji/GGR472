@@ -1,3 +1,4 @@
+/* ---------------------------- MAP ------------------------------------ */
 .body {
     height: 100%;
     margin: 0;
@@ -11,6 +12,16 @@
     width: 100%;
 }
 
+.map-container {
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+/* ---------------------------- NAVBAR ------------------------------------ */
 .flex-center {
     position: absolute;
     display: flex;
@@ -31,8 +42,6 @@
     border-radius: 10px;
     box-shadow: 0 0 50px -25px black;
 }
-
-/* ---------------------------- NAVBAR ------------------------------------ */
 
 #navbar {
     height: 60px;
@@ -70,18 +79,7 @@
     font-weight: bold;
 }
 
-/* ------------------------- MAP CONTAINER --------------------------------- */
-
-.map-container {
-    position: absolute;
-    top: 60px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-}
 /* ---------------------------- SIDEBAR ----------------------------------- */
-
 .sidebar {
     position: absolute;
     transition: transform 2s;
@@ -152,13 +150,10 @@
     cursor: pointer;
 }
 
-/* Developer comments: The sidebar styling has them "expanded" by default, we use CSS transforms to push them offscreen
-    The toggleSidebar() function removes this class from the element in order to expand it.
-    */
+
 .left.collapsed {
     transform: translateX(-285px);
 }
-
 
 optgroup {
     font-weight: normal;
@@ -183,11 +178,9 @@ optgroup {
             #6D6A6A 6%,
             #000000 25%,
             #000000 100%);
-    /* TESTING */
 }
 
 /* --------------------------- CHECKBOXES -------------------------------- */
-
 .checkbox-label {
     font-family: Arial, Helvetica, Verdana, sans-serif;
     font-size: medium;
@@ -205,7 +198,6 @@ input[type="checkbox"] {
 }
 
 /* Checkbox title */
-
 .checkbox-title {
     font: 15px 'Arial', Helvetica, Verdana, sans-serif;
     font-weight: bold;
@@ -316,8 +308,7 @@ input[type="checkbox"] {
     text-align: left;
 }
 
-/*  -------------------------- INFO BUTTON 2 --------------------------- */
-/* Format small info button */
+/*  -------------------------- INFO BUTTON 2 and 3 (same code as 2) --------------------------- */
 .infobutton2 {
     display: flex;
     width: 20px;
@@ -398,9 +389,7 @@ input[type="checkbox"] {
     /*FOR TESTS ON WHITE SURFACES */
 }
 
-
 /* --------------- Format map title and description ------------  */
-
 .maptitle {
     position: relative;
     font: 'Arial', Helvetica, Verdana, sans-serif;
