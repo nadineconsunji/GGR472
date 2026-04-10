@@ -30,6 +30,7 @@
 <body>
 
     <div id="navbar" class="navbar">
+        <!-- Navbar title -->
         <span class="navbar-title">Energy Transition Readiness in Africa</span>
 
         <!-- Vertical line -->
@@ -38,7 +39,6 @@
         <a class="navbar-tab" href="#" style="font-weight: bold;">Overall Indices</a>
         <a class="navbar-tab" href="technology.html">Technology-Specific Preparedness</a>
 
-        <!-- Vertical line -->
         <span class="vertical-line"></span>
 
         <a class="navbar-tab" href="methodology.html">Methodology</a>
@@ -46,6 +46,7 @@
 
     </div>
 
+    <!-- Add web map -->
     <div id="my-map" class="map-container">
 
         <!-- Sidebar -->
@@ -53,7 +54,7 @@
             <div class="sidebar-content">
                 <div>
 
-                    <!-- CATF logo RELATIVE PATH COPIED, MAY REQ. CHANGE LATER -->
+                    <!-- CATF logo with link to main website -->
                     <div>
                         <a href="https://www.catf.us/africa/"><img class="logoCATF" src="images/CATFlogo.png"></a>
                         <br>
@@ -78,7 +79,7 @@
                     <!-- Horizontal line -->
                     <hr class="horizontalline">
 
-                    <!-- Filter map view -->
+                    <!-- Filter map view by energy transition scores -->
                     <p class="heading" for="layercheck">Select variable</p>
                     <div>
                         <select name="select_data" id="selections" class="data-select" onchange="handleData()">
@@ -87,7 +88,7 @@
                             <option value="performance">System Performance</option>
                         </select>
 
-                        <!-- Transition scores info button and related pop-up -->
+                        <!-- Energy transition scores info button and related pop-up -->
                         <div>
                             <button id="infobutton2" class="infobutton2">i</button>
                             <div id="popup2" class="popup2">
@@ -95,14 +96,16 @@
                                     <span class="close-btn2" id="closeBtn2">&times;</span>
                                     <h3 class="mapinfo-label">Composite Index</h3>
                                     <p class="mapinfo-label2">Single, overall score of a country’s current clean energy
-                                        technology. Considers hydrogen technology, carbon capture and storage
+                                        technology. Considers a country's hydrogen technology, carbon capture and storage
                                         technology, transition readiness score and system performance score. </p>
                                     <h3 class="mapinfo-label">Transition Readiness</h3>
-                                    <p class="mapinfo-label2">Measures a country's potential to successfully shift to a
-                                        clean energy system </p>
+                                    <p class="mapinfo-label2">Considers political commitment, governance, human capital, 
+                                        investments and power system structures to assess the enabling conditions required 
+                                        for Nigeria to advance toward a clean energy transition</p>
                                     <h3 class="mapinfo-label">System Performance</h3>
-                                    <p class="mapinfo-label2">Measures how well a country’s current clean energy system
-                                        is functioning today</p>
+                                    <p class="mapinfo-label2">Considers economic development and growth, measures of sustainability 
+                                        (carbon dioxide output and biodiversity), and energy access and security to quantify how 
+                                        clean Nigeria’s current energy system is presently</p>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +115,7 @@
                     <!-- Horizontal line -->
                     <hr class="horizontalline">
 
-                    <!-- Region Select -->
+                    <!-- Filter map view by region -->
                     <p class="heading" for="layercheck">Region</p>
 
                     <p>
@@ -126,9 +129,10 @@
                         </select>
                     </p>
 
+                    <!-- Return map view to all region view and original zoom -->
                     <button class="button" type="button" id="returnbutton">Return to original view</button>
 
-                    <!-- Select regional average button and pop up -->
+                    <!-- User-selected regional average button and pop up -->
                     <p class="checkbox-title">Calculate Region Average</p>
 
                     <span class="checkbox-label">
@@ -155,7 +159,7 @@
                     <hr class="horizontalline">
                     <p class="heading" for="layercheck">Legend</p>
 
-                    <!-- Legend -->
+                    <!-- Dynamic legend -->
                     <div class="legend">
                         <p class="legendpara">Index Values (%)</p>
                         <div><span class="colour-ramp"></span>
@@ -180,6 +184,7 @@
                 <div class="popup-content">
                     <span class="close-btn" id="closeBtn">&times;</span>
                     <h2>Map Instructions</h2>
+                    <br>
                     <li class="mapinfo-label2"><b>Hover</b> your mouse over a country to see its individual, specific
                         clean energy capacity including its composite index, transition readiness and system performance
                         scores</li>
@@ -210,5 +215,3 @@
     crossorigin="anonymous"></script>
 
 </html>
-
-<!-- Sidebar HTML, style, and script attribution: by GitHub user antelove19, on Sandbox (codesandbox.io) https://bjiow.csb.app/, https://codesandbox.io/p/sandbox/javascript-api-mapbox-map-sidebar-bjiow?file=%2Findex.html%3A113%2C21-113%2C30 -->
