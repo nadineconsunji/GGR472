@@ -783,16 +783,28 @@ document.getElementById('combinebutton').addEventListener('click', () => {
                 You have calculated the average ${current.label} for ${selectedFeatures.length} selected countries.
             `)
             .addTo(map);
-    }
 
-    // Turn select off
-    layers.forEach(layer => {
-        map.off('click', layer, onCountryClick);
-    });
 
-    // Uncheck select checkbox
-    document.getElementById('select').checked = false;
 
-    // Empty list of selected countries
-    selectedFeatures = [];
+        activePopup.on('close', () => {
+            // Uncheck select checkbox
+            document.getElementById('select').checked = false;
+
+            //Clear layers after highlighted boundary layers and turn off country layers for average calculation purposes
+            if (map.getLayer('selected_boundaries')) {
+                map.removeLayer('selected_boundaries');
+            }
+            if (map.getSource('selected_countries')) {
+                map.removeSource('selected_countries')
+            }
+
+            // Turn selected countries off
+            layers.forEach(layer => {
+                map.off('click', layer, onCountryClick);
+            });
+
+            // Empty list of selected countries
+            selectedFeatures = [];
+        });
+    };
 });
