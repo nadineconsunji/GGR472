@@ -146,6 +146,18 @@ optgroup {
     font-weight: normal;
 }
 
+.sidebar-methods {
+    position: absolute;
+    width: 95%;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 32px;
+    background: #ffffff;
+    border-right: 0.5px solid #00000080;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 /* --------------------------- CHECKBOXES -------------------------------- */
 
 input[type="checkbox"] {
