@@ -291,7 +291,7 @@ input[type="checkbox"] {
 /*  -------------------------- INFO BUTTON 2 --------------------------- */
 /* Format small info button */
 .infobutton2 {
-    display: inline-block;
+    display: flex;
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -335,7 +335,7 @@ input[type="checkbox"] {
 .popup-content2 {
     background-color: white;
     margin: 15% auto;
-    padding: 20px;
+    padding: 30px;
     width: 500px;
     border-radius: 10px;
     position: relative;
@@ -344,13 +344,11 @@ input[type="checkbox"] {
 
 .close-btn2 {
     position: absolute;
-    top: 10px;
+    top: 15px;
     right: 15px;
     font-size: 20px;
     cursor: pointer;
 }
-
-
 
 /*  -------------------------- LOGOS --------------------------- */
 .logoCATF {
