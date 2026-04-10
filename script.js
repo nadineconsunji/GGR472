@@ -436,6 +436,9 @@ Adding interactivity
 
 // 1) Add event listener which returns map view to original view on button click using flyTo method ---------------------------------------------------------------------------------------------
 document.getElementById('returnbutton').addEventListener('click', () => {
+    layers.forEach(layer => {
+        map.setFilter(layer, null);
+    });
     map.flyTo({
         center: center, // LINES 10-11
         zoom: zoom, // LINE 10, 12
@@ -465,7 +468,7 @@ window.addEventListener("click", (e) => {
     }
 });
 
-// 3) Information button 2 ---------------------------------------------------------------------------------------------
+// 3) Information button 2 and 3 ---------------------------------------------------------------------------------------------
 const infopopup2 = document.getElementById("popup2");
 const infobutton2 = document.getElementById("infobutton2");
 const closeBtn2 = document.getElementById("closeBtn2");
@@ -484,6 +487,27 @@ closeBtn2.addEventListener("click", () => {
 window.addEventListener("click", (e) => {
     if (e.target === infopopup2) {
         infopopup2.style.display = "none";
+    }
+});
+
+const infopopup3 = document.getElementById("popup3");
+const infobutton3 = document.getElementById("infobutton3");
+const closeBtn3 = document.getElementById("closeBtn3");
+
+// Open popup
+infobutton3.addEventListener("click", () => {
+    infopopup3.style.display = "block";
+});
+
+// Close popup
+closeBtn3.addEventListener("click", () => {
+    infopopup3.style.display = "none";
+});
+
+// Close if clicking outside the box
+window.addEventListener("click", (e) => {
+    if (e.target === infopopup3) {
+        infopopup3.style.display = "none";
     }
 });
 

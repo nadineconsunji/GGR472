@@ -198,9 +198,9 @@ input[type="checkbox"] {
 
 .popup-content {
     background-color: white;
-    margin: 15% auto;
+    margin: 7% auto;
     padding: 20px;
-    width: 800px;
+    width: 1000px;
     border-radius: 10px;
     position: relative;
     text-align: center;
@@ -296,12 +296,8 @@ input[type="checkbox"] {
     width: 90%;
 }
 
-.logoUofT {
-    position: absolute;
-    bottom: 10px;
-    width: 90%;
-    margin: 5% 0 0 5%;
-    /*FOR TESTS ON WHITE SURFACES background-color: #000000; */
+.logoCATF:hover {
+  cursor: hand;
 }
 
 /* --------------- Format map title and description ------------  */
