@@ -1,6 +1,7 @@
-/*--------------------------------------------------------------------
-Initializing map
---------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------------
+1.1) Initializing map
+------------------------------------------------------------------------------------------------------------------------*/
+
 // Mapbox Token
 mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6NTNkb29meTJzMW81dSJ9.t6RLssyQkfZODRIMy_ToNQ';
 
@@ -8,7 +9,6 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6N
 // mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuaWVsODEwMTciLCJhIjoiY21rZWI2eGg4MDU5NjNscHdxbjhkMTNmciJ9.jdsMukp7zHz3llySNBJs0A';
 
 // Center coordinates for map on load and zoom change(to change, refer to https://labs.mapbox.com/location-helper)
-// FIX COORDINATES FOR EAST, WEST, AND SOUTH
 const center = [22.34868, -0.31974];
 const centerEast = [35, -5];
 const centerWest = [-2, 15];
@@ -19,22 +19,22 @@ const zoom = 2.5;
 const minZoom = zoom;
 const maxZoom = 7.0;
 
-let layers = ['composite_index_layer', 'system_performance_layer', 'transition_readiness_layer', 'technology_layer'];
-
 // Initialize map and edit to your preference
 const map = new mapboxgl.Map({
     container: 'my-map', // container id in HTML
     style: 'mapbox://styles/nadineconsunji/cmmbdfg9r007x01ryckrx8rx8',
-    center: center,  // starting point, longitude/latitude - SEE LINES 10-11
-    zoom: zoom, // starting zoom level - SEE LINE 10, 12
+    // The following variables have been defined above
+    center: center,
+    zoom: zoom,
     minZoom: minZoom,
     maxZoom: maxZoom
-    // pitch: '', [CAN USE FOR 3D MAP VISUALIZATION] 
 });
 
-// Test center of map with marker (see lines 10-11) - check if below needs to be changed to add.To(my-map)
-// new mapboxgl.Marker().setLngLat(center).addTo(map);
+/*------------------------------------------------------------------------------------------------------------------------
+1.2) Adding interactivity to sidebar
+------------------------------------------------------------------------------------------------------------------------*/
 
+// Function to collapse sidebar on click
 function toggleSidebar(leftsidebar) {
 
     let elem = document.getElementById(leftsidebar);
@@ -83,17 +83,23 @@ function toggleSidebar(leftsidebar) {
 }
 
 // Expands sidebar on map load (remove to keep closed on default load, change nested code to remove the "sliding" appearance)
-
 map.on('load', function () {
     toggleSidebar('left');
 });
 
-/*--------------------------------------------------------------------
-Adding sources and layers
---------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------
+2) Adding sources and layers, and changing layer display based on user interactions
+--------------------------------------------------------------------------------------------------*/
 
+// 2.1) Defining lists and arrays used in all layers
+
+// List of layers. Most layer interactions go inside a 'for each' loop
+let layers = ['composite_index_layer', 'system_performance_layer', 'transition_readiness_layer', 'technology_layer'];
+
+// Defining theme colours based on CATF brand colours
 const theme_colours = ['#25d0ff', '#00a6d4', '#026bc2', '#00457d', '#01145e'];
 
+// Boolean fill opacity, with greater opacity on hover
 const fillOpacity = [
     'case',
     ['boolean', ['feature-state', 'hover'], false],
@@ -101,18 +107,22 @@ const fillOpacity = [
     0.7     // all other countries (dimmed)
 ];
 
-// Add and visualize data layers
+// 2.2) Adding layers and interactivity
 
 map.on('load', () => {
 
-    // Composite index layer
-
+    /*-----------------------------------------------------------------------------------------
+    2.2.1) Load 3 layers for overall indices tab
+    -----------------------------------------------------------------------------------------*/
+    
+    // Source for overall indices
     map.addSource('energy', {
         type: 'geojson',
         data: 'https://raw.githubusercontent.com/nadineconsunji/GGR472/main/data/energy_index.geojson',
         promoteId: 'OBJECTID'
     });
-
+    
+    // 1) Composite index layer
     const composite_stops = [21, 33, 45, 57, 69];
 
     map.addLayer({
@@ -136,8 +146,7 @@ map.on('load', () => {
         }
     });
 
-    // Transition readiness layer
-
+    // 2) Transition readiness layer
     const readiness_stops = [5, 13.5, 22, 30.5, 39];
 
     map.addLayer({
@@ -161,7 +170,7 @@ map.on('load', () => {
         }
     });
 
-    // System performance layer
+    // 3) System performance layer
     const performance_stops = [21, 26.5, 32, 37.5, 43];
 
     map.addLayer({
@@ -185,12 +194,22 @@ map.on('load', () => {
         }
     });
 
-    // Dynamic layer for technology (JUMP1)
+    /*-----------------------------------------------------------------------------------------
+    2.2.2) Load 1 layer for specific technologies tab
+    -----------------------------------------------------------------------------------------*/
 
+    // Source for specific technologies
+    map.addSource('technology', {
+        type: 'geojson',
+        data: 'https://raw.githubusercontent.com/nadineconsunji/GGR472/main/data/technology.geojson',
+        promoteId: 'OBJECTID'
+    });
+
+    // Dynamic layer for technology (JUMP1)
     map.addLayer({
         id: 'technology_layer',
         type: 'fill',
-        source: 'energy', // CHANGE SOURCE ONCE DUMMY DATA IS CREATED
+        source: 'technology', // CHANGE SOURCE ONCE DUMMY DATA IS CREATED
         layout: {
             visibility: 'visible'
         },
@@ -202,8 +221,11 @@ map.on('load', () => {
 
     // DELETE JUMP
 
-    // Boundaries
+    /*-----------------------------------------------------------------------------------------
+    2.2.3) Load layer to display boundaries
+    -----------------------------------------------------------------------------------------*/
 
+    // Boundaries
     map.addLayer({
         id: 'boundaries',
         type: 'line',
@@ -217,17 +239,17 @@ map.on('load', () => {
         }
     });
 
-    // Legend
+    /*-----------------------------------------------------------------------------------------
+    2.3.1) Change data display on overall indices tab
+    -----------------------------------------------------------------------------------------*/
 
+    // Legend
     function updateLegend(stops_variable) {
         document.getElementById('stop_0').textContent = stops_variable[0];
         document.getElementById('stop_1').textContent = stops_variable[4];
     }
 
-    // Toggle layers off and on
-
-    const layers = ['composite_index_layer', 'transition_readiness_layer', 'system_performance_layer', 'technology_layer']
-
+    // Change overall index displayed when data selected
     function handleData() {
 
         var selectedData = document.getElementById("selections").value;
@@ -249,16 +271,29 @@ map.on('load', () => {
         }
     };
 
-    // Event listener to trigger change
-
+    // Visualizes current layer on map load
     handleData();
+
+    // Event listener to trigger change in data display
     document.getElementById("selections").addEventListener("change", handleData);
 
-    // Filter by region
+    /*-----------------------------------------------------------------------------------------
+    EDIT SUBSEQUENT HEADING NUMBERS: 2.3.2) Change data display on specific technologies tab
+    -----------------------------------------------------------------------------------------*/
 
+    // INSERT FUNCTION PIECE BY PIECE
+
+    /*-----------------------------------------------------------------------------------------
+    2.3.2) Filter by region and zoom to region
+    -----------------------------------------------------------------------------------------*/
+
+    // Function to filter by region
     function handleRegions() {
+        
+        // Store selected region in a variable
         var selectedRegion = document.getElementById("regions").value;
 
+        // Add filter to all layers
         layers.forEach(layer => {
             if (selectedRegion == 'all') {
                 map.setFilter(layer, null);
@@ -268,7 +303,6 @@ map.on('load', () => {
         });
 
         // Fly to selected region
-
         if (selectedRegion == 'all') {
             map.flyTo({
                 center: center,
@@ -302,11 +336,12 @@ map.on('load', () => {
         };
     };
 
-    // Event listener to trigger change
-
+    // Event listener to trigger region function
     document.getElementById("regions").addEventListener("change", handleRegions);
 
-    // Hover
+    /*--------------------------------------------------------------------
+    2.3.3) Increase country opacity on hover
+    --------------------------------------------------------------------*/
     let hoveredId = null;
 
     layers.forEach(layer => {
@@ -342,7 +377,9 @@ map.on('load', () => {
         });
     });
 
-    // Popups
+    /*--------------------------------------------------------------------
+    2.3.4) Create popups on hover
+    --------------------------------------------------------------------*/
 
     const energy_popup = new mapboxgl.Popup({
         closeButton: false,
@@ -381,13 +418,16 @@ map.on('load', () => {
     });
 
     /*--------------------------------------------------------------------
-    Zoom to country
+    2.3.5) Zoom to country and display panels with text
     --------------------------------------------------------------------*/
 
+    // Disable existing zoom settings
     map.doubleClickZoom.disable();
 
+    // Define popup to start
     let country_popup = null;
 
+    // Create popups
     layers.forEach(layer => {
         map.on('dblclick', layer, (e) => {
             const feature = e.features[0];
@@ -421,12 +461,14 @@ map.on('load', () => {
         });
     });
 
+    // Function to close popups
     function closeCountryPopup() {
         if (country_popup) {
             country_popup.remove();
         }
     }
 
+    // Close popups on the following interactions
     map.on("dragstart", closeCountryPopup);
     map.on("zoomstart", closeCountryPopup);
 
