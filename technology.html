@@ -31,19 +31,18 @@
 
     <div id="navbar" class="navbar">
         <span class="navbar-title">Energy Transition Readiness in Africa</span>
-        
+
         <!-- Vertical line -->
         <span class="vertical-line"></span>
 
-        <a class="navbar-tab" href="index.html">Composite Scores</a>
-        <a class="navbar-tab" href="#" style="font-weight: bold;">Hydrogen</a>
-        <a class="navbar-tab">Methane</a>
-        <a class="navbar-tab">CCS</a>
+        <a class="navbar-tab" href="index.html">Overall Indices</a>
+        <a class="navbar-tab" href="#" style="font-weight: bold;">Technology-Specific Preparedness</a>
 
         <!-- Vertical line -->
         <span class="vertical-line"></span>
 
         <a class="navbar-tab">Methods</a>
+        <a class="navbar-tab" href="https://github.com/nadineconsunji/GGR472">Data</a>
 
     </div>
 
@@ -51,7 +50,7 @@
 
         <!-- Sidebar -->
         <div id="left" class="sidebar flex-center left collapsed">
-            <div class="sidebar-content rounded-rect">
+            <div class="sidebar-content">
                 <div>
 
                     <!-- CATF logo RELATIVE PATH COPIED, MAY REQ. CHANGE LATER -->
@@ -59,16 +58,16 @@
                         <img class="logoCATF" src="data\CATFlogo.png"> <br>
                     </div>
 
+                    <!-- Horizontal line -->
+                    <hr class="horizontalline">
+                    <p class="maptitle" for="layercheck">Technology-Specific Readiness</p>
+
                     <!-- Map title and brief description -->
                     <div>
-                        <h2 class="maptitle">Hydrogen Scores</h2>
                         <p class="description">
-                            This map showcases Africa's transition potential to environmentally sustainable technologies
-                            by
-                            country and region.
-                            <br>Readiness is quantified through composite index, transition readiness and system
-                            performance
-                            scores.
+                            This map shows transition readiness across Africa by type of renewable energy technology.
+                            These are scores of how well a country is
+                            prepared to shift to clean energy across each of these technologies.
                         </p>
                     </div>
 
@@ -76,36 +75,20 @@
                     <hr class="horizontalline">
 
                     <!-- Filter map view -->
-                    <p class="heading" for="layercheck">Filter map view</p>
+                    <p class="heading" for="layercheck">Select technology</p>
                     <div>
-                        <select name="select_data" id="selections" class="data-select" onchange="handleData()">
-                            <option value="composite">Composite Index</option>
-                            <option value="readiness">Transition Readiness</option>
-                            <option value="performance">System Performance</option>
+                        <select id="tech_select" class="data-select">
+                            <option value="solar">Solar Energy</option>
+                            <option value="wind">Wind Energy</option>
+                            <option value="hydro">Hydropower</option>
                         </select>
-                        <!-- Transition scores info button and related pop-up -->
-                        <div>
-                            <button id="infobutton2" class="infobutton2">i</button>
-                            <div id="popup2" class="popup2">
-                                <div class="popup-content2">
-                                    <span class="close-btn2" id="closeBtn2">&times;</span>
-                                    <h3 class="mapinfo-label">Composite Index</h3>
-                                    <p class="mapinfo-label2">Single, overall score of a country’s current energy
-                                        technology</p>
-                                    <h3 class="mapinfo-label">Transition Readiness</h3>
-                                    <p class="mapinfo-label2">Measures how prepared a country is to successfully shift
-                                        to a clean energy system </p>
-                                    <h3 class="mapinfo-label">System Performance</h3>
-                                    <p class="mapinfo-label2">How well is a country’s current system functioning today
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
-                    <!-- Region Select -->
+                    <!-- Horizontal line -->
+                    <hr class="horizontalline">
                     <p class="heading" for="layercheck">Region</p>
 
+                    <!-- Region Select -->
                     <select name="select_region" id="regions" class="data-select" onchange="handleRegions()">
                         <option value="all">Show all regions</option>
                         <option value="east">East</option>
@@ -116,43 +99,23 @@
                     </select>
                     <br>
                     <button class="button" type="button" id="returnbutton">Return to original view</button>
-                    <br><br>
-                    <input type="checkbox" id="select" class="checkbox" value="new_selection">
-                    <span class="label"><strong>New selection</strong></span>
-                    <br>
-                    <button class="button" id="combinebutton">Calculate average</button>
 
                     <!-- Horizontal line -->
-                    <br>
                     <hr class="horizontalline">
                     <p class="heading" for="layercheck">Legend</p>
 
                     <!-- Legend -->
                     <div class="legend">
-                        <p class="legendpara">Index Values (%)</p>
+                        <p class="legendpara">Weighted Scores</p>
                         <div><span class="colour-ramp"></span>
                             <br>
                         </div>
                         <div class="legendpara">
-                            <span id="stop_0">21</span>
-                            <span id="stop_1" style="position: absolute; right: 0px;">69</span>
+                            <span id="stop_0">0</span>
+                            <span id="stop_1" style="position: absolute; right: 0px;">100</span>
                         </div>
                     </div>
                 </div>
-
-                <!-- CATF logo RELATIVE PATH COPIED, MAY REQ. CHANGE LATER -->
-                <!--
-                    <div>
-                        <div class="bottomtextcredits">
-                            Site made in partnership with the University of Toronto's Faculty of Arts and Science
-                            Sandbox program.
-                            <br>Course: GGR472H1S Developing Web Maps.
-                        </div>
-                        <div>
-                            <img class="logoUofT" src="data\UofTArtSciwordmark.png">
-                        </div>
-                    </div>
-                    -->
             </div>
 
             <!-- Sidebar toggle (left) -->
@@ -166,7 +129,7 @@
         <div id="popup" class="popup">
             <div class="popup-content">
                 <span class="close-btn" id="closeBtn">&times;</span>
-                <h2>Map Information</h2>
+                <h2 class="mapinfo-title">Map Information</h2>
                 <h6 class="mapinfo-label">Right-hand corner</h6>
                 <p class="mapinfo-label2">In the upper right hand corner, you can use the buttons to search for specific
                     countries, zoom in and out of the map and make the map full screen.</p>

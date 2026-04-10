@@ -35,15 +35,14 @@
         <!-- Vertical line -->
         <span class="vertical-line"></span>
 
-        <a class="navbar-tab" href="#" style="font-weight: bold;">Composite Scores</a>
-        <a class="navbar-tab" href="hydrogen.html">Hydrogen</a>
-        <a class="navbar-tab">Methane</a>
-        <a class="navbar-tab">CCS</a>
+        <a class="navbar-tab" href="#" style="font-weight: bold;">Overall Indices</a>
+        <a class="navbar-tab" href="technology.html">Technology-Specific Preparedness</a>
 
         <!-- Vertical line -->
         <span class="vertical-line"></span>
 
         <a class="navbar-tab">Methods</a>
+        <a class="navbar-tab" href="https://github.com/nadineconsunji/GGR472">Data</a>
 
     </div>
 
@@ -51,7 +50,7 @@
 
         <!-- Sidebar -->
         <div id="left" class="sidebar flex-center left collapsed">
-            <div class="sidebar-content rounded-rect">
+            <div class="sidebar-content">
                 <div>
 
                     <!-- CATF logo RELATIVE PATH COPIED, MAY REQ. CHANGE LATER -->
@@ -59,9 +58,12 @@
                         <img class="logoCATF" src="data\CATFlogo.png"> <br>
                     </div>
 
+                    <!-- Horizontal line -->
+                    <hr class="horizontalline">
+                    <p class="maptitle">Overall Indices</p>
+
                     <!-- Map title and brief description -->
                     <div>
-                        <h2 class="maptitle">Composite Scores</h2>
                         <p class="description">
                             This map showcases Africa's transition potential to environmentally sustainable technologies
                             by
@@ -76,7 +78,7 @@
                     <hr class="horizontalline">
 
                     <!-- Filter map view -->
-                    <p class="heading" for="layercheck">Filter map view</p>
+                    <p class="heading" for="layercheck">Select variable</p>
                     <div>
                         <select name="select_data" id="selections" class="data-select" onchange="handleData()">
                             <option value="composite">Composite Index</option>
@@ -139,20 +141,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- CATF logo RELATIVE PATH COPIED, MAY REQ. CHANGE LATER -->
-                <!--
-                    <div>
-                        <div class="bottomtextcredits">
-                            Site made in partnership with the University of Toronto's Faculty of Arts and Science
-                            Sandbox program.
-                            <br>Course: GGR472H1S Developing Web Maps.
-                        </div>
-                        <div>
-                            <img class="logoUofT" src="data\UofTArtSciwordmark.png">
-                        </div>
-                    </div>
-                    -->
             </div>
 
             <!-- Sidebar toggle (left) -->
@@ -166,7 +154,7 @@
         <div id="popup" class="popup">
             <div class="popup-content">
                 <span class="close-btn" id="closeBtn">&times;</span>
-                <h2>Map Information</h2>
+                <h2 class="mapinfo-title">Map Information</h2>
                 <h6 class="mapinfo-label">Right-hand corner</h6>
                 <p class="mapinfo-label2">In the upper right hand corner, you can use the buttons to search for specific
                     countries, zoom in and out of the map and make the map full screen.</p>
