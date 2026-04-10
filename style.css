@@ -138,15 +138,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffffff;
+    color: #ffffff;
+    background-color: #0b81e1;
+    font-size: large;
 }
 
 .sidebar-toggle.left {
-    right: -1.5em;
+    right: -1.6em;
 }
 
 .sidebar-toggle:hover {
-    background-color: #c2f2ff;
+    color: #000000;
+    background-color: #ffffff;
     cursor: pointer;
 }
 
@@ -154,12 +157,9 @@
     The toggleSidebar() function removes this class from the element in order to expand it.
     */
 .left.collapsed {
-    transform: translateX(-315px);
+    transform: translateX(-285px);
 }
 
-.right.collapsed {
-    transform: translateX(315px);
-}
 
 optgroup {
     font-weight: normal;
