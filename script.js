@@ -86,7 +86,7 @@ map.on('load', function () {
 
 // 2.1) Defining lists and arrays used in all layers
 
-// List of layers. Most layer interactions go inside a 'for each' loop
+// List of composite layers. Most layer interactions go inside a 'for each' loop
 let layers = ['composite_index_layer', 'system_performance_layer', 'transition_readiness_layer', 'technology_layer'];
 
 // Defining theme colours based on CATF brand colours
@@ -107,14 +107,14 @@ map.on('load', () => {
     /*-----------------------------------------------------------------------------------------
     2.2.1) Load 3 layers for overall indices tab
     -----------------------------------------------------------------------------------------*/
-    
+
     // Source for overall indices
     map.addSource('energy', {
         type: 'geojson',
         data: 'https://raw.githubusercontent.com/nadineconsunji/GGR472/main/data/energy_index.geojson',
         promoteId: 'OBJECTID'
     });
-    
+
     // 1) Composite index layer
     const composite_stops = [21, 33, 45, 57, 69];
 
@@ -191,28 +191,66 @@ map.on('load', () => {
     2.2.2) Load 1 layer for specific technologies tab
     -----------------------------------------------------------------------------------------*/
 
-    // Source for specific technologies
-    map.addSource('technology', {
-        type: 'geojson',
-        data: 'https://raw.githubusercontent.com/nadineconsunji/GGR472/main/data/technology.geojson',
-        promoteId: 'OBJECTID'
-    });
+    // Dynamic layer for technology
+    const technology_stops = [21, 69];
 
-    // Dynamic layer for technology (JUMP1)
     map.addLayer({
         id: 'technology_layer',
         type: 'fill',
-        source: 'technology', // CHANGE SOURCE ONCE DUMMY DATA IS CREATED
+        source: 'energy', // CHANGE SOURCE ONCE DUMMY DATA IS CREATED
         layout: {
             visibility: 'visible'
         },
         paint: {
-            'fill-color': '#0099ff', // INTERPOLATE ONCE DUMMY DATA IS CREATED
+            'fill-color': [
+                'interpolate',
+                ['linear'], ['get', 'solar'],
+                technology_stops[0], theme_colours[0],
+                technology_stops[1], theme_colours[4]
+            ],
             'fill-opacity': fillOpacity // THE HOVER DOES NOT WORK
         }
     });
 
-    // DELETE JUMP
+    /*-----------------------------------------------------------------------------------------
+    2.2.2.1) Change data display on specific technologies tab
+    -----------------------------------------------------------------------------------------*/
+
+    function handleTechTest(selectedTech) {
+
+        // Update selected technology variable
+        var selectedTech = document.getElementById("tech_select").value;
+
+        // Compute min and max
+        const values = map.querySourceFeatures('energy')
+            .map(f => f.properties[selectedTech])
+            .filter(v => v != null);
+
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+
+        // Update legend
+        document.getElementById('tech_stop_0').textContent = min;
+        document.getElementById('tech_stop_1').textContent = max;
+
+        // Update layer fill
+        map.setPaintProperty('technology_layer', 'fill-color', [
+            'interpolate',
+            ['linear'],
+            ['get', selectedTech],
+            min, theme_colours[0],
+            max, theme_colours[4]
+        ]);
+    }
+    
+    const techSelect = document.getElementById("tech_select");
+
+    if (techSelect) {
+        techSelect.addEventListener("change", () => {
+            const selectedTech = document.getElementById("tech_select").value;
+            handleTechTest(selectedTech);
+        });
+    };
 
     /*-----------------------------------------------------------------------------------------
     2.2.3) Load layer to display boundaries
@@ -271,18 +309,14 @@ map.on('load', () => {
     document.getElementById("selections").addEventListener("change", handleData);
 
     /*-----------------------------------------------------------------------------------------
-    EDIT SUBSEQUENT HEADING NUMBERS: 2.3.2) Change data display on specific technologies tab
+    2.4) Functions that apply to multiple layers
     -----------------------------------------------------------------------------------------*/
 
-    // INSERT FUNCTION PIECE BY PIECE
-
-    /*-----------------------------------------------------------------------------------------
-    2.3.2) Filter by region and zoom to region
-    -----------------------------------------------------------------------------------------*/
+    // 2.4.1) Filter by region and zoom to region ---------------------------------------------
 
     // Function to filter by region
     function handleRegions() {
-        
+
         // Store selected region in a variable
         var selectedRegion = document.getElementById("regions").value;
 
@@ -332,9 +366,8 @@ map.on('load', () => {
     // Event listener to trigger region function
     document.getElementById("regions").addEventListener("change", handleRegions);
 
-    /*--------------------------------------------------------------------
-    2.3.3) Increase country opacity on hover
-    --------------------------------------------------------------------*/
+    // 2.4.2) Increase country opacity on hover -------------------------------------------------
+
     let hoveredId = null;
 
     layers.forEach(layer => {
@@ -370,9 +403,7 @@ map.on('load', () => {
         });
     });
 
-    /*--------------------------------------------------------------------
-    2.3.4) Create popups on hover
-    --------------------------------------------------------------------*/
+    // 2.4.3) Create popups on hover -------------------------------------------------------------
 
     const energy_popup = new mapboxgl.Popup({
         closeButton: false,
@@ -410,9 +441,7 @@ map.on('load', () => {
         });
     });
 
-    /*--------------------------------------------------------------------
-    2.3.5) Zoom to country and display panels with text
-    --------------------------------------------------------------------*/
+    // 2.4.4) Zoom to country and display panels with text --------------------------------------------
 
     // Disable existing zoom settings
     map.doubleClickZoom.disable();
@@ -467,64 +496,18 @@ map.on('load', () => {
 
 });
 
-/*--------------------------------------------------------------------
-Switch between individual technology layers (JUMP2)
---------------------------------------------------------------------*/
-
-// Change layer property depending on technology selected
-
-/*
-function handleTech(selectedTech) {
-
-    // Update selected technology variable - this works
-    var selectedTech = document.getElementById("tech_select").value;
-    console.log(selectedTech);
-
-    // Compute min and max - this works
-    const values = map.querySourceFeatures('energy') // CHANGE SOURCE
-        .map(f => f.properties.system_performance) // CHANGE PROPERTY TO selectedTech
-        .filter(v => v != null);
-
-    const min = Math.min(...values);
-    const max = Math.max(...values);
-
-    // Update layer property - this works
-
-    map.setPaintProperty('technology_layer', 'fill-color', [
-        'interpolate',
-        ['linear'],
-        ['get', 'system_performance'], // CHANGE TO selectedTech ONCE DUMMY DATA CREATED
-        min, theme_colours[0],
-        max, theme_colours[4]
-    ]);
-
-    // Confirm update
-    console.log("layer updated");
-}
-
-// Event listener to trigger change - this works
-document.getElementById("tech_select").addEventListener("change", (e) => {
-    var selectedTech = e.target.value;
-    handleTech(selectedTech);
-});
-
-// FIGURE OUT HOW TO RUN THE ABOVE FUNCTION AND LISTENER WITHIN THE MAP LOAD
-
-// END JUMP
-*/
-
-/*--------------------------------------------------------------------
-Resize map
---------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------
+3) Resize map
+------------------------------------------------------------------------------------------------*/
 
 map.on('load', () => {
     // Resize map accordingly if browser size is changed/minimised 
     map.resize();
 });
 
-/*--------------------------------------------------------------------
-Adding map controls 
---------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------
+4) Adding map controls 
+------------------------------------------------------------------------------------------------*/
 // Search control 
 map.addControl(
     new MapboxGeocoder({
@@ -540,11 +523,11 @@ map.addControl(new mapboxgl.NavigationControl());
 // Add fullscreen option to the map
 map.addControl(new mapboxgl.FullscreenControl());
 
-/*--------------------------------------------------------------------
-Adding interactivity 
---------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------
+5) Adding interactivity 
+------------------------------------------------------------------------------------------------*/
 
-// 1) Add event listener which returns map view to original view on button click using flyTo method ---------------------------------------------------------------------------------------------
+// 5.1) Add event listener which returns map view to original view on button click using flyTo method ---------------------------------------------------------------------------------------------
 document.getElementById('returnbutton').addEventListener('click', () => {
     layers.forEach(layer => {
         map.setFilter(layer, null);
@@ -556,7 +539,7 @@ document.getElementById('returnbutton').addEventListener('click', () => {
     });
 });
 
-// 2) Information button ---------------------------------------------------------------------------------------------
+// 5.2) Information button ---------------------------------------------------------------------------------------------
 const infopopup = document.getElementById("popup");
 const infobutton = document.getElementById("infobutton");
 const closeBtn = document.getElementById("closeBtn");
@@ -578,7 +561,7 @@ window.addEventListener("click", (e) => {
     }
 });
 
-// 3) Information button 2 and 3 ---------------------------------------------------------------------------------------------
+// 5.3) Information button 2 and 3 ---------------------------------------------------------------------------------------------
 const infopopup2 = document.getElementById("popup2");
 const infobutton2 = document.getElementById("infobutton2");
 const closeBtn2 = document.getElementById("closeBtn2");
@@ -621,7 +604,9 @@ window.addEventListener("click", (e) => {
     }
 });
 
-// 4) Combine countries ---------------------------------------------------------------------------------------------
+/* ----------------------------------------------------------------------------------------------------------------
+6) Calculate averages for selected countries
+----------------------------------------------------------------------------------------------------------------- */
 
 // Store selected countries
 function onCountryClick(e) {
