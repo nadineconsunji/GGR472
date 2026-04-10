@@ -46,6 +46,7 @@
 
     </div>
 
+    <!-- Add web map -->
     <div id="my-map" class="map-container">
 
         <!-- Sidebar -->
@@ -53,7 +54,7 @@
             <div class="sidebar-content">
                 <div>
 
-                    <!-- CATF logo RELATIVE PATH COPIED, MAY REQ. CHANGE LATER -->
+                   <!-- CATF logo with link to main website -->
                     <div>
                         <a href="https://www.catf.us/africa/"><img class="logoCATF" src="images/CATFlogo.png"></a>
                         <br>
@@ -75,7 +76,7 @@
                     <!-- Horizontal line -->
                     <hr class="horizontalline">
 
-                    <!-- Filter map view -->
+                    <!-- Filter map view by technology -->
                     <p class="heading" for="layercheck">Select technology</p>
                     <div>
                         <select id="tech_select" class="data-select">
@@ -144,23 +145,24 @@
         <div id="popup" class="popup">
             <div class="popup-content">
                 <span class="close-btn" id="closeBtn">&times;</span>
-                <h2 class="mapinfo-title">Map Information</h2>
-                <h6 class="mapinfo-label">Right-hand corner</h6>
-                <p class="mapinfo-label2">In the upper right hand corner, you can use the buttons to search for specific
-                    countries, zoom in and out of the map and make the map full screen.</p>
-                <h6 class="mapinfo-label">Central, main map</h6>
-                <p class="mapinfo-label2">Numerical measurements for each country are showcased using blue colour
-                    intensity. Darker blue countries have higher numberical values for what is being showcased. On the
-                    main map, hovering over a country allows you to see its individual, specific energy transition
-                    readiness scores including its composite index, transition readiness, and system performance scores.
-                    Double clicking on a country allows you to zoom to its level and returns a short summary of the
-                    country’s energy infrastructure and potential for an energy transition. To average the composite
-                    index, transition readiness and system performance of multiple countries, you can click on the
-                    countries of interest and press the ‘combine’ button in the left-hand sidebar.</p>
-                <h6 class="mapinfo-label">Left-hand sidebar</h6>
-                <p class="mapinfo-label2">Use the ‘filter map view’ items to toggle between transition measurements -
-                    composite index, transition readiness, and system performance. Use the ‘region’ items to focus on
-                    specific regions in Africa.</p>
+                <h2>Map Instructions</h2>
+                <br>
+                <li class="mapinfo-label2"><b>Hover</b> your mouse over a country to see its individual, specific
+                    clean energy capacity including its composite index, transition readiness and system performance
+                    scores</li>
+                <li class="mapinfo-label2"><b>Double clicking</b> on a country allows you to zoom to its geographic
+                    level and returns a short summary of the country's energy infrastructure and potential for an
+                    energy transition</li>
+                <li class="mapinfo-label2">To average the composite index, transition readiness or system
+                    performance of multiple countries to illustrate a specific region's capacity to achieve a clean
+                    energy transition, <b>tick</b> the 'new selection' box and <b>click on countries</b> of
+                    interest, then <b>press the 'calculate average' button</b></li>
+                <li class="mapinfo-label2">Use the <b>'filter map view' items</b> to toggle between transition
+                    measurements - composite index, transition readiness, and system performance</li>
+                <li class="mapinfo-label2">Use the <b>‘region’ items</b> to focus on specific regions in Africa</li>
+                <li class="mapinfo-label2">Use the <b>side bar button</b> to slide the sidebar in and out of the
+                    screen</li>
+                <br>
             </div>
         </div>
     </div>
@@ -175,5 +177,3 @@
 </body>
 
 </html>
-
-<!-- Sidebar HTML, style, and script attribution: by GitHub user antelove19, on Sandbox (codesandbox.io) https://bjiow.csb.app/, https://codesandbox.io/p/sandbox/javascript-api-mapbox-map-sidebar-bjiow?file=%2Findex.html%3A113%2C21-113%2C30 -->
