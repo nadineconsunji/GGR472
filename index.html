@@ -80,7 +80,7 @@
 
                     <!-- Filter map view -->
                     <p class="heading" for="layercheck">Select variable</p>
-                    <p>
+                    <div>
                         <select name="select_data" id="selections" class="data-select" onchange="handleData()">
                             <option value="composite">Composite Index</option>
                             <option value="readiness">Transition Readiness</option>
@@ -88,7 +88,6 @@
                         </select>
 
                         <!-- Transition scores info button and related pop-up -->
-                        
                         <div>
                             <button id="infobutton2" class="infobutton2">i</button>
                             <div id="popup2" class="popup2">
@@ -108,7 +107,7 @@
                             </div>
                         </div>
                        
-                    </p>
+                    </div>
 
                     <!-- Horizontal line -->
                     <hr class="horizontalline">
@@ -137,22 +136,18 @@
                     </span>
 
                     <!-- Info button -->
-                    <!--
-                    <span>
-                        <button id="infobutton3" class="infobutton2">i</button>
-                    </span>
-
-                    <span id="popup3" class="popup2">
-                        <span class="popup-content2">
+                    <button id="infobutton3" class="infobutton2">i</button>
+                    <div id="popup3" class="popup2">
+                        <div class="popup-content2">
                             <span class="close-btn2" id="closeBtn3">&times;</span>
-                            <span class="mapinfo-label">Calculate Regional Average</span>
-                            <span class="mapinfo-label2">To calculate the average of composite index, transition
+                            <div class="mapinfo-label">Calculate Regional Average</div>
+                            <div class="mapinfo-label2">To calculate the average of composite index, transition
                                 readiness or system performance for a region of your choosing, <b>tick</b> the
                                 'new selection' box and <b>click on countries</b> of interest, then <b>press the
-                                    'calculate average' button.</b></span>
-                        </span>
-                    </span>
-                    -->
+                                    'calculate average' button.</b></div>
+                        </div>
+                    </div>
+                   
 
                     <button class="button" id="combinebutton">Calculate average</button>
 
