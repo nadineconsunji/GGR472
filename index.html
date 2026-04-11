@@ -22,6 +22,7 @@
     <!-- Bootstrap CSS (for responsive layout/grids) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!--linking to bootstrap SEE BELOW -->
     <!-- Turf.js -->
     <script src='https://unpkg.com/@turf/turf@7.2.0/turf.min.js'></script>
 </head>
@@ -79,36 +80,36 @@
                     <hr class="horizontalline">
 
                     <!-- Filter map view by energy transition scores -->
-                    <p class="heading" for="layercheck">Index Type</p>
-                    <div class="dropdownbuttonalignment">
+                    <p class="heading" for="layercheck">Select variable</p>
+                    <div>
                         <select name="select_data" id="selections" class="data-select" onchange="handleData()">
-                            <option value="" disabled selected>Select variable</option>
                             <option value="composite">Composite Index</option>
                             <option value="readiness">Transition Readiness</option>
                             <option value="performance">System Performance</option>
                         </select>
 
-                        <!-- Info button and pop-up for energy transition scores -->
+                        <!-- Energy transition scores info button and related pop-up -->
                         <div>
                             <button id="infobutton2" class="infobutton2">i</button>
                             <div id="popup2" class="popup2">
                                 <div class="popup-content2">
                                     <span class="close-btn2" id="closeBtn2">&times;</span>
                                     <h3 class="mapinfo-label">Composite Index</h3>
-                                    <p class="mapinfo-label2">A single, overall score of a country's current clean
-                                        energy
+                                    <p class="mapinfo-label2">Single, overall score of a country’s current clean energy
                                         technology. Considers a country's hydrogen technology, carbon capture and
                                         storage
                                         technology, transition readiness score and system performance score. </p>
                                     <h3 class="mapinfo-label">Transition Readiness</h3>
                                     <p class="mapinfo-label2">Considers political commitment, governance, human capital,
-                                        investments, and power system structures to assess the conditions required
-                                        for Nigeria to advance toward a clean energy transition.</p>
+                                        investments and power system structures to assess the enabling conditions
+                                        required
+                                        for Nigeria to advance toward a clean energy transition</p>
                                     <h3 class="mapinfo-label">System Performance</h3>
                                     <p class="mapinfo-label2">Considers economic development and growth, measures of
                                         sustainability
                                         (carbon dioxide output and biodiversity), and energy access and security to
-                                        quantify the present state of Nigeria's energy system.</p>
+                                        quantify how
+                                        clean Nigeria’s current energy system is presently</p>
                                 </div>
                             </div>
                         </div>
@@ -123,7 +124,7 @@
 
                     <p>
                         <select name="select_region" id="regions" class="data-select" onchange="handleRegions()">
-                            <option value="all" disabled selected>All regions</option>
+                            <option value="all">Show all regions</option>
                             <option value="east">East</option>
                             <option value="west">West</option>
                             <option value="north">North</option>
@@ -133,26 +134,25 @@
                     </p>
 
                     <!-- Return map view to all region view and original zoom -->
-                    <button class="button" type="button" id="returnbutton">Return to continent view</button>
+                    <button class="button" type="button" id="returnbutton">Return to original view</button>
 
                     <!-- User-selected regional average button and pop up -->
-                    <p class="checkbox-title">Calculate Regional Average</p>
-                    <div class="dropdownbuttonalignment">
-                        <span class="checkbox-label">
-                            <input type="checkbox" id="select" class="checkbox" value="new_selection">New selection
-                        </span>
+                    <p class="checkbox-title">Calculate Region Average</p>
 
-                        <!-- Info button -->
-                        <button id="infobutton3" class="infobutton2">i</button>
-                        <div id="popup3" class="popup2">
-                            <div class="popup-content2">
-                                <span class="close-btn2" id="closeBtn3">&times;</span>
-                                <div class="mapinfo-label">Calculate Regional Average</div>
-                                <div class="mapinfo-label2">To calculate the average of composite index, transition
-                                    readiness or system performance for a region of your choosing, <b>tick</b> the
-                                    'new selection' box and <b>click on countries</b> of interest, then <b>press the
-                                        'calculate average' button.</b></div>
-                            </div>
+                    <span class="checkbox-label">
+                        <input type="checkbox" id="select" class="checkbox" value="new_selection">New selection
+                    </span>
+
+                    <!-- Info button -->
+                    <button id="infobutton3" class="infobutton2">i</button>
+                    <div id="popup3" class="popup2">
+                        <div class="popup-content2">
+                            <span class="close-btn2" id="closeBtn3">&times;</span>
+                            <div class="mapinfo-label">Calculate Regional Average</div>
+                            <div class="mapinfo-label2">To calculate the average of composite index, transition
+                                readiness or system performance for a region of your choosing, <b>tick</b> the
+                                'new selection' box and <b>click on countries</b> of interest, then <b>press the
+                                    'calculate average' button.</b></div>
                         </div>
                     </div>
 
@@ -186,24 +186,11 @@
                         <a href="https://www.utoronto.ca/"></a><img class="logoUofT" src="images\UofT_logo.jpg"><br>
                     </div>
 
-                    <!-- Bottom credits -->
-                    <!-- <div class="sidebarbottom">
-                        <div class="bottomtextcredits">
-                            <br><br><br>Site made in partnership with the University of Toronto's Faculty of Arts and Science
-                            Sandbox program.
-                            <br>Course: GGR472H1S Developing Web Maps.
-                        </div>
-                        <div>
-                            <a href="https://www.utoronto.ca/"></a><img class="logoUofT" src="images\UofTArtSciwordmark.png"><br><br>
-                            <a href="https://www.utoronto.ca/">
-                        </div>
-                    </div>                      -->
                 </div>
             </div>
 
             <!-- Sidebar toggle (left) -->
             <div class="sidebar-toggle rounded-rect left" id="left-toggle" onclick="toggleSidebar('left')">
-            ⇨
             </div>
 
         </div>
