@@ -358,7 +358,9 @@ map.on('load', () => {
                 center: center,
                 zoom: minZoom
             });
-            returnButtonDisabler.disabled = true;
+            
+            // @DH commenting this out for now so the return button works on pan
+            // returnButtonDisabler.disabled = true;
         } else if (selectedRegion == 'east') {
             map.flyTo({
                 center: centerEast,
@@ -616,7 +618,9 @@ document.getElementById('returnbutton').addEventListener('click', () => {
     });
 
     document.getElementById("regions").value = "all";
-    returnButtonDisabler.disabled = true;
+
+    // @DH commenting this out for now so the button still works on pan
+    // returnButtonDisabler.disabled = true;
 
 });
 
