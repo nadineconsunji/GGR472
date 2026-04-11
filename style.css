@@ -48,7 +48,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    background-color: #0047bb;
+    background-color: #026bc2;
 }
 
 .navbar-title {
@@ -135,8 +135,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #000000;
-    background-color: #ffffff;
+    color: #ffffff;
+    background-color: #026bc2;
     font-size: large;
 }
 
@@ -145,8 +145,8 @@
 }
 
 .sidebar-toggle:hover {
-    color: #ffffff;
-    background-color: #0b81e1;
+    color: #000000;
+    background-color: #ffffff;
     cursor: pointer;
 }
 
