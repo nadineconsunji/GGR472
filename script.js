@@ -236,7 +236,7 @@ map.on('load', () => {
 
     function handleTechTest(selectedData) {
 
-        // Update selected technology variable -completed by DH 2:28a
+        // Update selected technology variable
         var selectedTech = document.getElementById("selections").value;
 
         // Compute min and max
