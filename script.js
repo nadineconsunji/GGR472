@@ -307,6 +307,9 @@ map.on('load', () => {
             updateLegend(performance_stops);
             map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
             activeLayer = 'system_performance_layer';
+            regionDisabler.disabled = false;
+            combineButtonDisabler.disabled = false;
+            checkboxDisabler.disabled = false;
         } else {
             selectedData = 'solar'; // Default technology on load
             handleTechTest(selectedData);
@@ -506,7 +509,7 @@ map.on('load', () => {
                 <strong>${name || 'Country'}</strong><br>
                 This country has a score of <strong>${val}</strong> for <strong>${type} readiness</strong>.
                 `)
-                .addTo(map);
+            .addTo(map);
     });
 
     // Mouse leave
@@ -615,7 +618,6 @@ document.getElementById('returnbutton').addEventListener('click', () => {
 
     document.getElementById("regions").value = "all";
     returnButtonDisabler.disabled = true;
-    console.log("aasdfasdf region all");
 
 });
 

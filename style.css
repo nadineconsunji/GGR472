@@ -97,7 +97,7 @@
     position: absolute;
     transition: transform 2s;
     z-index: 1;
-    width: 290px;
+    width: 315px;
     height: 98%;
 }
 
@@ -142,8 +142,8 @@
 
 .sidebar-toggle {
     position: absolute;
-    width: 1.3em;
-    height: 1.3em;
+    width: 1.5em;
+    height: 1.5em;
     overflow: visible;
     display: flex;
     justify-content: center;
