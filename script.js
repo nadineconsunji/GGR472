@@ -5,9 +5,6 @@
 // Mapbox Token
 mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6NTNkb29meTJzMW81dSJ9.t6RLssyQkfZODRIMy_ToNQ';
 
-// Mapbox Token (default public) - added by Daniel
-// mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuaWVsODEwMTciLCJhIjoiY21rZWI2eGg4MDU5NjNscHdxbjhkMTNmciJ9.jdsMukp7zHz3llySNBJs0A';
-
 // Center coordinates for map on load and zoom change(to change, refer to https://labs.mapbox.com/location-helper)
 const center = [22.34868, -0.31974];
 const centerEast = [35, -5];
@@ -241,8 +238,8 @@ map.on('load', () => {
 
         console.log('running handle tech');
 
-        // Update selected technology variable
-        var selectedTech = document.getElementById("selections").value;
+        // Update selected technology variable -completed by DH 2:28a
+        var selectedTech = document.getElementById("tech_select").value;
 
         // Compute min and max
         const values = map.querySourceFeatures('energy')
@@ -279,6 +276,13 @@ map.on('load', () => {
     function handleData() {
 
         var selectedData = document.getElementById("selections").value;
+        // Variables calling the various button functions, to be disabled if no region is selected
+        const regionDisabler = document.getElementById("regions");
+        const returnButtonDisabler = document.getElementById("returnbutton");
+        const combineButtonDisabler = document.getElementById("combinebutton");
+        const checkboxDisabler = document.getElementById("select");
+
+
         layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
 
         // Show the selected layer and set activeLayer accordingly
@@ -286,18 +290,32 @@ map.on('load', () => {
             updateLegend(composite_stops);
             map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
             activeLayer = 'composite_index_layer';
+            regionDisabler.disabled = false;
+            combineButtonDisabler.disabled = false;
+            checkboxDisabler.disabled = false;
         } else if (selectedData == 'readiness') {
             updateLegend(readiness_stops);
             map.setLayoutProperty('transition_readiness_layer', 'visibility', 'visible');
             activeLayer = 'transition_readiness_layer';
+            regionDisabler.disabled = false;
+            combineButtonDisabler.disabled = false;
+            checkboxDisabler.disabled = false;
         } else if (selectedData == 'performance') {
             updateLegend(performance_stops);
             map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
             activeLayer = 'system_performance_layer';
+            regionDisabler.disabled = false;
+            combineButtonDisabler.disabled = false;
+            checkboxDisabler.disabled = false;
         } else {
             selectedData = 'solar'; // Default technology on load
             handleTechTest(selectedData);
-        }
+            regionDisabler.disabled = true;
+            returnButtonDisabler.disabled = true;
+            combineButtonDisabler.disabled = true;
+            checkboxDisabler.disabled = true;
+            regionDisabler.value = "all";
+        }  
     };
 
     /*-----------------------------------------------------------------------------------------
@@ -321,6 +339,8 @@ map.on('load', () => {
 
         // Store selected region in a variable
         var selectedRegion = document.getElementById("regions").value;
+        const returnButtonDisabler = document.getElementById("returnbutton");
+
 
         // Add filter to all layers
         layers.forEach(layer => {
@@ -330,41 +350,45 @@ map.on('load', () => {
                 map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
             }
         });
-
         // Fly to selected region
         if (selectedRegion == 'all') {
             map.flyTo({
                 center: center,
                 zoom: minZoom
             });
+            returnButtonDisabler.disabled = true;
         } else if (selectedRegion == 'east') {
             map.flyTo({
                 center: centerEast,
                 zoom: 3.3
             });
+            returnButtonDisabler.disabled = false;
         } else if (selectedRegion == 'west') {
             map.flyTo({
                 center: centerWest,
                 zoom: 4
             });
+            returnButtonDisabler.disabled = false;
         } else if (selectedRegion == 'north') {
             map.flyTo({
                 center: centerNorth,
                 zoom: 3.5
             });
+            returnButtonDisabler.disabled = false;
         } else if (selectedRegion == 'south') {
             map.flyTo({
                 center: centerSouth,
                 zoom: 3.5
             });
+            returnButtonDisabler.disabled = false;
         } else if (selectedRegion == 'central') {
             map.flyTo({
                 center: centerCentral,
                 zoom: 3.5
             });
+            returnButtonDisabler.disabled = false;
         };
     };
-
     // Event listener to trigger region function
     document.getElementById("regions").addEventListener("change", handleRegions);
 
@@ -482,7 +506,7 @@ map.on('load', () => {
                 <strong>${name || 'Country'}</strong><br>
                 This country has a score of <strong>${val}</strong> for <strong>${type} readiness</strong>.
                 `)
-                .addTo(map);
+            .addTo(map);
     });
 
     // Mouse leave
@@ -511,7 +535,7 @@ map.on('load', () => {
             // Fly to the centroid
             map.flyTo({
                 center: centerCoordinates,
-                zoom: 4,        // adjust zoom as needed
+                zoom: 4,
                 essential: true
             });
 
@@ -579,6 +603,7 @@ map.addControl(new mapboxgl.FullscreenControl());
 
 // 7.1) Add event listener which returns map view to original view on button click using flyTo method ---------------------------------------------------------------------------------------------
 document.getElementById('returnbutton').addEventListener('click', () => {
+    const returnButtonDisabler = document.getElementById("returnbutton");
     layers.forEach(layer => {
         map.setFilter(layer, null);
     });
@@ -587,6 +612,10 @@ document.getElementById('returnbutton').addEventListener('click', () => {
         zoom: zoom, // LINE 10, 12
         essential: true
     });
+
+    document.getElementById("regions").value = "all";
+    returnButtonDisabler.disabled = true;
+
 });
 
 // 7.2) Information button ---------------------------------------------------------------------------------------------
@@ -783,16 +812,40 @@ document.getElementById('combinebutton').addEventListener('click', () => {
                 You have calculated the average ${current.label} for ${selectedFeatures.length} selected countries.
             `)
             .addTo(map);
-    }
+    };
 
-    // Turn select off
-    layers.forEach(layer => {
-        map.off('click', layer, onCountryClick);
-    });
+    activePopup.on('close', () => {
+        const checkbox = document.getElementById("select");
+        checkbox.checked = false;
+        checkbox.dispatchEvent(new Event('change'));
+        console.log("pop-up closed successfully");
+    }, { once: true });
 
-    // Uncheck select checkbox
-    document.getElementById('select').checked = false;
 
-    // Empty list of selected countries
-    selectedFeatures = [];
+
+
+    // //Clear layers after highlighted boundary layers and turn off country layers for average calculation purposes
+    // if (map.getLayer('selected_boundaries')) {
+    //     map.removeLayer('selected_boundaries');
+    // }
+    // if (map.getSource('selected_countries')) {
+    //     map.removeSource('selected_countries')
+    // }
+
+    // // Turn selected countries off
+    // layers.forEach(layer => {
+    //     map.off('click', layer, onCountryClick);
+    // });
+
+
+
+    // // Manually trigger the 'change' eventcheckbox.dispatchEvent(new Event('change'));
+
+
+    // // Empty list of selected countries
+    // selectedFeatures = [];
+
+
+    // });
+
 });
