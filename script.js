@@ -84,7 +84,7 @@ map.on('load', function () {
 2) Adding sources and layers, and changing layer display based on user interactions
 --------------------------------------------------------------------------------------------------*/
 
-// 2.1) Defining lists and arrays used in all layers
+// 2.1) Defining lists and arrays used in all layers -----------------------------------------------
 
 // List of composite layers. Most layer interactions go inside a 'for each' loop
 let layers = ['composite_index_layer', 'system_performance_layer', 'transition_readiness_layer', 'technology_layer'];
@@ -100,12 +100,14 @@ const fillOpacity = [
     0.7     // all other countries (dimmed)
 ];
 
-// 2.2) Adding layers and interactivity
+/*-----------------------------------------------------------------------------------------
+3) Adding layers and interactivity
+-----------------------------------------------------------------------------------------*/
 
 map.on('load', () => {
 
     /*-----------------------------------------------------------------------------------------
-    2.2.1) Load 3 layers for overall indices tab
+    3.1) Load 3 layers for overall indices tab
     -----------------------------------------------------------------------------------------*/
 
     // Source for overall indices
@@ -188,7 +190,7 @@ map.on('load', () => {
     });
 
     /*-----------------------------------------------------------------------------------------
-    2.2.2) Load 1 layer for specific technologies tab
+    3.2) Load 1 layer for specific technologies tab
     -----------------------------------------------------------------------------------------*/
 
     // Dynamic layer for technology
@@ -213,47 +215,7 @@ map.on('load', () => {
     });
 
     /*-----------------------------------------------------------------------------------------
-    2.2.2.1) Change data display on specific technologies tab
-    -----------------------------------------------------------------------------------------*/
-
-    function handleTechTest(selectedTech) {
-
-        // Update selected technology variable
-        var selectedTech = document.getElementById("tech_select").value;
-
-        // Compute min and max
-        const values = map.querySourceFeatures('energy')
-            .map(f => f.properties[selectedTech])
-            .filter(v => v != null);
-
-        const min = Math.min(...values);
-        const max = Math.max(...values);
-
-        // Update legend
-        document.getElementById('tech_stop_0').textContent = min;
-        document.getElementById('tech_stop_1').textContent = max;
-
-        // Update layer fill
-        map.setPaintProperty('technology_layer', 'fill-color', [
-            'interpolate',
-            ['linear'],
-            ['get', selectedTech],
-            min, theme_colours[0],
-            max, theme_colours[4]
-        ]);
-    }
-    
-    const techSelect = document.getElementById("tech_select");
-
-    if (techSelect) {
-        techSelect.addEventListener("change", () => {
-            const selectedTech = document.getElementById("tech_select").value;
-            handleTechTest(selectedTech);
-        });
-    };
-
-    /*-----------------------------------------------------------------------------------------
-    2.2.3) Load layer to display boundaries
+    3.3) Load layer to display boundaries
     -----------------------------------------------------------------------------------------*/
 
     // Boundaries
@@ -271,7 +233,39 @@ map.on('load', () => {
     });
 
     /*-----------------------------------------------------------------------------------------
-    2.3.1) Change data display on overall indices tab
+    3.4) Function to toggle technology-specific data display
+    -----------------------------------------------------------------------------------------*/
+
+    function handleTechTest(selectedData) {
+
+        console.log('running handle tech');
+
+        // Update selected technology variable
+        var selectedTech = document.getElementById("selections").value;
+
+        // Compute min and max
+        const values = map.querySourceFeatures('energy')
+            .map(f => f.properties[selectedTech])
+            .filter(v => v != null);
+
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+
+        // Update layer fill
+        map.setPaintProperty('technology_layer', 'fill-color', [
+            'interpolate',
+            ['linear'],
+            ['get', selectedTech],
+            0, theme_colours[0],
+            100, theme_colours[4]
+        ]);
+
+        // Show layer
+        map.setLayoutProperty('technology_layer', 'visibility', 'visible');
+    }
+
+    /*-----------------------------------------------------------------------------------------
+    3.5) Function to toggle composite data display
     -----------------------------------------------------------------------------------------*/
 
     // Legend
@@ -299,20 +293,27 @@ map.on('load', () => {
             updateLegend(performance_stops);
             map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
             activeLayer = 'system_performance_layer';
+        } else {
+            selectedData = 'solar';
+            handleTechTest(selectedData);
         }
     };
 
-    // Visualizes current layer on map load
+    /*-----------------------------------------------------------------------------------------
+    3.6) Run functions to display data on map load and user interactions
+    -----------------------------------------------------------------------------------------*/
+
+    // Visualize relevant layer on map load
     handleData();
 
     // Event listener to trigger change in data display
     document.getElementById("selections").addEventListener("change", handleData);
 
     /*-----------------------------------------------------------------------------------------
-    2.4) Functions that apply to multiple layers
+    4) Functions that apply to multiple layers
     -----------------------------------------------------------------------------------------*/
 
-    // 2.4.1) Filter by region and zoom to region ---------------------------------------------
+    // 4.1) Filter by region and zoom to region ---------------------------------------------
 
     // Function to filter by region
     function handleRegions() {
@@ -366,7 +367,7 @@ map.on('load', () => {
     // Event listener to trigger region function
     document.getElementById("regions").addEventListener("change", handleRegions);
 
-    // 2.4.2) Increase country opacity on hover -------------------------------------------------
+    // 4.2) Increase country opacity on hover -------------------------------------------------
 
     let hoveredId = null;
 
@@ -403,7 +404,7 @@ map.on('load', () => {
         });
     });
 
-    // 2.4.3) Create popups on hover -------------------------------------------------------------
+    // 4.3) Create popups on hover -------------------------------------------------------------
 
     const energy_popup = new mapboxgl.Popup({
         closeButton: false,
@@ -441,7 +442,7 @@ map.on('load', () => {
         });
     });
 
-    // 2.4.4) Zoom to country and display panels with text --------------------------------------------
+    // 4.4) Zoom to country and display panels with text --------------------------------------------
 
     // Disable existing zoom settings
     map.doubleClickZoom.disable();
@@ -497,7 +498,7 @@ map.on('load', () => {
 });
 
 /*------------------------------------------------------------------------------------------------
-3) Resize map
+5) Resize map
 ------------------------------------------------------------------------------------------------*/
 
 map.on('load', () => {
@@ -506,7 +507,7 @@ map.on('load', () => {
 });
 
 /*------------------------------------------------------------------------------------------------
-4) Adding map controls 
+6) Adding map controls 
 ------------------------------------------------------------------------------------------------*/
 // Search control 
 map.addControl(
@@ -524,10 +525,10 @@ map.addControl(new mapboxgl.NavigationControl());
 map.addControl(new mapboxgl.FullscreenControl());
 
 /*------------------------------------------------------------------------------------------------
-5) Adding interactivity 
+7) Adding interactivity 
 ------------------------------------------------------------------------------------------------*/
 
-// 5.1) Add event listener which returns map view to original view on button click using flyTo method ---------------------------------------------------------------------------------------------
+// 7.1) Add event listener which returns map view to original view on button click using flyTo method ---------------------------------------------------------------------------------------------
 document.getElementById('returnbutton').addEventListener('click', () => {
     layers.forEach(layer => {
         map.setFilter(layer, null);
@@ -539,7 +540,7 @@ document.getElementById('returnbutton').addEventListener('click', () => {
     });
 });
 
-// 5.2) Information button ---------------------------------------------------------------------------------------------
+// 7.2) Information button ---------------------------------------------------------------------------------------------
 const infopopup = document.getElementById("popup");
 const infobutton = document.getElementById("infobutton");
 const closeBtn = document.getElementById("closeBtn");
@@ -561,7 +562,7 @@ window.addEventListener("click", (e) => {
     }
 });
 
-// 5.3) Information button 2 and 3 ---------------------------------------------------------------------------------------------
+// 7.3) Information button 2 and 3 ---------------------------------------------------------------------------------------------
 const infopopup2 = document.getElementById("popup2");
 const infobutton2 = document.getElementById("infobutton2");
 const closeBtn2 = document.getElementById("closeBtn2");
@@ -605,7 +606,7 @@ window.addEventListener("click", (e) => {
 });
 
 /* ----------------------------------------------------------------------------------------------------------------
-6) Calculate averages for selected countries
+8) Calculate averages for selected countries
 ----------------------------------------------------------------------------------------------------------------- */
 
 // Store selected countries
