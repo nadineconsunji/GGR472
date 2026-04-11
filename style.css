@@ -48,7 +48,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    background-color: #0047bb;
+    background-color: #026bc2;
 }
 
 .navbar-title {
@@ -93,7 +93,7 @@
     top: 15px;
     width: 95%;
     height: auto;
-    max-height: 95.5%;
+    max-height: 93%;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 32px;
     line-height: 1.2;
@@ -135,8 +135,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #000000;
-    background-color: #ffffff;
+    color: #ffffff;
+    background-color: #026bc2;
     font-size: large;
 }
 
@@ -145,8 +145,8 @@
 }
 
 .sidebar-toggle:hover {
-    color: #ffffff;
-    background-color: #0b81e1;
+    color: #000000;
+    background-color: #ffffff;
     cursor: pointer;
 }
 
@@ -169,15 +169,6 @@ optgroup {
     border-right: 0.5px solid #00000080;
     overflow-y: auto;
     overflow-x: hidden;
-}
-
-.sidebarbottom {
-    position: relative;
-    bottom: 0;
-    background: linear-gradient(#ffffff 3%,
-            #6D6A6A 6%,
-            #000000 25%,
-            #000000 100%);
 }
 
 /* --------------------------- CHECKBOXES -------------------------------- */
@@ -381,12 +372,9 @@ input[type="checkbox"] {
 
 .logoUofT {
     position: relative;
-    top: 10px;
-    width: 90%;
-    margin: 5% 0 0 5%;
+    top: 5px;
+    width: 100%;
     cursor: pointer;
-    /* background-color: #000000; */
-    /*FOR TESTS ON WHITE SURFACES */
 }
 
 /* --------------- Format map title and description ------------  */
