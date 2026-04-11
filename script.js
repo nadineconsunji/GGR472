@@ -5,9 +5,6 @@
 // Mapbox Token
 mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6NTNkb29meTJzMW81dSJ9.t6RLssyQkfZODRIMy_ToNQ';
 
-// Mapbox Token (default public) - added by Daniel
-// mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuaWVsODEwMTciLCJhIjoiY21rZWI2eGg4MDU5NjNscHdxbjhkMTNmciJ9.jdsMukp7zHz3llySNBJs0A';
-
 // Center coordinates for map on load and zoom change(to change, refer to https://labs.mapbox.com/location-helper)
 const center = [22.34868, -0.31974];
 const centerEast = [35, -5];
@@ -241,8 +238,8 @@ map.on('load', () => {
 
         console.log('running handle tech');
 
-        // Update selected technology variable
-        var selectedTech = document.getElementById("selections").value;
+        // Update selected technology variable -completed by DH 2:28a
+        var selectedTech = document.getElementById("tech_select").value;
 
         // Compute min and max
         const values = map.querySourceFeatures('energy')
@@ -313,12 +310,12 @@ map.on('load', () => {
         } else {
             selectedData = 'solar'; // Default technology on load
             handleTechTest(selectedData);
-            regionDisabler.disabled = false;
+            regionDisabler.disabled = true;
             returnButtonDisabler.disabled = true;
             combineButtonDisabler.disabled = true;
             checkboxDisabler.disabled = true;
             regionDisabler.value = "all";
-        }
+        }  
     };
 
     /*-----------------------------------------------------------------------------------------
