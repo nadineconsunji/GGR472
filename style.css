@@ -135,8 +135,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #ffffff;
-    background-color: #0b81e1;
+    color: #000000;
+    background-color: #ffffff;
     font-size: large;
 }
 
@@ -145,8 +145,8 @@
 }
 
 .sidebar-toggle:hover {
-    color: #000000;
-    background-color: #ffffff;
+    color: #ffffff;
+    background-color: #0b81e1;
     cursor: pointer;
 }
 
