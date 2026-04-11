@@ -79,6 +79,19 @@
     font-weight: bold;
 }
 
+/* Navbar for methodology */
+.navbar-title2 {
+    display: flex;
+    align-items: center;
+}
+
+.logoCATF2 {
+    height: 40px; 
+    margin-left: 10px;
+    width: auto;
+    display: block;
+}
+
 /* ---------------------------- SIDEBAR ----------------------------------- */
 .sidebar {
     position: absolute;
