@@ -88,6 +88,7 @@ map.on('load', function () {
 
 // List of composite layers. Most layer interactions go inside a 'for each' loop
 let layers = ['composite_index_layer', 'system_performance_layer', 'transition_readiness_layer', 'technology_layer'];
+let composite_layers = ['composite_index_layer', 'system_performance_layer', 'transition_readiness_layer'];
 
 // Defining theme colours based on CATF brand colours
 const theme_colours = ['#25d0ff', '#00a6d4', '#026bc2', '#00457d', '#01145e'];
@@ -294,7 +295,7 @@ map.on('load', () => {
             map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
             activeLayer = 'system_performance_layer';
         } else {
-            selectedData = 'solar';
+            selectedData = 'solar'; // Default technology on load
             handleTechTest(selectedData);
         }
     };
@@ -406,25 +407,33 @@ map.on('load', () => {
 
     // 4.3) Create popups on hover -------------------------------------------------------------
 
+    // 4.3.1) Popup for composite layers -------------------------------------------------------
+
+    // Define composite popup
     const energy_popup = new mapboxgl.Popup({
         closeButton: false,
         closeOnClick: false
     });
 
-    layers.forEach(layer => {
+    // Create composite popup on hover
+    composite_layers.forEach(layer => {
         map.on('mousemove', layer, function (e) {
 
+            // Change cursor
             map.getCanvas().style.cursor = 'pointer';
 
+            // Find coordinates
             const feature = e.features[0];
             const featureId = feature.properties.id;
             const coordinates = e.lngLat;
 
+            // Access values
             const ind = feature.properties.composite_index;
             const read = feature.properties.transition_readiness;
             const perf = feature.properties.system_performance;
             const name = feature.properties.country;
 
+            // Create popup
             energy_popup
                 .setLngLat(coordinates)
                 .setHTML(`
@@ -436,10 +445,50 @@ map.on('load', () => {
                 .addTo(map);
         });
 
+        // Hide popup when mouse leaves
         map.on('mouseleave', layer, function () {
             map.getCanvas().style.cursor = '';
             energy_popup.remove();
         });
+    });
+
+    // 4.3.2) Popup for specific technologies -------------------------------------------------------
+
+    // Define technology popup
+    const tech_popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    // Create technology popup on hover
+    map.on('mousemove', 'technology_layer', function (e) {
+
+        // Change cursor
+        map.getCanvas().style.cursor = 'pointer';
+
+        // Calculate position of cursor
+        const feature = e.features[0];
+        const coordinates = e.lngLat;
+
+        // Access values
+        var type = document.getElementById("selections").value;
+
+        const name = feature.properties.country;
+        const val = feature.properties[type];
+
+        tech_popup
+            .setLngLat(coordinates)
+            .setHTML(`
+                <strong>${name || 'Country'}</strong><br>
+                This country has a score of <strong>${val}</strong> for <strong>${type} readiness</strong>.
+                `)
+                .addTo(map);
+    });
+
+    // Mouse leave
+    map.on('mouseleave', 'technology_layer', function () {
+        map.getCanvas().style.cursor = '';
+        tech_popup.remove();
     });
 
     // 4.4) Zoom to country and display panels with text --------------------------------------------
