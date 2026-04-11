@@ -1,4 +1,4 @@
-### Energy Transition Readiness in Africa
+# Energy Transition Readiness in Africa
 
 ## Credits
 
@@ -20,8 +20,28 @@ On a regional level, the map contains a region filter to allow the user to focus
 
 ## Adding to the map
 
-# Adding dummy data and replacing data
+### Adding dummy data and replacing data
 
-# Visualizing layers
+To add dummy data into the table, download the geojson file from the 'data' folder, open in geojson.io or Excel, and add values. Alternatively, merge with other existing data using code or this open-source geodata merger on GitHub: https://funkeinteraktiv.github.io/geo-data-merger/
 
-# Areas for improvement
+### Visualizing layers
+
+Theme colours have already been defined for ease of access.
+
+To visualize additional layers, follow the logic outlined by comments in the 'script.js' file, and continue using theme colours to ensure that the website aligns with other pages published by the CATF.
+
+Once a new layer is created, add it to the array 'layers' to preserve the functionality of the map.
+
+### Areas for improvement
+
+Existing data can be updated as the CATF attains composite and technology-specific scores for other countries. This would increase the accuracy of information the map was displaying, allowing for improved conclusions to be drawn about regional and country-level clean energy transition capacity in Africa.
+
+Additionally, data regarding the specific location of current clean technologies could be added to display the geographical clustering of energy sources and supplement the existing visualisation of clean energy transition capacity in countries.
+
+Other improvements include:
+
+- Limiting the geocoder to only search for areas within the African continent to narrow the focus of the map
+- Adding more cohesive written summaries for all countries based on both data collected from the CATF and information from peer-reviewed studies
+- Using a data file with more precise African country boundaries.
+
+Ultimately, we suggest embedding the web map onto the CATF website alongside a more detailed explanations on data sourcing and score calculation.
