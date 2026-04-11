@@ -236,10 +236,8 @@ map.on('load', () => {
 
     function handleTechTest(selectedData) {
 
-        console.log('running handle tech');
-
         // Update selected technology variable -completed by DH 2:28a
-        var selectedTech = document.getElementById("tech_select").value;
+        var selectedTech = document.getElementById("selections").value;
 
         // Compute min and max
         const values = map.querySourceFeatures('energy')
@@ -282,7 +280,6 @@ map.on('load', () => {
         const combineButtonDisabler = document.getElementById("combinebutton");
         const checkboxDisabler = document.getElementById("select");
 
-
         layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
 
         // Show the selected layer and set activeLayer accordingly
@@ -308,14 +305,19 @@ map.on('load', () => {
             combineButtonDisabler.disabled = false;
             checkboxDisabler.disabled = false;
         } else {
+
+            // @DH I don't think these options need to be disabled here:
+            // regionDisabler.disabled = true;
+            // returnButtonDisabler.disabled = true;
+            // regionDisabler.value = "all";
+
+            // @DH I believe lines break the tech layers because they try to access an element that doesn't exist
+            // combineButtonDisabler.disabled = true;
+            // checkboxDisabler.disabled = true;
+
             selectedData = 'solar'; // Default technology on load
             handleTechTest(selectedData);
-            regionDisabler.disabled = true;
-            returnButtonDisabler.disabled = true;
-            combineButtonDisabler.disabled = true;
-            checkboxDisabler.disabled = true;
-            regionDisabler.value = "all";
-        }  
+        }
     };
 
     /*-----------------------------------------------------------------------------------------
@@ -722,8 +724,6 @@ function onCountryClick(e) {
             });
         }
     }
-
-    console.log("Selected features count:", selectedFeatures.length);
 };
 
 // Select countries only when checkbox is checked
@@ -818,7 +818,6 @@ document.getElementById('combinebutton').addEventListener('click', () => {
         const checkbox = document.getElementById("select");
         checkbox.checked = false;
         checkbox.dispatchEvent(new Event('change'));
-        console.log("pop-up closed successfully");
     }, { once: true });
 
 
