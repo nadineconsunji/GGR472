@@ -251,10 +251,6 @@ map.on('load', () => {
         const min = Math.min(...values);
         const max = Math.max(...values);
 
-        // Update legend
-        document.getElementById('tech_stop_0').textContent = min;
-        document.getElementById('tech_stop_1').textContent = max;
-
         // Update layer fill
         map.setPaintProperty('technology_layer', 'fill-color', [
             'interpolate',
