@@ -97,8 +97,8 @@
     position: absolute;
     transition: transform 2s;
     z-index: 1;
-    width: 290px;
-    height: 98%;
+    width: 315px;
+    height: 100%;
 }
 
 .sidebar-content {
@@ -194,7 +194,7 @@ optgroup {
 }
 
 input[type="checkbox"] {
-    margin-left: 25px;
+    margin-left: 15px;
     margin-right: 15px;
     accent-color: #0084ff;
     width: 20px;
@@ -217,25 +217,6 @@ input[type="checkbox"] {
 .button {
     position: relative;
     font: 15px 'Arial', Helvetica, Verdana, sans-serif;
-    width: 65%;
-    z-index: 1000;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-left: 25px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    border-width: 1px;
-    background-color: #ffffff;
-    text-align: left;
-}
-
-.button:hover {
-    background-color: #c2f2ff;
-}
-
-#returnbutton {
-    position: relative;
-    font: 15px 'Arial', Helvetica, Verdana, sans-serif;
     width: 75%;
     z-index: 1000;
     padding-top: 5px;
@@ -245,11 +226,12 @@ input[type="checkbox"] {
     border-radius: 10px;
     border-width: 1px;
     background-color: #ffffff;
-    text-align: left;    
+    text-align: left;
 }
 
-#returnbutton:hover {
+.button:hover {
     background-color: #c2f2ff;
+    /* Darker blue on hover */
 }
 
 /*  -------------------------- INFO BUTTON --------------------------- */
@@ -331,13 +313,6 @@ input[type="checkbox"] {
 }
 
 /*  -------------------------- INFO BUTTON 2 and 3 (same code as 2) --------------------------- */
-
-.dropdownbuttonalignment{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
 .infobutton2 {
     display: flex;
     width: 20px;
@@ -346,12 +321,12 @@ input[type="checkbox"] {
     border: none;
     background-color: rgb(184, 184, 184);
     cursor: pointer;
-    /* top: 0px;
-    left: 0px; */
+    top: -25px;
+    left: 255px;
     line-height: 18px;
     transition: background-color 0.3s;
     text-align: center;
-    /* position: relative; */
+    position: relative;
     z-index: 3000;
     font-size: 20px;
     font-weight: bold;
@@ -432,8 +407,8 @@ input[type="checkbox"] {
     font: 1px;
     color: #000000;
     height: 1px;
-    width: 95%;
-    left: 7.5px;
+    width: 100%;
+    top: 0px;
 }
 
 .description {
@@ -467,13 +442,6 @@ input[type="checkbox"] {
     z-index: 1000;
     border-radius: 10px;
 }
-
-:disabled {
-    color: #a8a3a3;
-    font-style: italic;
-}
-
-
 
 /* Format dropdown option in the map data container */
 .form {
