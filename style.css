@@ -248,7 +248,7 @@ input[type="checkbox"] {
     text-align: left;    
 }
 
-#returnbutton:hover {
+#returnbutton:hover:not(:disabled) {
     background-color: #c2f2ff;
 }
 
