@@ -343,7 +343,6 @@ map.on('load', () => {
         var selectedRegion = document.getElementById("regions").value;
         const returnButtonDisabler = document.getElementById("returnbutton");
 
-
         // Add filter to all layers
         layers.forEach(layer => {
             if (selectedRegion == 'all') {
@@ -358,9 +357,9 @@ map.on('load', () => {
                 center: center,
                 zoom: minZoom
             });
-            
+
             // @DH commenting this out for now so the return button works on pan
-            // returnButtonDisabler.disabled = true;
+            returnButtonDisabler.disabled = true;
         } else if (selectedRegion == 'east') {
             map.flyTo({
                 center: centerEast,
@@ -393,8 +392,33 @@ map.on('load', () => {
             returnButtonDisabler.disabled = false;
         };
     };
+
     // Event listener to trigger region function
     document.getElementById("regions").addEventListener("change", handleRegions);
+
+    // Turning the return to default view on if any pan that results in coordinates/zoomthat is not the centre is detected
+    function viewChangeNot0() {
+        const currentView = map.getCenter();
+        const currentZoom = map.getZoom();
+
+        //Calculates whether there is a difference between the existing view and the first value in center, which is longitude. Then second, which is latitude. Finally, it assesses whether the zoom has changed.
+        //Employs "AND" logic for longitude/latitude (together) and "OR" for zoom, though such low respective 'assess difference' values of 0.1 and 0.01 makes such the use of "AND" or "OR" negligible. Will always be false.
+        return (
+            (Math.abs(currentView.lng - center[0]) < 0.1 || Math.abs(currentView.lat - center[1]) < 0.1) && //lnglat
+            Math.abs(currentZoom - zoom) < 0.001 //zoom
+        );
+    }
+
+    map.on('moveend', (e) => {
+        const returnButtonDisabler = document.getElementById("returnbutton");
+
+        if (viewChangeNot0()) {
+            returnButtonDisabler.disabled = true;
+        }
+        else {
+            returnButtonDisabler.disabled = false;
+        };
+    });
 
     // 4.2) Increase country opacity on hover -------------------------------------------------
 
@@ -614,13 +638,12 @@ document.getElementById('returnbutton').addEventListener('click', () => {
     map.flyTo({
         center: center, // LINES 10-11
         zoom: zoom, // LINE 10, 12
-        essential: true
+        essential: true,
     });
 
     document.getElementById("regions").value = "all";
 
-    // @DH commenting this out for now so the button still works on pan
-    // returnButtonDisabler.disabled = true;
+    returnButtonDisabler.disabled = true;
 
 });
 
