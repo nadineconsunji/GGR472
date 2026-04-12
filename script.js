@@ -457,7 +457,6 @@ map.on('load', () => {
     });
 
     // 4.3) Create popups on hover -------------------------------------------------------------
-
     // 4.3.1) Popup for composite layers -------------------------------------------------------
 
     // Define composite popup
