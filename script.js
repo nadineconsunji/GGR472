@@ -358,7 +358,6 @@ map.on('load', () => {
                 zoom: minZoom
             });
 
-            // @DH commenting this out for now so the return button works on pan
             returnButtonDisabler.disabled = true;
         } else if (selectedRegion == 'east') {
             map.flyTo({
