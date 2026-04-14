@@ -258,6 +258,10 @@ map.on('load', () => {
 
         // Show layer
         map.setLayoutProperty('technology_layer', 'visibility', 'visible');
+
+        // Code to update legend dynamically if desired
+        // document.getElementById('tech_stop_0').textContent = min;
+        // document.getElementById('tech_stop_1').textContent = max;
     }
 
     /*-----------------------------------------------------------------------------------------
@@ -305,16 +309,6 @@ map.on('load', () => {
             combineButtonDisabler.disabled = false;
             checkboxDisabler.disabled = false;
         } else {
-
-            // @DH I don't think these options need to be disabled here:
-            // regionDisabler.disabled = true;
-            // returnButtonDisabler.disabled = true;
-            // regionDisabler.value = "all";
-
-            // @DH I believe lines break the tech layers because they try to access an element that doesn't exist
-            // combineButtonDisabler.disabled = true;
-            // checkboxDisabler.disabled = true;
-
             selectedData = 'solar'; // Default technology on load
             handleTechTest(selectedData);
         }
