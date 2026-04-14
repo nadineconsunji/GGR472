@@ -56,7 +56,8 @@
 
                     <!-- CATF logo with link to main website -->
                     <div>
-                        <a href="https://www.catf.us/africa/" target="_blank" rel="noopener noreferrer"><img class="logoCATF" src="images/CATFlogo.png"></a>
+                        <a href="https://www.catf.us/africa/" target="_blank" rel="noopener noreferrer"><img
+                                class="logoCATF" src="images/CATFlogo.png"></a>
                         <br>
                     </div>
 
@@ -68,17 +69,22 @@
                     <div>
                         <p class="description">
                             This map shows transition readiness across Africa by type of renewable energy technology.
-                            These are scores of how well a country is prepared to shift to clean energy across each of these technologies.
+                            These are scores of how well a country is prepared to shift to clean energy across each of
+                            these technologies.
                             <br><br>
-                            A score of <strong>0</strong> signifies <strong>low preparedness</strong>, while <strong>100</strong> represents <strong>full preparedness</strong>.
+                            A score of <strong>0</strong> signifies <strong>low preparedness</strong>, while
+                            <strong>100</strong> represents <strong>full preparedness</strong>.
                         </p>
                     </div>
 
-                    <!-- Horizontal line -->
+                    <!-- Horizontal line and new heading -->
                     <hr class="horizontalline">
 
+                    <div class="section">
+                        <div class="heading" for="layercheck">Technology Type</div>
+                    </div>
+
                     <!-- Filter map view by technology type -->
-                    <p class="heading" for="layercheck">Technology Type</p>
                     <div>
                         <select id="selections" class="data-select">
                             <option value="solar">Solar Energy</option>
@@ -93,25 +99,27 @@
                         </select>
                     </div>
 
-                    <!-- Horizontal line -->
+                    <!-- Horizontal line and new heading -->
                     <hr class="horizontalline">
-                    <p class="heading" for="layercheck">Region</p>
 
-                    <!-- Region Select -->
-                    <p>
-                        <select name="select_region" id="regions" class="data-select" onchange="handleRegions()">
-                            <option value="all">All regions</option>
-                            <option value="east">East</option>
-                            <option value="west">West</option>
-                            <option value="north">North</option>
-                            <option value="south">South</option>
-                            <option value="central">Central</option>
-                        </select>
-                    </p>
+                    <div class="section">
+                        <div class="heading" for="layercheck">Region</div>
+                    </div>
 
+                    <!-- Region select -->
+                    <select name="select_region" id="regions" class="data-select" onchange="handleRegions()">
+                        <option value="all">All regions</option>
+                        <option value="east">East</option>
+                        <option value="west">West</option>
+                        <option value="north">North</option>
+                        <option value="south">South</option>
+                        <option value="central">Central</option>
+                    </select>
+
+                    <!-- Return to original view button -->
                     <button type="button" id="returnbutton">Return to continent view</button>
 
-                    <!-- Horizontal line -->
+                    <!-- Horizontal line and new heading -->
                     <hr class="horizontalline">
                     <p class="heading" for="layercheck">Legend</p>
 
@@ -135,20 +143,10 @@
                         <br>Site made in partnership with the University of Toronto's Faculty of Arts and
                         Science Sandbox Initiative.
                         <br>Course: GGR472 Developing Web Maps.
-                        <a href="https://www.utoronto.ca/"></a><img class="logoUofT" src="images\UofT_logo.jpg"><br>
+                        <a href="https://www.utoronto.ca/" target="_blank" rel="noopener noreferrer"></a><img
+                            class="logoUofT" src="images\UofT_logo.jpg"><br>
                     </div>
-                    <!-- Bottom credits -->
-                    <!-- <div class="sidebarbottom">
-                        <div class="bottomtextcredits">
-                            <br><br><br>Site made in partnership with the University of Toronto's Faculty of Arts and Science
-                            Sandbox program.
-                            <br>Course: GGR472H1S Developing Web Maps.
-                        </div>
-                        <div>
-                            <a href="https://www.utoronto.ca/"></a><img class="logoUofT" src="images\UofTArtSciwordmark.png"><br><br>
-                            <a href="https://www.utoronto.ca/">
-                        </div>
-                    </div> -->
+
                 </div>
             </div>
 
